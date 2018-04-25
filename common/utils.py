@@ -26,7 +26,7 @@ def wait_el_xpath(driver, element):
   try:
     return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_xpath(element))
   except Exception as e:
-    logging.info('Exception{0}'.format(e))
+    logging.info('Exception: {0}'.format(e))
 
 def wait_el_xpath_click(driver, element):
   try:
