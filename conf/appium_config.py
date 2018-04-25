@@ -4,6 +4,7 @@ import sys
 import time
 import re
 import configparser
+import logging
 from appium import webdriver
 
 sys.path.append("..")
@@ -17,6 +18,11 @@ os_version = os.popen('adb -s {0} shell getprop ro.build.version.release'.format
 PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
 cfg = configparser.ConfigParser()
 cfg.read(PATH('./element.ini'))
+
+logging.basicConfig(
+  level=logging.DEBUG,
+  format="[%(asctime)s] %(levelname)s: %(message)s"
+)
 
 def my_webdriver(app_name):
   return webdriver.Remote('http://127.0.0.1:4723/wd/hub', get_desired_caps(cfg.get('apps', app_name)))
