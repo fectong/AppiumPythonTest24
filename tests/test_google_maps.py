@@ -1,25 +1,14 @@
 # -*- coding:utf-8 -*-
 """
-Launch Maps:
-  Launch Google maps, apply several map overlays, then quit.
+03. Launch Maps: Launch Google maps, apply several map overlays, then quit.
 """
 import os
 import unittest
-import configparser
-import logging
-from time import sleep
+
 from appium import webdriver
-
 from conf import appium_config
+from conf.appium_config import cfg, logging
 from common.utils import wait_el_xpath, wait_el_xpath_click
-
-PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
-cfg = configparser.ConfigParser()
-cfg.read(PATH('../conf/element.ini'))
-logging.basicConfig(
-  level=logging.DEBUG,
-  format="[%(asctime)s] %(levelname)s: %(message)s"
-)
 
 class GoogleMaps(unittest.TestCase):
   @classmethod
@@ -38,6 +27,7 @@ class GoogleMaps(unittest.TestCase):
     type_transit = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_transit_path'))
     type_traffic = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_traffic_path'))
     type_bicycling = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_bicycling_path'))
+
     map_list = [
       type_default,
       type_satellite,

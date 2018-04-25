@@ -1,26 +1,15 @@
 # -*- coding:utf-8 -*-
 """
-Launch Game:
-  Launch a popular App Store game (currently Candy Crush), navigate the menu, then quit.
+02. Launch Game: Launch a popular App Store game (currently Candy Crush), navigate the menu, then quit.
 """
 import os
 import unittest
-import configparser
-import logging
+
 from time import sleep
 from appium import webdriver
-from appium.webdriver.common.touch_action import TouchAction
-
 from conf import appium_config
+from conf.appium_config import cfg, logging
 from common.utils import wait_el_xpath
-
-PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
-cfg = configparser.ConfigParser()
-cfg.read(PATH('../conf/element.ini'))
-logging.basicConfig(
-  level=logging.DEBUG,
-  format="[%(asctime)s] %(levelname)s: %(message)s"
-)
 
 class CandyCrush(unittest.TestCase):
   @classmethod

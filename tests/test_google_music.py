@@ -1,26 +1,14 @@
 # -*- coding:utf-8 -*-
 """
-Local Music Playback:
-  Playback a provided audio playlist from local storage.
+04. Local Music Playback: Playback a provided audio playlist from local storage.
 """
 import os
 import unittest
-import configparser
-import logging
-from time import sleep
+
 from appium import webdriver
-from appium.webdriver.common.touch_action import TouchAction
-
 from conf import appium_config
+from conf.appium_config import cfg, logging
 from common.utils import wait_el_xpath, wait_el_xpath_click
-
-PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
-cfg = configparser.ConfigParser()
-cfg.read(PATH('../conf/element.ini'))
-logging.basicConfig(
-  level=logging.DEBUG,
-  format="[%(asctime)s] %(levelname)s: %(message)s"
-)
 
 class GoogleMusic(unittest.TestCase):
   @classmethod

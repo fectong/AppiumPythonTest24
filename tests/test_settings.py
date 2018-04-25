@@ -1,25 +1,18 @@
 # -*- coding:utf-8 -*-
 """
-Get Phone Memory Status:
-  Get the phone’s current memory status from the settings menu
-  (this is mostly for post analysis upon instability)
+01. Get Phone Memory Status: Get the phone’s current memory status from the settings menu(this is mostly for post analysis upon instability)
+14. Turn Bluetooth Off: Navigate to the appropriate settings menu and successfully disable Bluetooth.
+15. Turn Bluetooth On: Navigate to the appropriate settings menu and successfully enable Bluetooth and pair to a provided headset.
+16. Turn WiFi Off: Navigate to the appropriate settings menu and successfully disable WiFi.
+17. Turn WiFi On: Navigate to the appropriate settings menu and successfully enable WiFi, connecting to a provided Access Point.
 """
 import os
 import unittest
-import configparser
-import logging
+
 from appium import webdriver
-
 from conf import appium_config
+from conf.appium_config import cfg, logging
 from common.utils import wait_el_xpath, MobileSwipe
-
-PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
-cfg = configparser.ConfigParser()
-cfg.read(PATH('../conf/element.ini'))
-logging.basicConfig(
-  level=logging.DEBUG,
-  format="[%(asctime)s] %(levelname)s: %(message)s"
-)
 
 class Settings(unittest.TestCase):
   @classmethod
