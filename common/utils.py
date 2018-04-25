@@ -12,6 +12,8 @@ from time import sleep
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 
+from conf.appium_config import logging
+
 def wait_time(func):
   def inner(*args):
     time.sleep(0.5)
@@ -21,31 +23,33 @@ def wait_time(func):
   return inner
 
 def wait_el_xpath(driver, element):
-  return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_xpath(element))
+  try:
+    return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_xpath(element))
+  except Exception as e:
+    logging.info('Exception{0}'.format(e))
 
 def wait_el_xpath_click(driver, element):
-  return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_xpath(element)).click()
+  try:
+    return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_xpath(element)).click()
+  except Exception as e:
+    logging.info('Exception{0}'.format(e))
 
 def wait_el_id(driver, element):
-  return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_id(element))
+  try:
+    return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_id(element))
+  except Exception as e:
+    logging.info('Exception{0}'.format(e))
 
 def wait_el_id_click(driver, element):
-  return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_id(element)).click()
-
-def el_send_keys(driver, element, data):
-  return driver.find_element_by_id(element).send_keys(data)
-
-def el_text(driver, element):
-  return driver.find_element_by_id(element).text
+  try:
+    return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_id(element)).click()
+  except Exception as e:
+    logging.info('Exception{0}'.format(e))
 
 @wait_time
 def screenshot(driver):
   filename = ''.join("../logs/" + str(time.time()) + ".png")
   return driver.get_screenshot_as_file(filename)
-
-# page element check
-def el_check(driver, element):
-  return driver.find_element_by_id(element).is_dispalyed()
 
 # Swipe: Left Right Up Down
 class MobileSwipe():
