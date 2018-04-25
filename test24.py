@@ -4,8 +4,8 @@ import sys
 import time
 import unittest
 import HTMLTestRunner
+import configparser
 
-from urllib.error import URLError
 from tests.test_settings import Settings
 from tests.test_candy_crush import CandyCrush
 from tests.test_google_maps import GoogleMaps
@@ -37,11 +37,7 @@ def suite():
 if __name__ == "__main__":
   try:
     runTest()
-  except ConnectionRefusedError as crfe:
-    print('ConnectionRefusedError: {0}'.format(crfe))
-  except URLError as url_error:
-    print('URLError: {0}'.format(url_error))
-  except AttributeError as ae:
-    print('AttributeError: {0}'.format(ae))
+  except Exception as e:
+    print('Exception: {0}'.format(e))
   finally:
-    print('Please check if the Appium is running')
+    print('Please check the Reports.')
