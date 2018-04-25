@@ -1,6 +1,6 @@
 __pycache__
 *.pyc
 .vscode
-logs/*
-apps
-docs
+*.html
+/apps
+/docs
