@@ -18,7 +18,7 @@ def runTest():
   runner = HTMLTestRunner.HTMLTestRunner(
     stream=fp,
     title=u'Test Report',
-    description=u'Test report for bluetooth by Fe2Cu'
+    description=u'Test report for bluetooth by TG'
   )
   runner.run(suite())
   fp.close()
@@ -26,10 +26,12 @@ def runTest():
 def suite():
   suite = unittest.TestSuite()
   test = [
-    # Settings('test_getMemoryStatus'),
+    Settings('test_getMemoryStatus'),
+    Settings('test_bluetoothDisable'),
+    Settings('test_bluetoothEnable')
     # CandyCrush('test_candyCrushIO'),
     # GoogleMaps('test_multi_layers'),
-    GoogleMusic('test_music_palyback')
+    # GoogleMusic('test_music_palyback')
   ]
   suite.addTests(test)
   return suite
