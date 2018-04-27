@@ -7,7 +7,6 @@ import configparser
 import logging
 from appium import webdriver
 
-sys.path.append("..")
 from common.mobile import get_serialno
 
 #Read mobile deviceId
