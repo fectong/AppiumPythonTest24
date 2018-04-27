@@ -20,7 +20,9 @@ cfg.read(PATH('./element.ini'))
 
 logging.basicConfig(
   level=logging.DEBUG,
-  format="[%(asctime)s] %(levelname)s: %(message)s"
+  format="[%(asctime)s] %(levelname)s: %(message)s",
+  filename=PATH('../logs/sys.log'),
+  filemode = 'a'
 )
 
 def my_webdriver(app_name):
