@@ -12,29 +12,27 @@ from tests.map import GoogleMaps
 from tests.music_local import GoogleMusic
 from tests.camera import Camera
 from tests.browser import GoogleChrome
+from conf.appium_config import logging
 
 def runTest():
   times = 1
-  timeout = time.time() + 60*60*24   # 24h = 60*60*24
+  timeout = time.time() + 60*1   # 24h = 60*60*24
   timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 
   filename = "./logs/"+timestr+".html"
-  fp = open(filename, 'wb')
-  
-  while True:
-    if time.time() > timeout:
-      print('TEST OVER')
-      break
-    else:
-      runner = HTMLTestRunner.HTMLTestRunner(
-        stream=fp,
-        title=u'Test Report: {0}'.format(times),
-        description=u'Test reports by TG'
-      )
-      times+=1
-      runner.run(suite())
-
-  fp.close()
+  with open(filename , 'wb') as f:
+    while True:
+      if time.time() > timeout:
+        print('TEST OVER')
+        break
+      else:
+        runner = HTMLTestRunner.HTMLTestRunner(
+          stream=f,
+          title=u'Test Report: {0}'.format(times),
+          description=u'Test reports by TG'
+        )
+        times+=1
+        runner.run(suite())
 
 def suite():
   suite = unittest.TestSuite()
@@ -57,6 +55,6 @@ if __name__ == "__main__":
   try:
     runTest()
   except Exception as e:
-    print('Exception: {0}'.format(e))
+    logging.info('Exception: {0}'.format(e))
   finally:
     print('Please check the Reports.')
