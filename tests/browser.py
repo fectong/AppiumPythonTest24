@@ -34,6 +34,7 @@ class GoogleChrome(unittest.TestCase):
     for site in websites:
       url_bar.clear()
       url_bar.send_keys(site)
+      # KEY_CODE 66: ENTER
       self.driver.press_keycode(66)
       sleep(15)
 
