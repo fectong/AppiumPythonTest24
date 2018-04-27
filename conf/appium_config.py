@@ -18,10 +18,11 @@ PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
 cfg = configparser.ConfigParser()
 cfg.read(PATH('./element.ini'))
 
+timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 logging.basicConfig(
-  level=logging.DEBUG,
-  format="[%(asctime)s] %(levelname)s: %(message)s",
-  filename=PATH('../logs/sys.log'),
+  level=logging.INFO,
+  format="[%(asctime)s] %(levelname)s- %(message)s",
+  filename=PATH("../logs/"+timestr+".log"),
   filemode = 'a'
 )
 
