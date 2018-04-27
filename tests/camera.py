@@ -15,7 +15,7 @@ class Camera(unittest.TestCase):
   def setUpClass(self):
     self.driver = appium_config.my_webdriver('Camera')
 
-  def test_takePicture(self):
+  def test_take_picture(self):
     wait_el_xpath_click(self.driver, cfg.get('camera', 'btn_ok'))
     wait_el_xpath_click(self.driver, cfg.get('camera', 'shutter_path'))
 

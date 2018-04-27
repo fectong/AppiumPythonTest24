@@ -16,7 +16,7 @@ class CandyCrush(unittest.TestCase):
   def setUpClass(self):
     self.driver = appium_config.my_webdriver('CandyCrush')
 
-  def test_candyCrushIO(self):
+  def test_candy_crush(self):
     sleep(13)
     logging.info('START')
     login_close_x = int(cfg.get('candy_crush', 'login_close_x'))

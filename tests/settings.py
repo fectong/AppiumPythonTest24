@@ -21,7 +21,7 @@ class Settings(unittest.TestCase):
     self.driver = appium_config.my_webdriver('Settings')
     self.MobileSwipe = MobileSwipe()
 
-  def test_getMemoryStatus(self):
+  def test_get_memory_status(self):
     MobileSwipe.swipe_down(self, self.driver, 400)
     wait_el_xpath_click(self.driver, cfg.get('settings', 'memory_path'))
     tv_performance = wait_el_xpath(self.driver, cfg.get('settings_memory', 'performance_path'))
@@ -36,7 +36,7 @@ class Settings(unittest.TestCase):
     self.driver.back()
     MobileSwipe.swipe_up(self, self.driver, 400)
 
-  def test_bluetoothDisable(self):
+  def test_bluetooth_disable(self):
     wait_el_xpath_click(self.driver, cfg.get('settings', 'bluetooth_path'))
     switch_bluetooth = wait_el_xpath(self.driver, cfg.get('settings_bluetooth', 'switch_bluetooth_path'))
     
@@ -46,7 +46,7 @@ class Settings(unittest.TestCase):
       logging.info('Bluetooth is already disabled.')
     self.driver.back()
 
-  def test_bluetoothEnable(self):
+  def test_bluetooth_enable(self):
     wait_el_xpath_click(self.driver, cfg.get('settings', 'bluetooth_path'))
     switch_bluetooth = wait_el_xpath(self.driver, cfg.get('settings_bluetooth', 'switch_bluetooth_path'))
 
@@ -62,7 +62,7 @@ class Settings(unittest.TestCase):
     sleep(10)
     self.driver.back()
 
-  def test_wlanDisable(self):
+  def test_wlan_disable(self):
     wait_el_xpath_click(self.driver, cfg.get('settings', 'wlan_path'))
     switch_wlan = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'switch_bluetooth_path'))
     
@@ -72,7 +72,7 @@ class Settings(unittest.TestCase):
       logging.info('WLAN is already disabled.')
     self.driver.back()
 
-  def test_wlanEnable(self):
+  def test_wlan_enable(self):
     wait_el_xpath_click(self.driver, cfg.get('settings', 'wlan_path'))
     switch_wlan = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'switch_bluetooth_path'))
     

@@ -13,7 +13,7 @@ class GoogleChrome(unittest.TestCase):
   def setUpClass(self):
     self.driver = appium_config.my_webdriver('GoogleChrome')
 
-  def test_tenWebsites(self):
+  def test_ten_websites(self):
     wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_terms_accept_path'))
     wait_el_xpath_click(self.driver, cfg.get('browser', 'search_box_path'))
     url_bar = wait_el_xpath(self.driver, cfg.get('browser', 'url_bar_path'))
