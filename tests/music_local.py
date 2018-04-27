@@ -16,13 +16,13 @@ class GoogleMusic(unittest.TestCase):
     self.driver = appium_config.my_webdriver('GoogleMusic')
   
   def test_music_palyback(self):
-    wait_el_xpath(self.driver, cfg.get('google_music', 'btn_skip_path'))
-    wait_el_xpath_click(self.driver, cfg.get('google_music', 's'))
-    wait_el_xpath_click(self.driver, cfg.get('google_music', 'shuffle_all_path'))
-    btn_pause_play = wait_el_xpath(self.driver, cfg.get('google_music', 'btn_pause_play_path'))
-    wait_el_xpath_click(self.driver, cfg.get('google_music', 'btn_menu_path'))
+    wait_el_xpath(self.driver, cfg.get('music', 'btn_skip_path'))
+    wait_el_xpath_click(self.driver, cfg.get('music', 's'))
+    wait_el_xpath_click(self.driver, cfg.get('music', 'shuffle_all_path'))
+    btn_pause_play = wait_el_xpath(self.driver, cfg.get('music', 'btn_pause_play_path'))
+    wait_el_xpath_click(self.driver, cfg.get('music', 'btn_menu_path'))
     
-    while btn_pause_play.tag_name == cfg.get('google_music', 'status_playing') :
+    while btn_pause_play.tag_name == cfg.get('music', 'status_playing') :
       logging.info(btn_pause_play.tag_name)
 
   @classmethod

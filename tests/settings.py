@@ -57,12 +57,48 @@ class Settings(unittest.TestCase):
       logging.info('Bluetooth is already enabled.')
 
     sleep(10)
-    try:
-      wait_el_xpath_click(self.driver, cfg.get('settings_bluetooth', 'headset_path'))
-      wait_el_xpath_click(self.driver, cfg.get('settings_bluetooth', 'btn_pair'))
-    except Exception as e:
-      logging.info('Exception: {0}'.format(e))
+    wait_el_xpath_click(self.driver, cfg.get('settings_bluetooth', 'headset_path'))
+    wait_el_xpath_click(self.driver, cfg.get('settings_bluetooth', 'btn_pair'))
     sleep(10)
+    self.driver.back()
+
+  def test_wlanDisable(self):
+    wait_el_xpath_click(self.driver, cfg.get('settings', 'wlan_path'))
+    switch_wlan = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'switch_bluetooth_path'))
+    
+    if switch_wlan.text == cfg.get('settings_wlan', 'wlan_enabled'):
+      switch_wlan.click()
+    else:
+      logging.info('WLAN is already disabled.')
+    self.driver.back()
+
+  def test_wlanEnable(self):
+    wait_el_xpath_click(self.driver, cfg.get('settings', 'wlan_path'))
+    switch_wlan = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'switch_bluetooth_path'))
+    
+    if switch_wlan.text == cfg.get('settings_wlan', 'wlan_disabled'):
+      switch_wlan.click()
+    else:
+      logging.info('WLAN is already enabled.')
+
+    sleep(3)
+    wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'ap_point_path'))
+    wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'checkbox_pw_show_path'))
+    et_pw = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'edit_text_pw_path'))
+    et_pw.clear()
+    # 输入密码
+    # et_pw.send_keys('173925239')
+    self.driver.press_keycode(8)
+    self.driver.press_keycode(14)
+    self.driver.press_keycode(10)
+    self.driver.press_keycode(16)
+    self.driver.press_keycode(9)
+    self.driver.press_keycode(12)
+    self.driver.press_keycode(9)
+    self.driver.press_keycode(10)
+    self.driver.press_keycode(16)
+    wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'btn_connect_path'))
+    sleep(1)
     self.driver.back()
 
   @classmethod

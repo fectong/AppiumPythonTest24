@@ -17,16 +17,16 @@ class GoogleMaps(unittest.TestCase):
 
   def test_multi_layers(self):
     logging.info(self.driver.current_activity)
-    wait_el_xpath_click(self.driver, cfg.get('google_maps', 'page_skip_path'))
-    wait_el_xpath_click(self.driver, cfg.get('google_maps', 'btn_compass_path'))
+    wait_el_xpath_click(self.driver, cfg.get('map', 'page_skip_path'))
+    wait_el_xpath_click(self.driver, cfg.get('map', 'btn_compass_path'))
     logging.info(self.driver.current_activity)
 
-    type_default = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_default_path'))
-    type_satellite = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_satellite_path'))
-    type_terrain = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_terrain_path'))
-    type_transit = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_transit_path'))
-    type_traffic = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_traffic_path'))
-    type_bicycling = wait_el_xpath(self.driver, cfg.get('google_maps', 'map_type_bicycling_path'))
+    type_default = wait_el_xpath(self.driver, cfg.get('map', 'map_type_default_path'))
+    type_satellite = wait_el_xpath(self.driver, cfg.get('map', 'map_type_satellite_path'))
+    type_terrain = wait_el_xpath(self.driver, cfg.get('map', 'map_type_terrain_path'))
+    type_transit = wait_el_xpath(self.driver, cfg.get('map', 'map_type_transit_path'))
+    type_traffic = wait_el_xpath(self.driver, cfg.get('map', 'map_type_traffic_path'))
+    type_bicycling = wait_el_xpath(self.driver, cfg.get('map', 'map_type_bicycling_path'))
 
     map_list = [
       type_default,
@@ -44,7 +44,7 @@ class GoogleMaps(unittest.TestCase):
       for d in details_list:
         d.click()
 
-    wait_el_xpath_click(self.driver, cfg.get('google_maps', 'btn_close_compass_path'))
+    wait_el_xpath_click(self.driver, cfg.get('map', 'btn_close_compass_path'))
 
   @classmethod
   def tearDownClass(self):
