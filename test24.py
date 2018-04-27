@@ -6,32 +6,49 @@ import unittest
 import HTMLTestRunner
 import configparser
 
-from tests.test_settings import Settings
-from tests.test_candy_crush import CandyCrush
-from tests.test_google_maps import GoogleMaps
-from tests.test_google_music import GoogleMusic
+from tests.settings import Settings
+from tests.candy_crush import CandyCrush
+from tests.map import GoogleMaps
+from tests.music_local import GoogleMusic
+from tests.camera import Camera
+from tests.browser import GoogleChrome
 
 def runTest():
+  times = 1
+  timeout = time.time() + 60*60*24   # 24h = 60*60*24
   timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
+
   filename = "./logs/"+timestr+".html"
   fp = open(filename, 'wb')
-  runner = HTMLTestRunner.HTMLTestRunner(
-    stream=fp,
-    title=u'Test Report',
-    description=u'Test report for bluetooth by TG'
-  )
-  runner.run(suite())
+  
+  while True:
+    if time.time() > timeout:
+      print('TEST OVER')
+      break
+    else:
+      runner = HTMLTestRunner.HTMLTestRunner(
+        stream=fp,
+        title=u'Test Report: {0}'.format(times),
+        description=u'Test reports by TG'
+      )
+      times+=1
+      runner.run(suite())
+
   fp.close()
 
 def suite():
   suite = unittest.TestSuite()
   test = [
-    Settings('test_getMemoryStatus'),
-    Settings('test_bluetoothDisable'),
-    Settings('test_bluetoothEnable')
-    # CandyCrush('test_candyCrushIO'),
-    # GoogleMaps('test_multi_layers'),
-    # GoogleMusic('test_music_palyback')
+    Settings('test_get_memory_status'),
+    Settings('test_bluetooth_disable'),
+    Settings('test_bluetooth_enable'),
+    Settings('test_wlan_disable'),
+    Settings('test_wlan_enable'),
+    CandyCrush('test_candy_crush'),
+    GoogleMaps('test_multi_layers'),
+    GoogleMusic('test_music_palyback'),
+    Camera('test_take_picture'),
+    GoogleChrome('test_ten_websites')
   ]
   suite.addTests(test)
   return suite
