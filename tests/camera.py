@@ -16,8 +16,11 @@ class Camera(unittest.TestCase):
     self.driver = appium_config.my_webdriver('Camera')
 
   def test_take_picture(self):
-    wait_el_xpath_click(self.driver, cfg.get('camera', 'btn_ok'))
+    logging.info('test_take_picture: START')
+    wait_el_xpath_click(self.driver, cfg.get('camera', 'btn_yes'))
     wait_el_xpath_click(self.driver, cfg.get('camera', 'shutter_path'))
+    logging.info('test_take_picture: Take a photo.')
+    logging.info('test_take_picture: END')
 
   @classmethod
   def tearDownClass(self):
