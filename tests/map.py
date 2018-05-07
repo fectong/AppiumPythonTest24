@@ -16,7 +16,7 @@ class GoogleMaps(unittest.TestCase):
     self.driver = appium_config.my_webdriver('GoogleMaps')
 
   def test_multi_layers(self):
-    logging.info(self.driver.current_activity)
+    logging.info('test_multi_layers: START')
     wait_el_xpath_click(self.driver, cfg.get('map', 'page_skip_path'))
     wait_el_xpath_click(self.driver, cfg.get('map', 'btn_compass_path'))
     logging.info(self.driver.current_activity)
@@ -45,6 +45,7 @@ class GoogleMaps(unittest.TestCase):
         d.click()
 
     wait_el_xpath_click(self.driver, cfg.get('map', 'btn_close_compass_path'))
+    logging.info('test_multi_layers: END')
 
   @classmethod
   def tearDownClass(self):
