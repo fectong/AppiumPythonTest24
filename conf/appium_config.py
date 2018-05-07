@@ -45,9 +45,3 @@ def get_desired_caps(app_name):
     'automationName': 'UiAutomator2'
   }
   return desired_caps
-
-# def get_appInfo(x):
-#   return{
-#     cfg.get('apps', 'settings'):[cfg.get('settings', 'package'), cfg.get('settings', 'activity')],
-#     cfg.get('apps', 'candy_crush'):[cfg.get('candy_crush', 'package'), cfg.get('candy_crush', 'activity')]
-#   }.get(x, "Please confirm the app's name")
