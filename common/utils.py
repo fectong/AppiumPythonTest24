@@ -22,29 +22,34 @@ def wait_time(func):
     return f
   return inner
 
+def get_keycode(key):
+  return{
+    'ENTER': 66,
+    'HOME': 3,
+    'BACK': 4,
+    0: 7,
+    1: 8,
+    2: 9,
+    3: 10,
+    4: 11,
+    5: 12,
+    6: 13,
+    7: 14,
+    8: 15,
+    9: 16
+  }.get(key, "Please confirm if the keycode is valid.")
+
 def wait_el_xpath(driver, element):
-  try:
-    return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_xpath(element))
-  except Exception as e:
-    logging.info('Exception: {0}'.format(e))
+  return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_xpath(element))
 
 def wait_el_xpath_click(driver, element):
-  try:
-    return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_xpath(element)).click()
-  except Exception as e:
-    logging.info('Exception{0}'.format(e))
+  return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_xpath(element)).click()
 
 def wait_el_id(driver, element):
-  try:
-    return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_id(element))
-  except Exception as e:
-    logging.info('Exception{0}'.format(e))
+  return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_id(element))
 
 def wait_el_id_click(driver, element):
-  try:
-    return WebDriverWait(driver, 5).until(lambda x: x.find_element_by_id(element)).click()
-  except Exception as e:
-    logging.info('Exception{0}'.format(e))
+  return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_id(element)).click()
 
 @wait_time
 def screenshot(driver):
