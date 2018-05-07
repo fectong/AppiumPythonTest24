@@ -17,18 +17,20 @@ class CandyCrush(unittest.TestCase):
     self.driver = appium_config.my_webdriver('CandyCrush')
 
   def test_candy_crush(self):
-    sleep(13)
-    logging.info('START')
+    sleep(20)
+    logging.info('test_candy_crush: START')
     login_close_x = int(cfg.get('candy_crush', 'login_close_x'))
     login_close_y = int(cfg.get('candy_crush', 'login_close_y'))
     settings_x = int(cfg.get('candy_crush', 'settings_x'))
     settings_y = int(cfg.get('candy_crush', 'settings_y'))
     offset = 5
     self.driver.tap([(login_close_x, login_close_y), (login_close_x+offset, login_close_y+offset)], 100)
+    logging.info('test_candy_crush: Close Logging popup.')
     sleep(1)
     self.driver.tap([(settings_x, settings_y), (settings_x+offset, settings_y+offset)], 100)
-    logging.info('END')
-    self.driver.close_app()
+    logging.info('test_candy_crush: Open settings.')
+    logging.info('test_candy_crush: END')
+    # self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):
