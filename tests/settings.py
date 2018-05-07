@@ -13,73 +13,97 @@ from time import sleep
 from appium import webdriver
 from conf import appium_config
 from conf.appium_config import cfg, logging
-from common.utils import wait_el_xpath, wait_el_xpath_click, MobileSwipe
+from common.utils import wait_el_xpath, wait_el_xpath_click, get_keycode
 
 class Settings(unittest.TestCase):
   @classmethod
   def setUpClass(self):
     self.driver = appium_config.my_webdriver('Settings')
-    self.MobileSwipe = MobileSwipe()
 
   def test_get_memory_status(self):
-    MobileSwipe.swipe_down(self, self.driver, 400)
+    logging.info('test_get_memory_status: START')
     wait_el_xpath_click(self.driver, cfg.get('settings', 'memory_path'))
-    tv_performance = wait_el_xpath(self.driver, cfg.get('settings_memory', 'performance_path'))
     tv_total_memory = wait_el_xpath(self.driver, cfg.get('settings_memory', 'total_memory_path'))
-    tv_average_used = wait_el_xpath(self.driver, cfg.get('settings_memory', 'average_used_path'))
-    tv_free = wait_el_xpath(self.driver, cfg.get('settings_memory', 'free_path'))
-    logging.info('Performance: '+tv_performance.text)
-    logging.info('Total Memory: '+tv_total_memory.text)
-    logging.info('Average Used: '+tv_average_used.text)
-    logging.info('Free: '+tv_free.text)
-    sleep(2)
+    tv_used = wait_el_xpath(self.driver, cfg.get('settings_memory', 'used_path'))
+    logging.info(tv_used.text + ' ' + tv_total_memory.text)
+    sleep(1)
     self.driver.back()
-    MobileSwipe.swipe_up(self, self.driver, 400)
+    # wait_el_xpath_click(self.driver, cfg.get('settings', 'navigate_up_path'))
+    logging.info('test_get_memory_status: END')
+
+  def initB(self):
+    """
+    Init bluetooth and return the bluetooth switch button.
+    """
+    wait_el_xpath_click(self.driver, cfg.get('settings', 'bluetooth_path'))
+    wait_el_xpath_click(self.driver, cfg.get('settings_bluetooth', 'bluetooth_index_path'))
+    switch_bluetooth = wait_el_xpath(self.driver, cfg.get('settings_bluetooth', 'switch_bluetooth_path'))
+    return switch_bluetooth
 
   def test_bluetooth_disable(self):
-    wait_el_xpath_click(self.driver, cfg.get('settings', 'bluetooth_path'))
-    switch_bluetooth = wait_el_xpath(self.driver, cfg.get('settings_bluetooth', 'switch_bluetooth_path'))
+    logging.info('test_bluetooth_disable: START')
+
+    switch_bluetooth = self.initB()
     
     if switch_bluetooth.text == cfg.get('settings_bluetooth', 'bluetooth_enabled'):
       switch_bluetooth.click()
+      logging.info('test_bluetooth_disable: Bluetooth disable succeed.')
     else:
-      logging.info('Bluetooth is already disabled.')
+      logging.info('test_bluetooth_disable: Bluetooth is already disabled.')
     self.driver.back()
+    self.driver.back()
+    logging.info('test_bluetooth_disable: END')
 
   def test_bluetooth_enable(self):
-    wait_el_xpath_click(self.driver, cfg.get('settings', 'bluetooth_path'))
-    switch_bluetooth = wait_el_xpath(self.driver, cfg.get('settings_bluetooth', 'switch_bluetooth_path'))
+    logging.info('test_bluetooth_enable: START')
+
+    switch_bluetooth = self.initB()
 
     if switch_bluetooth.text == cfg.get('settings_bluetooth', 'bluetooth_disabled'):
       switch_bluetooth.click()
-      switch_bluetooth.is_displayed()
+      logging.info('test_bluetooth_enable: Bluetooth enable succeed.')
     else:
-      logging.info('Bluetooth is already enabled.')
+      logging.info('test_bluetooth_enable: Bluetooth is already enabled.')
 
     sleep(10)
     wait_el_xpath_click(self.driver, cfg.get('settings_bluetooth', 'headset_path'))
     wait_el_xpath_click(self.driver, cfg.get('settings_bluetooth', 'btn_pair'))
     sleep(10)
     self.driver.back()
+    self.driver.back()
+    logging.info('test_bluetooth_enable: END')
+
+  def initW(self):
+    """
+    Init wlan and return the wlan switch button.
+    """
+    wait_el_xpath_click(self.driver, cfg.get('settings', 'wlan_path'))
+    wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'wlan_index_path'))
+    switch_wlan = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'switch_wlan_path'))
+    return switch_wlan
 
   def test_wlan_disable(self):
-    wait_el_xpath_click(self.driver, cfg.get('settings', 'wlan_path'))
-    switch_wlan = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'switch_bluetooth_path'))
+    logging.info('test_wlan_disable: START')
+    switch_wlan = self.initW()
     
     if switch_wlan.text == cfg.get('settings_wlan', 'wlan_enabled'):
       switch_wlan.click()
+      logging.info('test_wlan_disable: WLAN disable succeed.')
     else:
-      logging.info('WLAN is already disabled.')
+      logging.info('test_wlan_disable: WLAN is already disabled.')
     self.driver.back()
+    self.driver.back()
+    logging.info('test_wlan_disable: END')
 
   def test_wlan_enable(self):
-    wait_el_xpath_click(self.driver, cfg.get('settings', 'wlan_path'))
-    switch_wlan = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'switch_bluetooth_path'))
+    logging.info('test_wlan_enable: START')
+    switch_wlan = self.initW()
     
     if switch_wlan.text == cfg.get('settings_wlan', 'wlan_disabled'):
       switch_wlan.click()
+      logging.info('test_wlan_enable: WLAN enable succeed.')
     else:
-      logging.info('WLAN is already enabled.')
+      logging.info('test_wlan_enable: WLAN is already enabled.')
 
     sleep(3)
     wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'ap_point_path'))
@@ -87,19 +111,21 @@ class Settings(unittest.TestCase):
     et_pw = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'edit_text_pw_path'))
     et_pw.clear()
     # 输入密码
-    # et_pw.send_keys('173925239')
-    self.driver.press_keycode(8)
-    self.driver.press_keycode(14)
-    self.driver.press_keycode(10)
-    self.driver.press_keycode(16)
-    self.driver.press_keycode(9)
-    self.driver.press_keycode(12)
-    self.driver.press_keycode(9)
-    self.driver.press_keycode(10)
-    self.driver.press_keycode(16)
+    # password: 173925239
+    pw = [
+      get_keycode(1), get_keycode(7), get_keycode(3),
+      get_keycode(9), get_keycode(2), get_keycode(5),
+      get_keycode(2), get_keycode(3), get_keycode(9)
+    ]
+    for n in pw:
+      self.driver.press_keycode(n)
+    
     wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'btn_connect_path'))
+    logging.info('test_wlan_enable: WLAN connect succeed.')
     sleep(1)
     self.driver.back()
+    self.driver.back()
+    logging.info('test_wlan_enable: END')
 
   @classmethod
   def tearDownClass(self):
