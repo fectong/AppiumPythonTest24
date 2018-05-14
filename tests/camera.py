@@ -4,7 +4,7 @@
 """
 import os
 import unittest
-
+from time import sleep
 from appium import webdriver
 from conf.appium_config import cfg, logging
 from conf import appium_config
@@ -18,7 +18,9 @@ class Camera(unittest.TestCase):
   def test_take_picture(self):
     logging.info('test_take_picture: START')
     wait_el_xpath_click(self.driver, cfg.get('camera', 'btn_yes'))
+    sleep(2)
     wait_el_xpath_click(self.driver, cfg.get('camera', 'shutter_path'))
+    sleep(2)
     logging.info('test_take_picture: Take a photo.')
     logging.info('test_take_picture: END')
 
