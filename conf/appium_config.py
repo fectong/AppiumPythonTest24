@@ -9,10 +9,15 @@ from appium import webdriver
 
 from common.mobile import get_serialno
 
-#Read mobile deviceId
-device_id = get_serialno()
-#Read mobile os Version
-os_version = os.popen('adb -s {0} shell getprop ro.build.version.release'.format(device_id)).read()
+#Get mobile devices_id
+devices_id = get_serialno()
+
+def os_version(device_name):
+  """
+  Get mobile os Version \n
+  By device id
+  """
+  return os.popen('adb -s {0} shell getprop ro.build.version.release'.format(device_name)).read()
 
 PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
 cfg = configparser.ConfigParser()
@@ -26,19 +31,28 @@ logging.basicConfig(
   filemode = 'a'
 )
 
-def my_webdriver(app_name):
-  return webdriver.Remote('http://127.0.0.1:4723/wd/hub', get_desired_caps(cfg.get('apps', app_name)))
+def my_webdriver(
+  app_name,
+  host = 'http://127.0.0.1',
+  port = 4723,
+  device_name = devices_id[0],
+  platform_version = os_version(devices_id[0]),
+  auto_grant_permissions = True,
+  no_reset = False,
+  fullReset = False):
+  return webdriver.Remote('{0}:{1}/wd/hub'.format(host, port), get_desired_caps(cfg.get('apps', app_name), device_name, platform_version, auto_grant_permissions, no_reset, fullReset))
 
-def get_desired_caps(app_name):
+def get_desired_caps(app_name, device_name, platform_version, auto_grant_permissions, no_reset, fullReset):
   desired_caps = {
-    'platformName': 'Android',
-    'platformVersion': os_version,
-    'deviceName': device_id,
     'appPackage': cfg.get(app_name, 'package'),
     'appActivity': cfg.get(app_name, 'activity'),
-    'autoGrantPermissions': True,
-    # 'noReset': True,
-    # 'fullReset': False,
+    'platformName': 'Android',
+    'platformVersion': platform_version,
+    'deviceName': device_name,
+    'udid': device_name,
+    'autoGrantPermissions': auto_grant_permissions,
+    'noReset': no_reset,
+    'fullReset': fullReset,
     # 'app': PATH('../apps/CandyCrushSaga.apk'),
     # 'unicodeKeyboard': True,
     # 'resetKeyboard': True,
