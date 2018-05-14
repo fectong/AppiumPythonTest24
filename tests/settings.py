@@ -14,6 +14,7 @@ from appium import webdriver
 from conf import appium_config
 from conf.appium_config import cfg, logging
 from common.utils import wait_el_xpath, wait_el_xpath_click, get_keycode
+from selenium.common.exceptions import TimeoutException
 
 class Settings(unittest.TestCase):
   @classmethod
@@ -104,21 +105,26 @@ class Settings(unittest.TestCase):
       logging.info('test_wlan_enable: WLAN enable succeed.')
     else:
       logging.info('test_wlan_enable: WLAN is already enabled.')
+    
+    sleep(3)
+    try:
+      ap_connected = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'ap_connected_path'))
+      ap_connected.click()
+      wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'ap_forget_path'))
+    except TimeoutException:
+      logging.info('No ap connected.')
 
     sleep(3)
-    wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'ap_point_path'))
+    ap_point = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'ap_point_path'))
+    ap_point.click()
     wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'checkbox_pw_show_path'))
     et_pw = wait_el_xpath(self.driver, cfg.get('settings_wlan', 'edit_text_pw_path'))
     et_pw.clear()
-    # 输入密码
+    
     # password: 173925239
-    pw = [
-      get_keycode(1), get_keycode(7), get_keycode(3),
-      get_keycode(9), get_keycode(2), get_keycode(5),
-      get_keycode(2), get_keycode(3), get_keycode(9)
-    ]
-    for n in pw:
-      self.driver.press_keycode(n)
+    password_str = cfg.get('settings_wlan', 'ap_password')
+    for s in password_str:
+      self.driver.press_keycode(get_keycode(int(s)))
     
     wait_el_xpath_click(self.driver, cfg.get('settings_wlan', 'btn_connect_path'))
     logging.info('test_wlan_enable: WLAN connect succeed.')
