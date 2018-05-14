@@ -18,7 +18,6 @@ class GoogleMusic(unittest.TestCase):
   def test_music_palyback(self):
     logging.info('test_music_palyback: START')
     wait_el_xpath(self.driver, cfg.get('music', 'btn_skip_path'))
-    wait_el_xpath_click(self.driver, cfg.get('music', 's'))
     wait_el_xpath_click(self.driver, cfg.get('music', 'shuffle_all_path'))
     logging.info('test_music_palyback: Shuffle all of the music.')
     btn_pause_play = wait_el_xpath(self.driver, cfg.get('music', 'btn_pause_play_path'))
