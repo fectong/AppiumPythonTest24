@@ -30,7 +30,6 @@ class CandyCrush(unittest.TestCase):
     self.driver.tap([(settings_x, settings_y), (settings_x+offset, settings_y+offset)], 100)
     logging.info('test_candy_crush: Open settings.')
     logging.info('test_candy_crush: END')
-    # self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):
