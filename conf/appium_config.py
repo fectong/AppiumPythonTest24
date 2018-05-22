@@ -25,7 +25,7 @@ cfg.read(PATH('./element.ini'))
 
 timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 logging.basicConfig(
-  level=logging.INFO,
+  level=logging.DEBUG,
   format="[%(asctime)s] %(levelname)s- %(message)s",
   filename=PATH("../logs/"+timestr+".log"),
   filemode = 'a'
@@ -39,10 +39,11 @@ def my_webdriver(
   platform_version = os_version(devices_id[0]),
   auto_grant_permissions = True,
   no_reset = False,
-  fullReset = False):
-  return webdriver.Remote('{0}:{1}/wd/hub'.format(host, port), get_desired_caps(cfg.get('apps', app_name), device_name, platform_version, auto_grant_permissions, no_reset, fullReset))
+  fullReset = False,
+  newCommandTimeout = 60):
+  return webdriver.Remote('{0}:{1}/wd/hub'.format(host, port), get_desired_caps(cfg.get('apps', app_name), device_name, platform_version, auto_grant_permissions, no_reset, fullReset, newCommandTimeout))
 
-def get_desired_caps(app_name, device_name, platform_version, auto_grant_permissions, no_reset, fullReset):
+def get_desired_caps(app_name, device_name, platform_version, auto_grant_permissions, no_reset, fullReset, newCommandTimeout):
   desired_caps = {
     'appPackage': cfg.get(app_name, 'package'),
     'appActivity': cfg.get(app_name, 'activity'),
@@ -53,6 +54,7 @@ def get_desired_caps(app_name, device_name, platform_version, auto_grant_permiss
     'autoGrantPermissions': auto_grant_permissions,
     'noReset': no_reset,
     'fullReset': fullReset,
+    'newCommandTimeout': newCommandTimeout,
     # 'app': PATH('../apps/CandyCrushSaga.apk'),
     # 'unicodeKeyboard': True,
     # 'resetKeyboard': True,
