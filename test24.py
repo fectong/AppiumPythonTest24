@@ -24,6 +24,12 @@ def runTest():
   timeout = time.time() + 60*1  # 24h = 60*60*24
   timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 
+  log_path = './logs'
+  if not(os.path.isdir(log_path)):
+    os.mkdir(log_path)
+    if not(os.access(log_path, os.W_OK)):
+      logging.info('Path {0} cannot be written.'.format(log_path))
+
   filename = "./logs/"+timestr+".html"
   with open(filename , 'wb') as f:
     while True:
@@ -43,21 +49,21 @@ def runTest():
 def suite():
   suite = unittest.TestSuite()
   test = [
-    # Settings('test_get_memory_status'),
-    # Settings('test_bluetooth_disable'),
-    # Settings('test_bluetooth_enable'),
-    # Settings('test_wlan_disable'),
-    # Settings('test_wlan_enable'),
-    # CandyCrush('test_candy_crush'),
-    # Camera('test_take_picture'),
+    # Settings('test_get_memory_status'),     # OK
+    # Settings('test_bluetooth_disable'),     # OK
+    # Settings('test_bluetooth_enable'),      # Headset Needed
+    # Settings('test_wlan_disable'),          # OK
+    # Settings('test_wlan_enable'),           # OK
+    # CandyCrush('test_candy_crush'),         # OK
+    # Camera('test_take_picture'),            # OK
     # Messaging('test_SMS_MO'),
     # Messaging('test_MMS_MO'),
     # GoogleMaps('test_multi_layers'),
-    # GoogleChrome('test_ten_websites'),
-    # GoogleMusic('test_music_palyback'),
-    Tune('test_music_network'),
-    # Video('test_play_video'),
-    # Youtube('test_video_network'),
+    # GoogleChrome('test_ten_websites'),      # OK
+    GoogleMusic('test_music_palyback'),
+    # Tune('test_music_network'),             # OK
+    # Video('test_video_playback'),           # OK
+    # Youtube('test_video_network'),          # OK
     # Dialer('test_MOViLTE'),
     # Dialer('test_MOVoLTE'),
     # Dialer('test_MTVoLTE'),
