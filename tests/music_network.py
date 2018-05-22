@@ -6,6 +6,8 @@ from appium import webdriver
 from conf.appium_config import cfg, logging
 from conf import appium_config
 from common.utils import wait_el_xpath, wait_el_xpath_click, get_keycode
+from selenium.common.exceptions import TimeoutException
+
 
 class Tune(unittest.TestCase):
   @classmethod
@@ -25,7 +27,7 @@ class Tune(unittest.TestCase):
     try:
       wait_el_xpath_click(self.driver, cfg.get('tune_in_radio', 'music_1st_path'))
       wait_el_xpath_click(self.driver, cfg.get('tune_in_radio', 'btn_profile_play'))
-    except:
+    except TimeoutException:
       logging.info('test_music_network: Check if there is network.')
     
     timeout = time.time() + 60*self.play_minutes

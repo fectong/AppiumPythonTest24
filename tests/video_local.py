@@ -6,6 +6,8 @@ from appium import webdriver
 from conf.appium_config import cfg, logging
 from conf import appium_config
 from common.utils import wait_el_xpath, wait_el_xpath_click, wait_els_xpath
+from selenium.common.exceptions import TimeoutException
+
 
 class Video(unittest.TestCase):
   @classmethod
@@ -22,13 +24,13 @@ class Video(unittest.TestCase):
     
     try:
       videos = wait_els_xpath(self.driver, cfg.get('video', 'videos_path'))
-    except:
+    except TimeoutException:
       logging.info('test_video_playback: Check if there are videos')
       self.fail("test_video_playback: No Videos")
     try:
       wait_el_xpath(self.driver, cfg.get('video', 'select_video_player_path')).click()
       os.popen('adb shell input tap {0} {1}'.format(btn_always_x1, btn_always_y1))
-    except:
+    except TimeoutException:
       os.popen('adb shell input tap {0} {1}'.format(btn_always_x, btn_always_y))
     
     logging.debug('test_video_playback: Play each video for {0} minutes'.format(self.play_minutes/3))

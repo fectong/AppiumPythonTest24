@@ -4,23 +4,55 @@
 """
 import os
 import unittest
-
+from time import sleep
 from appium import webdriver
 from conf import appium_config
 from conf.appium_config import cfg, logging
-from common.utils import wait_el_xpath, wait_el_xpath_click
+from common.utils import wait_el_xpath, wait_el_xpath_click, wait_els_xpath
+from selenium.common.exceptions import TimeoutException
+
 
 class GoogleMaps(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver('GoogleMaps')
+    # self.driver = appium_config.my_webdriver('GoogleMaps')
+    self.driver = appium_config.my_webdriver(app_name='GoogleMaps', no_reset=True)
 
   def test_multi_layers(self):
+    # Remote webdriver without no_reset
     logging.info('test_multi_layers: START')
-    wait_el_xpath_click(self.driver, cfg.get('map', 'page_skip_path'))
-    wait_el_xpath_click(self.driver, cfg.get('map', 'btn_compass_path'))
-    logging.info(self.driver.current_activity)
+    try:
+      wait_el_xpath_click(self.driver, cfg.get('map', 'page_skip_path'))
+    except TimeoutException:
+      logging.info('test_multi_layers: No need to initialize Google Maps.')
 
+    sleep(10)
+    nav_menu = wait_el_xpath(self.driver, cfg.get('map', 'nav_menu_path'))
+    nav_menu.click()
+    traffic_types = wait_els_xpath(self.driver, cfg.get('map', 'nav_types_path'))
+
+    for type in traffic_types:
+      logging.info('test_multi_layers: {0}'.format(type.text))
+      type.click()
+      sleep(5)
+      nav_menu.click()
+    
+    traffic_types[0].click()
+    sleep(5)
+    logging.info('test_multi_layers: END')
+
+  def test_multi_layers_no_reset(self):
+    logging.info('test_compass_layers: START')
+    try:
+      wait_el_xpath_click(self.driver, cfg.get('map', 'page_skip_path'))
+      sleep(15)
+      self.driver.close_app()
+      self.driver.launch_app()
+    except TimeoutException:
+      logging.info('test_compass_layers: No need to initialize Google Maps.')
+
+    sleep(8)
+    wait_el_xpath_click(self.driver, cfg.get('map', 'btn_compass_path'))
     type_default = wait_el_xpath(self.driver, cfg.get('map', 'map_type_default_path'))
     type_satellite = wait_el_xpath(self.driver, cfg.get('map', 'map_type_satellite_path'))
     type_terrain = wait_el_xpath(self.driver, cfg.get('map', 'map_type_terrain_path'))
@@ -41,11 +73,14 @@ class GoogleMaps(unittest.TestCase):
 
     for m in map_list:
       m.click()
+      sleep(2)
       for d in details_list:
         d.click()
+        logging.info('test_multi_layers: {0} - {1}'.format(m.text, d.text))
+        sleep(2)
 
     wait_el_xpath_click(self.driver, cfg.get('map', 'btn_close_compass_path'))
-    logging.info('test_multi_layers: END')
+    logging.info('test_compass_layers: END')
 
   @classmethod
   def tearDownClass(self):

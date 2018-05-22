@@ -6,6 +6,8 @@ from appium import webdriver
 from conf.appium_config import cfg, logging
 from conf import appium_config
 from common.utils import wait_el_xpath, wait_el_xpath_click
+from selenium.common.exceptions import TimeoutException
+
 
 class Youtube(unittest.TestCase):
   @classmethod
@@ -18,7 +20,7 @@ class Youtube(unittest.TestCase):
     time.sleep(15)
     try:
       wait_el_xpath_click(self.driver, cfg.get('youtube', 'home_1st_video_path'))
-    except:
+    except TimeoutException:
       logging.info('test_video_network: Check if there is network.')
 
     timeout = time.time() + 60*self.play_minutes

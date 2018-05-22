@@ -7,6 +7,8 @@ from appium import webdriver
 from conf.appium_config import cfg, logging
 from conf import appium_config
 from common.utils import wait_el_xpath, wait_el_xpath_click, get_keycode
+from selenium.common.exceptions import TimeoutException
+
 
 class GoogleChrome(unittest.TestCase):
   @classmethod
@@ -19,12 +21,12 @@ class GoogleChrome(unittest.TestCase):
       wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_terms_accept_path'))
       wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_negative_path'))
       wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_unchange_search_path'))
-    except:
+    except TimeoutException:
       logging.info('test_ten_websites: No need to initialize Google Chrome.')
 
     try:
       wait_el_xpath_click(self.driver, cfg.get('browser', 'search_box_path'))
-    except:
+    except TimeoutException:
       logging.info('test_ten_websites: There is HomePage.')
 
     url_bar = wait_el_xpath(self.driver, cfg.get('browser', 'url_bar_path'))
