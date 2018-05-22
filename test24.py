@@ -49,21 +49,21 @@ def runTest():
 def suite():
   suite = unittest.TestSuite()
   test = [
-    # Settings('test_get_memory_status'),     # OK
-    # Settings('test_bluetooth_disable'),     # OK
-    # Settings('test_bluetooth_enable'),      # Headset Needed
-    # Settings('test_wlan_disable'),          # OK
-    # Settings('test_wlan_enable'),           # OK
-    # CandyCrush('test_candy_crush'),         # OK
-    # Camera('test_take_picture'),            # OK
+    # Settings('test_get_memory_status'),         # OK
+    # Settings('test_bluetooth_disable'),         # OK
+    # Settings('test_bluetooth_enable'),          # Headset Needed
+    # Settings('test_wlan_disable'),              # OK
+    # Settings('test_wlan_enable'),               # OK
+    # CandyCrush('test_candy_crush'),             # OK
+    # Camera('test_take_picture'),                # OK
     # Messaging('test_SMS_MO'),
     # Messaging('test_MMS_MO'),
-    # GoogleMaps('test_multi_layers'),
-    # GoogleChrome('test_ten_websites'),      # OK
-    GoogleMusic('test_music_palyback'),
-    # Tune('test_music_network'),             # OK
-    # Video('test_video_playback'),           # OK
-    # Youtube('test_video_network'),          # OK
+    # GoogleMaps('test_multi_layers_no_reset'),   # OK
+    # GoogleChrome('test_ten_websites'),          # OK
+    # GoogleMusic('test_music_palyback'),         # OK
+    # Tune('test_music_network'),                 # OK
+    # Video('test_video_playback'),               # OK
+    # Youtube('test_video_network'),              # OK
     # Dialer('test_MOViLTE'),
     # Dialer('test_MOVoLTE'),
     # Dialer('test_MTVoLTE'),
