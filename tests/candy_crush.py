@@ -23,11 +23,10 @@ class CandyCrush(unittest.TestCase):
     login_close_y = int(cfg.get('candy_crush', 'login_close_y'))
     settings_x = int(cfg.get('candy_crush', 'settings_x'))
     settings_y = int(cfg.get('candy_crush', 'settings_y'))
-    offset = 5
-    self.driver.tap([(login_close_x, login_close_y), (login_close_x+offset, login_close_y+offset)], 100)
+    os.popen('adb shell input tap {0} {1}'.format(login_close_x, login_close_y))
     logging.info('test_candy_crush: Close Logging popup.')
     sleep(1)
-    self.driver.tap([(settings_x, settings_y), (settings_x+offset, settings_y+offset)], 100)
+    os.popen('adb shell input tap {0} {1}'.format(settings_x, settings_y))
     logging.info('test_candy_crush: Open settings.')
     logging.info('test_candy_crush: END')
 
