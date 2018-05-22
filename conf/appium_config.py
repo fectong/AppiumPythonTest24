@@ -23,9 +23,15 @@ PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
 cfg = configparser.ConfigParser()
 cfg.read(PATH('./element.ini'))
 
+log_path = PATH('../logs')
+if not(os.path.isdir(log_path)):
+  os.mkdir(log_path)
+  if not(os.access(log_path, os.W_OK)):
+    logging.info('Path {0} cannot be written.'.format(log_path))
+
 timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 logging.basicConfig(
-  level=logging.DEBUG,
+  level=logging.INFO,
   format="[%(asctime)s] %(levelname)s- %(message)s",
   filename=PATH("../logs/"+timestr+".log"),
   filemode = 'a'
