@@ -10,14 +10,18 @@ from conf.appium_config import logging
 from tests.settings import Settings
 from tests.candy_crush import CandyCrush
 from tests.map import GoogleMaps
-from tests.music_local import GoogleMusic
 from tests.camera import Camera
 from tests.browser import GoogleChrome
 from tests.messaging import Messaging
+from tests.music_local import GoogleMusic
+from tests.music_network import Tune
+from tests.video_local import Video
+from tests.video_network import Youtube
+from tests.dialer import Dialer
 
 def runTest():
   times = 1
-  timeout = time.time() + 60*10  # 24h = 60*60*24
+  timeout = time.time() + 60*1  # 24h = 60*60*24
   timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 
   filename = "./logs/"+timestr+".html"
@@ -39,18 +43,25 @@ def runTest():
 def suite():
   suite = unittest.TestSuite()
   test = [
-    Settings('test_get_memory_status'),
-    Settings('test_bluetooth_disable'),
-    Settings('test_bluetooth_enable'),
-    Settings('test_wlan_disable'),
-    Settings('test_wlan_enable'),
-    Camera('test_take_picture'),
-    GoogleChrome('test_ten_websites'),
-    GoogleMaps('test_multi_layers'),
-    GoogleMusic('test_music_palyback'),
-    Messaging('test_SMS_MO'),
-    Messaging('test_MMS_MO'),
-    CandyCrush('test_candy_crush')
+    # Settings('test_get_memory_status'),
+    # Settings('test_bluetooth_disable'),
+    # Settings('test_bluetooth_enable'),
+    # Settings('test_wlan_disable'),
+    # Settings('test_wlan_enable'),
+    # CandyCrush('test_candy_crush'),
+    # Camera('test_take_picture'),
+    # Messaging('test_SMS_MO'),
+    # Messaging('test_MMS_MO'),
+    # GoogleMaps('test_multi_layers'),
+    # GoogleChrome('test_ten_websites'),
+    # GoogleMusic('test_music_palyback'),
+    Tune('test_music_network'),
+    # Video('test_play_video'),
+    # Youtube('test_video_network'),
+    # Dialer('test_MOViLTE'),
+    # Dialer('test_MOVoLTE'),
+    # Dialer('test_MTVoLTE'),
+    # Dialer('test_Vo2Vi2Vo'),
   ]
   suite.addTests(test)
   return suite
