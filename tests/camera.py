@@ -17,10 +17,19 @@ class Camera(unittest.TestCase):
 
   def test_take_picture(self):
     logging.info('test_take_picture: START')
-    wait_el_xpath_click(self.driver, cfg.get('camera', 'btn_yes'))
+    try:
+      wait_el_xpath_click(self.driver, cfg.get('camera', 'btn_yes'))
+    except:
+      logging.info('test_take_picture: No need to press button Yes.')
     sleep(2)
-    wait_el_xpath_click(self.driver, cfg.get('camera', 'shutter_path'))
-    sleep(2)
+    btn_shutter = wait_el_xpath(self.driver, cfg.get('camera', 'shutter_path'))
+    try:
+      btn_shutter.click()
+    except:
+      wait_el_xpath_click(self.driver, cfg.get('camera', 'camera_switcher_path'))
+      wait_el_xpath_click(self.driver, cfg.get('camera', 'photo_switcher_path'))
+      btn_shutter.click()
+    sleep(6)
     logging.info('test_take_picture: Take a photo.')
     logging.info('test_take_picture: END')
 
