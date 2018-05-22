@@ -67,30 +67,25 @@ class MobileSwipe():
   def __init__(self):
     pass
 
-  def swipe_up(self, driver, time):
+  def swipe_up(self, driver, time=500):
     width = driver.get_window_size()['width']
     height = driver.get_window_size()['height']
-    driver.swipe(width/2, height/4, width/2, height/4*3, time)
+    driver.swipe(width/2, height*2/3, width/2, height*1/3, time)
 
-  def swipe_down(self, driver, time):
+  def swipe_down(self, driver, time=500):
     width = driver.get_window_size()['width']
     height = driver.get_window_size()['height']
-    driver.swipe(width/2, height/4*3, width/2, height/4, time)
+    driver.swipe(width/2, height*1/3, width/2, height*2/3, time)
 
-  def swipe_down_half(self, driver, time):
+  def swipe_left(self, driver, time=500):
     width = driver.get_window_size()['width']
     height = driver.get_window_size()['height']
-    driver.swipe(width/2, height/4*3, width/2, height/4*2, time)
+    driver.swipe(width*3/4, height/2, width*1/4, height/2, time)
 
-  def swipe_left(self, driver, time):
+  def swipe_right(self, driver, time=500):
     width = driver.get_window_size()['width']
     height = driver.get_window_size()['height']
-    driver.swipe(width/4*3, height/2, width/4, height/2, time)
-
-  def swipe_right(self, driver, time):
-    width = driver.get_window_size()['width']
-    height = driver.get_window_size()['height']
-    driver.swipe(width/4, height/2, width/4*3, height/2, time)
+    driver.swipe(width*1/4, height/2, width*3/4, height/2, time)
 
 if __name__ == "__main__":
   MobileSwipe()
