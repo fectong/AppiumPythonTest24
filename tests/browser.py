@@ -15,8 +15,18 @@ class GoogleChrome(unittest.TestCase):
 
   def test_ten_websites(self):
     logging.info('test_ten_websites: START')
-    wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_terms_accept_path'))
-    wait_el_xpath_click(self.driver, cfg.get('browser', 'search_box_path'))
+    try:
+      wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_terms_accept_path'))
+      wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_negative_path'))
+      wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_unchange_search_path'))
+    except:
+      logging.info('test_ten_websites: No need to initialize Google Chrome.')
+
+    try:
+      wait_el_xpath_click(self.driver, cfg.get('browser', 'search_box_path'))
+    except:
+      logging.info('test_ten_websites: There is HomePage.')
+
     url_bar = wait_el_xpath(self.driver, cfg.get('browser', 'url_bar_path'))
 
     websites = [
@@ -33,11 +43,12 @@ class GoogleChrome(unittest.TestCase):
     ]
     
     for site in websites:
+      logging.info('test_ten_websites: {0}'.format(site))
+      url_bar.click()
       url_bar.clear()
       url_bar.send_keys(site)
       self.driver.press_keycode(get_keycode('ENTER'))
-      sleep(15)
-      logging.info('test_ten_websites: {0}', site)
+      sleep(20)
       
     logging.info('test_ten_websites: END')
 
