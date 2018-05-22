@@ -42,11 +42,17 @@ def get_keycode(key):
 def wait_el_xpath(driver, element):
   return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_xpath(element))
 
+def wait_els_xpath(driver, elements):
+  return WebDriverWait(driver, 10).until(lambda x: x.find_elements_by_xpath(elements))
+
 def wait_el_xpath_click(driver, element):
   return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_xpath(element)).click()
 
 def wait_el_id(driver, element):
   return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_id(element))
+
+def wait_els_id(driver, elements):
+  return WebDriverWait(driver, 10).until(lambda x: x.find_elements_by_id(elements))
 
 def wait_el_id_click(driver, element):
   return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_id(element)).click()
