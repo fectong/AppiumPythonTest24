@@ -11,8 +11,10 @@ import unittest
 from time import sleep
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
-from conf.appium_config import logging
+
+from conf.appium_config import logging, PATH
 
 def wait_time(func):
   def inner(*args):
@@ -39,27 +41,57 @@ def get_keycode(key):
     9: 16
   }.get(key, "Please confirm if the keycode is valid.")
 
-def wait_el_xpath(driver, element):
-  return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_xpath(element))
 
-def wait_els_xpath(driver, elements):
-  return WebDriverWait(driver, 10).until(lambda x: x.find_elements_by_xpath(elements))
+"""
+WebDriverWait
+"""
+def wait_el_xpath(driver, element, timeout=10):
+  try:
+    return WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_xpath(element))
+  except TimeoutException:
+    logging.debug("TIMEOUT, Please confirm if the xPath({0}) is exist.".format(element))
+    return None
 
-def wait_el_xpath_click(driver, element):
-  return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_xpath(element)).click()
+def wait_els_xpath(driver, elements, timeout=10):
+  try:
+    return WebDriverWait(driver, timeout).until(lambda x: x.find_elements_by_xpath(elements))
+  except TimeoutException:
+    logging.debug("TIMEOUT, Please confirm if the xPath({0}) is exist.".format(elements))
+    return None
 
-def wait_el_id(driver, element):
-  return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_id(element))
+def wait_el_xpath_click(driver, element, timeout=10):
+  try:
+    WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_xpath(element)).click()
+    return True
+  except TimeoutException:
+    logging.debug("TIMEOUT, Please confirm if the xPath({0}) is exist.".format(element))
+    return False
 
-def wait_els_id(driver, elements):
-  return WebDriverWait(driver, 10).until(lambda x: x.find_elements_by_id(elements))
+def wait_el_id(driver, element, timeout=10):
+  try:
+    return WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_id(element))
+  except TimeoutException:
+    logging.debug("TIMEOUT, Please confirm if the id({0}) is exist.".format(element))
+    return None
 
-def wait_el_id_click(driver, element):
-  return WebDriverWait(driver, 10).until(lambda x: x.find_element_by_id(element)).click()
+def wait_els_id(driver, elements, timeout=10):
+  try:
+    return WebDriverWait(driver, timeout).until(lambda x: x.find_elements_by_id(elements))
+  except TimeoutException:
+    logging.debug("TIMEOUT, Please confirm if the id({0}) is exist.".format(elements))
+    return None
+
+def wait_el_id_click(driver, element, timeout=10):
+  try:
+    WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_id(element)).click()
+    return True
+  except TimeoutException:
+    logging.debug("TIMEOUT, Please confirm if the id({0}) is exist.".format(element))
+    return False
 
 @wait_time
 def screenshot(driver):
-  filename = ''.join("../logs/" + str(time.time()) + ".png")
+  filename = ''.join(PATH("../logs/"+str(time.time())+".png"))
   return driver.get_screenshot_as_file(filename)
 
 # Swipe: Left Right Up Down
