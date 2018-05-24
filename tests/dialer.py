@@ -11,9 +11,8 @@ import unittest
 
 from time import sleep
 from appium import webdriver
-from conf.appium_config import cfg, logging
 from conf import appium_config
-from common.utils import wait_el_xpath, wait_el_xpath_click
+from common.utils import get_path, logging, wait_el_xpath, wait_el_xpath_click
 
 class Dialer(unittest.TestCase):
   @classmethod

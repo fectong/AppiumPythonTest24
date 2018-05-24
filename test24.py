@@ -4,9 +4,10 @@ import sys
 import time
 import unittest
 import HTMLTestRunner
-import configparser
 import traceback
-from conf.appium_config import logging
+
+from common.utils import get_path, logging
+
 from tests.settings import Settings
 from tests.candy_crush import CandyCrush
 from tests.map import GoogleMaps
@@ -19,16 +20,11 @@ from tests.video_local import Video
 from tests.video_network import Youtube
 from tests.dialer import Dialer
 
+
 def runTest():
   times = 1
   timeout = time.time() + 60*1  # 24h = 60*60*24
   timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
-
-  log_path = './logs'
-  if not(os.path.isdir(log_path)):
-    os.mkdir(log_path)
-    if not(os.access(log_path, os.W_OK)):
-      logging.info('Path {0} cannot be written.'.format(log_path))
 
   filename = "./logs/"+timestr+".html"
   with open(filename , 'wb') as f:
@@ -56,8 +52,8 @@ def suite():
     # Settings('test_wlan_enable'),               # OK
     # CandyCrush('test_candy_crush'),             # OK
     # Camera('test_take_picture'),                # OK
-    # Messaging('test_SMS_MO'),
-    # Messaging('test_MMS_MO'),
+    Messaging('test_SMS_MO'),
+    Messaging('test_MMS_MO'),
     # GoogleMaps('test_multi_layers_no_reset'),   # OK
     # GoogleChrome('test_ten_websites'),          # OK
     # GoogleMusic('test_music_palyback'),         # OK
@@ -73,19 +69,11 @@ def suite():
   return suite
 
 if __name__ == "__main__":
-  try:
-    runTest()
-  except KeyboardInterrupt as ki:
-    logging.info('KeyboardInterrupt: {0}'.format(ki))
-    logging.debug('KeyboardInterrupt: {0}'.format(traceback.format_exc()))
-  except KeyError as ke:
-    logging.info('KeyError: {0}'.format(ke))
-    logging.debug('KeyError: {0}'.format(traceback.format_exc()))
-  except AttributeError as ae:
-    logging.info('AttributeError: {0}'.format(ae))
-    logging.debug('AttributeError: {0}'.format(traceback.format_exc()))
-  except Exception as e:
-    logging.info('Exception: {0}'.format(e))
-    logging.debug('Exception: {0}'.format(traceback.format_exc()))
-  finally:
-    print('Please check the Reports.')
+  # try:
+  #   runTest()
+  # except Exception as e:
+  #   logging.info('Exception: {0}'.format(e))
+  #   logging.debug('Exception: {0}'.format(traceback.format_exc()))
+  # finally:
+  #   print('Please check the Reports.')
+  runTest()

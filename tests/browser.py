@@ -4,10 +4,8 @@ import unittest
 
 from time import sleep
 from appium import webdriver
-from conf.appium_config import cfg, logging
 from conf import appium_config
-from common.utils import wait_el_xpath, wait_el_xpath_click, get_keycode
-from selenium.common.exceptions import TimeoutException
+from common.utils import get_path, logging, wait_el_xpath, wait_el_xpath_click, get_keycode
 
 
 class GoogleChrome(unittest.TestCase):
@@ -16,40 +14,33 @@ class GoogleChrome(unittest.TestCase):
     self.driver = appium_config.my_webdriver('GoogleChrome')
 
   def test_ten_websites(self):
-    logging.info('test_ten_websites: START')
-    if wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_terms_accept_path')):
-      wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_negative_path'))
-      wait_el_xpath_click(self.driver, cfg.get('browser', 'btn_unchange_search_path'))
+    app = 'browser'
+    prefix = 'test_ten_websites'
+    logging.info('{0}: START'.format(prefix))
+    if wait_el_xpath_click(self.driver, get_path(app, 'btn_terms_accept_path'),5):
+      wait_el_xpath_click(self.driver, get_path(app, 'btn_negative_path'),5)
+      wait_el_xpath_click(self.driver, get_path(app, 'btn_unchange_search_path'),5)
     else:
-      logging.info('test_ten_websites: No need to initialize Google Chrome.')
+      logging.info('{0}: No need to initialize Google Chrome.'.format(prefix))
 
-    if wait_el_xpath_click(self.driver, cfg.get('browser', 'search_box_path')):
-      logging.info('test_ten_websites: There is HomePage.')
+    if wait_el_xpath_click(self.driver, get_path(app, 'search_box_path')):
+      logging.info('{0}: There is HomePage.'.format(prefix))
 
-    url_bar = wait_el_xpath(self.driver, cfg.get('browser', 'url_bar_path'))
-
-    websites = [
-      cfg.get('websites', 'site_0'),
-      cfg.get('websites', 'site_1'),
-      cfg.get('websites', 'site_2'),
-      cfg.get('websites', 'site_3'),
-      cfg.get('websites', 'site_4'),
-      cfg.get('websites', 'site_5'),
-      cfg.get('websites', 'site_6'),
-      cfg.get('websites', 'site_7'),
-      cfg.get('websites', 'site_8'),
-      cfg.get('websites', 'site_9'),
-    ]
-    
-    for site in websites:
-      logging.info('test_ten_websites: {0}'.format(site))
+    url_bar = wait_el_xpath(self.driver, get_path(app, 'url_bar_path'))
+    if url_bar is None:
+      logging.info('{0}: URL bar load unsucceed.'.format(prefix))
+      self.fail('{0}: URL bar load unsucceed.'.format(prefix))
+      
+    for index in range (0, 10):
+      site = get_path('websites', 'site_{0}'.format(index))
+      logging.info('{0}: {1}'.format(prefix, site))
       url_bar.click()
       url_bar.clear()
       url_bar.send_keys(site)
       self.driver.press_keycode(get_keycode('ENTER'))
       sleep(20)
 
-    logging.info('test_ten_websites: END')
+    logging.info('{0}: END'.format(prefix))
 
   @classmethod
   def tearDownClass(self):

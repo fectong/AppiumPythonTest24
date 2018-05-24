@@ -3,11 +3,18 @@ import os
 import sys
 import time
 
+def os_version(device_name):
+  """
+  Get mobile os Version \n
+  By device id
+  """
+  return os.popen('adb -s {0} shell getprop ro.build.version.release'.format(device_name)).read()
+
 def str_sub(content, num):
   ct = content.replace('[', '').replace(']', '')
   return ct.split(':')[num].strip()
 
-def get_serialno():
+def get_devices():
   """
   Get devices id through adb\n
   And return
