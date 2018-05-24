@@ -27,7 +27,6 @@ class Tune(unittest.TestCase):
       et_search.clear()
       et_search.send_keys('love')
       self.driver.press_keycode(get_keycode('ENTER'))
-      time.sleep(10)
       song_1st = wait_el_xpath(self.driver, cfg.get('tune_in_radio', 'music_1st_path'), 30)
       if song_1st is None:
         self.fail('test_music_network: Please check if there is network or it is very slow.')
