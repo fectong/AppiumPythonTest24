@@ -19,17 +19,15 @@ class Camera(unittest.TestCase):
 
   def test_take_picture(self):
     logging.info('test_take_picture: START')
-    try:
-      wait_el_xpath_click(self.driver, cfg.get('camera', 'btn_yes'))
-    except TimeoutException:
+    if not wait_el_xpath_click(self.driver, cfg.get('camera', 'btn_yes')):
       logging.info('test_take_picture: No need to initialize Camera.')
     sleep(2)
     btn_shutter = wait_el_xpath(self.driver, cfg.get('camera', 'shutter_path'))
-    try:
-      btn_shutter.click()
-    except TimeoutException:
+    if btn_shutter is None:
       wait_el_xpath_click(self.driver, cfg.get('camera', 'camera_switcher_path'))
       wait_el_xpath_click(self.driver, cfg.get('camera', 'photo_switcher_path'))
+      btn_shutter.click()
+    else:
       btn_shutter.click()
     sleep(8)
     logging.info('test_take_picture: Take a photo.')

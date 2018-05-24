@@ -18,20 +18,22 @@ class Youtube(unittest.TestCase):
   def test_video_network(self):
     logging.info('test_video_network: START')
     time.sleep(15)
-    try:
-      wait_el_xpath_click(self.driver, cfg.get('youtube', 'home_1st_video_path'))
-    except TimeoutException:
+
+    home_videos = wait_el_xpath(self.driver, cfg.get('youtube', 'home_1st_video_path'))
+    if home_videos is None:
       logging.info('test_video_network: Check if there is network.')
-
-    timeout = time.time() + 60*self.play_minutes
-    logging.info('test_video_network: Play for {0} miuntes'.format(self.play_minutes))
-    while time.time() < timeout:
-      if (int(timeout-time.time()))%20 == 0:
-        self.driver.get_window_size()
-        logging.debug('test_video_network: Playing')
-        time.sleep(5)
-
-    logging.info('test_video_network: END')
+      logging.info('test_video_network: END')
+      self.fail('No network.')
+    else:
+      home_videos.click()
+      timeout = time.time() + 60*self.play_minutes
+      logging.info('test_video_network: Play for {0} miuntes'.format(self.play_minutes))
+      while time.time() < timeout:
+        if (int(timeout-time.time()))%20 == 0:
+          self.driver.get_window_size()
+          logging.debug('test_video_network: Playing')
+          time.sleep(5)
+      logging.info('test_video_network: END')
 
   @classmethod
   def tearDownClass(self):

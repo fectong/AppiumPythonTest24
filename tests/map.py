@@ -18,16 +18,14 @@ class GoogleMaps(unittest.TestCase):
     # self.driver = appium_config.my_webdriver('GoogleMaps')
     self.driver = appium_config.my_webdriver(app_name='GoogleMaps', no_reset=True)
 
+  @unittest.skip('If you want reset app every time, use this case.')
   def test_multi_layers(self):
-    # Remote webdriver without no_reset
+    # Remote webdriver with no_reset=False
     logging.info('test_multi_layers: START')
-    try:
-      wait_el_xpath_click(self.driver, cfg.get('map', 'page_skip_path'))
-    except TimeoutException:
+    if not wait_el_xpath_click(self.driver, cfg.get('map', 'page_skip_path')):
       logging.info('test_multi_layers: No need to initialize Google Maps.')
 
-    sleep(10)
-    nav_menu = wait_el_xpath(self.driver, cfg.get('map', 'nav_menu_path'))
+    nav_menu = wait_el_xpath(self.driver, cfg.get('map', 'nav_menu_path'), 20)
     nav_menu.click()
     traffic_types = wait_els_xpath(self.driver, cfg.get('map', 'nav_types_path'))
 
@@ -42,17 +40,23 @@ class GoogleMaps(unittest.TestCase):
     logging.info('test_multi_layers: END')
 
   def test_multi_layers_no_reset(self):
-    logging.info('test_compass_layers: START')
-    try:
-      wait_el_xpath_click(self.driver, cfg.get('map', 'page_skip_path'))
-      sleep(15)
+    logging.info('test_multi_layers_no_reset: START')
+    page_skip = wait_el_xpath(self.driver, cfg.get('map', 'page_skip_path'))
+    if page_skip is None:
+      logging.info('test_multi_layers_no_reset: No need to initialize Google Maps.')
+    else:
+      sleep(2)
+      page_skip.click()
+      logging.info('test_multi_layers_no_reset: Need re-launch to initialize Google Maps.')
       self.driver.close_app()
+      sleep(8)
       self.driver.launch_app()
-    except TimeoutException:
-      logging.info('test_compass_layers: No need to initialize Google Maps.')
 
     sleep(8)
-    wait_el_xpath_click(self.driver, cfg.get('map', 'btn_compass_path'))
+    btn_compass = wait_el_xpath(self.driver, cfg.get('map', 'btn_compass_path'))
+    if btn_compass is None:
+      self.fail('test_multi_layers_no_reset: Compass button load unsucceed.')
+    btn_compass.click()
     type_default = wait_el_xpath(self.driver, cfg.get('map', 'map_type_default_path'))
     type_satellite = wait_el_xpath(self.driver, cfg.get('map', 'map_type_satellite_path'))
     type_terrain = wait_el_xpath(self.driver, cfg.get('map', 'map_type_terrain_path'))
@@ -76,11 +80,11 @@ class GoogleMaps(unittest.TestCase):
       sleep(2)
       for d in details_list:
         d.click()
-        logging.info('test_multi_layers: {0} - {1}'.format(m.text, d.text))
+        logging.info('test_multi_layers_no_reset: {0} - {1}'.format(m.text, d.text))
         sleep(2)
 
     wait_el_xpath_click(self.driver, cfg.get('map', 'btn_close_compass_path'))
-    logging.info('test_compass_layers: END')
+    logging.info('test_multi_layers_no_reset: END')
 
   @classmethod
   def tearDownClass(self):

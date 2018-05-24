@@ -20,9 +20,8 @@ class GoogleMusic(unittest.TestCase):
   
   def test_music_palyback(self):
     logging.info('test_music_palyback: START')
-    try:
-      wait_el_xpath(self.driver, cfg.get('music', 'btn_skip_path'))
-    except TimeoutException:
+
+    if not wait_el_xpath_click(self.driver, cfg.get('music', 'btn_skip_path')):
       logging.info('test_music_palyback: No need to initialize Google Music.')
 
     wait_el_xpath_click(self.driver, cfg.get('music', 'nav_listen_now_path'))
