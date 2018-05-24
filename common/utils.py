@@ -8,21 +8,32 @@ import os
 import sys
 import time
 import unittest
+import configparser
+import logging
+
 from time import sleep
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, WebDriverException
+from configparser import NoOptionError, NoSectionError
 
+PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
 
-from conf.appium_config import logging, PATH
+cfg = configparser.ConfigParser()
+cfg.read(PATH('../conf/element.ini'))
 
-def wait_time(func):
-  def inner(*args):
-    time.sleep(0.5)
-    f = func(*args)
-    time.sleep(0.5)
-    return f
-  return inner
+if not(os.path.isdir(PATH('../logs'))):
+  os.mkdir(PATH('../logs'))
+  if not(os.access(PATH('../logs'), os.W_OK)):
+    logging.info('Path {0} cannot be written.'.format(PATH('../logs')))
+
+timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
+logging.basicConfig(
+  level=logging.DEBUG,
+  format="[%(asctime)s] %(levelname)s- %(message)s",
+  filename=PATH("../logs/"+timestr+".log"),
+  filemode = 'a'
+)
 
 def get_keycode(key):
   return{
@@ -41,53 +52,92 @@ def get_keycode(key):
     9: 16
   }.get(key, "Please confirm if the keycode is valid.")
 
+def get_path(section, option):
+  try:
+    path = cfg.get(section, option)
+    return path
+  except KeyError:
+    logging.debug("KeyError, config file does not have key named {0}.".format(option))
+    return None
+  except NoSectionError:
+    logging.debug("NoSectionError, config file does not have section named {0}.".format(section))
+    return None
+  except NoOptionError:
+    logging.debug("NoOptionError, config file does not have option named {0}.".format(option))
+    return None
 
 """
 WebDriverWait
 """
-def wait_el_xpath(driver, element, timeout=10):
+def wait_el_xpath(driver, element, timeout=8):
   try:
     return WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_xpath(element))
   except TimeoutException:
     logging.debug("TIMEOUT, Please confirm if the xPath({0}) is exist.".format(element))
     return None
+  except WebDriverException:
+    logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(element))
+    return None
 
-def wait_els_xpath(driver, elements, timeout=10):
+def wait_els_xpath(driver, elements, timeout=8):
   try:
     return WebDriverWait(driver, timeout).until(lambda x: x.find_elements_by_xpath(elements))
   except TimeoutException:
     logging.debug("TIMEOUT, Please confirm if the xPath({0}) is exist.".format(elements))
     return None
+  except WebDriverException:
+    logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(elements))
+    return None
 
-def wait_el_xpath_click(driver, element, timeout=10):
+def wait_el_xpath_click(driver, element, timeout=8):
   try:
     WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_xpath(element)).click()
     return True
   except TimeoutException:
     logging.debug("TIMEOUT, Please confirm if the xPath({0}) is exist.".format(element))
     return False
+  except WebDriverException:
+    logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(element))
+    return None
 
-def wait_el_id(driver, element, timeout=10):
+def wait_el_id(driver, element, timeout=8):
   try:
     return WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_id(element))
   except TimeoutException:
     logging.debug("TIMEOUT, Please confirm if the id({0}) is exist.".format(element))
     return None
+  except WebDriverException:
+    logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(element))
+    return None
 
-def wait_els_id(driver, elements, timeout=10):
+def wait_els_id(driver, elements, timeout=8):
   try:
     return WebDriverWait(driver, timeout).until(lambda x: x.find_elements_by_id(elements))
   except TimeoutException:
     logging.debug("TIMEOUT, Please confirm if the id({0}) is exist.".format(elements))
     return None
+  except WebDriverException:
+    logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(elements))
+    return None
 
-def wait_el_id_click(driver, element, timeout=10):
+def wait_el_id_click(driver, element, timeout=8):
   try:
     WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_id(element)).click()
     return True
   except TimeoutException:
     logging.debug("TIMEOUT, Please confirm if the id({0}) is exist.".format(element))
     return False
+  except WebDriverException:
+    logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(element))
+    return None
+
+def wait_time(func):
+  def inner(*args):
+    time.sleep(0.5)
+    f = func(*args)
+    time.sleep(0.5)
+    return f
+  return inner
 
 @wait_time
 def screenshot(driver):
