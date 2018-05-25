@@ -69,10 +69,12 @@ def path(section, option):
 
 def value(element, value):
   try:
-    return{
-      Commands.TEXT: element.text,
-      Commands.TAG_NAME: element.tag_name
-    }.get(value, "Please confirm if the element has this {0}.".format(value))
+    if value == Commands.TEXT:
+      return element.text
+    elif value == Commands.TAG_NAME:
+      return element.tag_name
+    else:
+      return None
   except AttributeError as ae:
     print('AttributeError: {0}'.format(ae))
   except KeyError as ke:
@@ -80,11 +82,14 @@ def value(element, value):
 
 def action(element, action, keys = None):
   try:
-    return{
-      Commands.CLICK: element.click(),
-      Commands.CLEAR: element.clear(),
-      Commands.SEND_KEYS: element.send_keys(keys)
-    }.get(action, "Please confirm if the element has this {0}.".format(action))
+    if action == Commands.CLICK:
+      element.click()
+    elif action == Commands.CLEAR:
+      element.clear()
+    elif action == Commands.SEND_KEYS:
+      element.send_keys(keys)
+    else:
+      logging.debug('Please confirm if the has no action {1}'.format(action))
   except AttributeError as ae:
     print('AttributeError: {0}'.format(ae))
   except KeyError as ke:
