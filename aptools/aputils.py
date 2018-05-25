@@ -16,6 +16,7 @@ from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from configparser import NoOptionError, NoSectionError
+from .apconstants import Commands
 
 PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
 
@@ -29,17 +30,17 @@ if not(os.path.isdir(PATH('../logs'))):
 
 timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 logging.basicConfig(
-  level=logging.DEBUG,
+  level=logging.INFO,
   format="[%(asctime)s] %(levelname)s- %(message)s",
   filename=PATH("../logs/"+timestr+".log"),
   filemode = 'a'
 )
 
-def get_keycode(key):
+def keycode(key):
   return{
-    'ENTER': 66,
-    'HOME': 3,
-    'BACK': 4,
+    Commands.ENTER: 66,
+    Commands.HOME: 3,
+    Commands.BACK: 4,
     0: 7,
     1: 8,
     2: 9,
@@ -52,7 +53,7 @@ def get_keycode(key):
     9: 16
   }.get(key, "Please confirm if the keycode is valid.")
 
-def get_path(section, option):
+def path(section, option):
   try:
     path = cfg.get(section, option)
     return path
@@ -65,6 +66,30 @@ def get_path(section, option):
   except NoOptionError:
     logging.debug("NoOptionError, config file does not have option named {0}.".format(option))
     return None
+
+def value(element, value):
+  try:
+    return{
+      Commands.TEXT: element.text,
+      Commands.TAG_NAME: element.tag_name
+    }.get(value, "Please confirm if the element has this {0}.".format(value))
+  except AttributeError as ae:
+    print('AttributeError: {0}'.format(ae))
+  except KeyError as ke:
+    print('KeyError: {0}'.format(ke))
+
+def action(element, action, keys = None):
+  try:
+    return{
+      Commands.CLICK: element.click(),
+      Commands.CLEAR: element.clear(),
+      Commands.SEND_KEYS: element.send_keys(keys)
+    }.get(action, "Please confirm if the element has this {0}.".format(action))
+  except AttributeError as ae:
+    print('AttributeError: {0}'.format(ae))
+  except KeyError as ke:
+    print('KeyError: {0}'.format(ke))
+
 
 """
 WebDriverWait
@@ -91,14 +116,14 @@ def wait_els_xpath(driver, elements, timeout=8):
 
 def wait_el_xpath_click(driver, element, timeout=8):
   try:
-    WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_xpath(element)).click()
+    action(wait_el_xpath(driver, element, timeout), Commands.CLICK)
     return True
   except TimeoutException:
     logging.debug("TIMEOUT, Please confirm if the xPath({0}) is exist.".format(element))
     return False
   except WebDriverException:
     logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(element))
-    return None
+    return False
 
 def wait_el_id(driver, element, timeout=8):
   try:
@@ -122,14 +147,14 @@ def wait_els_id(driver, elements, timeout=8):
 
 def wait_el_id_click(driver, element, timeout=8):
   try:
-    WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_id(element)).click()
+    action(wait_el_id(driver, element, timeout), Commands.CLICK)
     return True
   except TimeoutException:
     logging.debug("TIMEOUT, Please confirm if the id({0}) is exist.".format(element))
     return False
   except WebDriverException:
     logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(element))
-    return None
+    return False
 
 def wait_time(func):
   def inner(*args):
@@ -168,6 +193,7 @@ class MobileSwipe():
     width = driver.get_window_size()['width']
     height = driver.get_window_size()['height']
     driver.swipe(width*1/4, height/2, width*3/4, height/2, time)
+
 
 if __name__ == "__main__":
   MobileSwipe()

@@ -7,21 +7,23 @@
 """
 
 import os
+import sys
 import unittest
 
 from time import sleep
-from appium import webdriver
+
+sys.path.append("..")
 from conf import appium_config
-from common.utils import get_path, logging, wait_el_xpath, wait_el_xpath_click
+from aptools.apconstants import Commands, Apps
+from aptools.aputils import path, action, logging, wait_el_xpath, wait_el_xpath_click
 
 class Dialer(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver('Dialer')
+    self.driver = appium_config.my_webdriver(Apps.DIALER)
 
   def test_MOViLTE(self):
     pass
-
   def test_MOVoLTE(self):
     pass
   

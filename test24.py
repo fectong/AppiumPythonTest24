@@ -6,7 +6,8 @@ import unittest
 import HTMLTestRunner
 import traceback
 
-from common.utils import get_path, logging
+from aptools.aputils import path, logging
+from aptools.apconstants import Tests
 
 from tests.settings import Settings
 from tests.candy_crush import CandyCrush
@@ -44,36 +45,35 @@ def runTest():
 
 def suite():
   suite = unittest.TestSuite()
-  test = [
-    # Settings('test_get_memory_status'),         # OK
-    # Settings('test_bluetooth_disable'),         # OK
-    # Settings('test_bluetooth_enable'),          # Headset Needed
-    # Settings('test_wlan_disable'),              # OK
-    # Settings('test_wlan_enable'),               # OK
-    # CandyCrush('test_candy_crush'),             # OK
-    # Camera('test_take_picture'),                # OK
-    Messaging('test_SMS_MO'),
-    Messaging('test_MMS_MO'),
-    # GoogleMaps('test_multi_layers_no_reset'),   # OK
-    # GoogleChrome('test_ten_websites'),          # OK
-    # GoogleMusic('test_music_palyback'),         # OK
-    # Tune('test_music_network'),                 # OK
-    # Video('test_video_playback'),               # OK
-    # Youtube('test_video_network'),              # OK
-    # Dialer('test_MOViLTE'),
-    # Dialer('test_MOVoLTE'),
-    # Dialer('test_MTVoLTE'),
-    # Dialer('test_Vo2Vi2Vo'),
+  tests = [
+    Settings(Tests.GET_MEMORY_STATUS),         # OK
+    # Settings(Tests.BLUETOOTH_DISABLE),         # OK
+    # Settings(Tests.BLUETOOTH_ENABLE),          # Headset Needed
+    # Settings(Tests.WLAN_DISABLE),              # OK
+    # Settings(Tests.WLAN_ENABLE),               # OK
+    # CandyCrush(Tests.CANDY_CRUSH),             # OK
+    # Camera(Tests.TAKE_PICTURE),                # OK
+    # Messaging(Tests.SMS_MO),                   # OK
+    # Messaging(Tests.MMS_MO),                   # OK
+    # GoogleMaps(Tests.MULTI_LAYERS),   # OK
+    # GoogleChrome(Tests.TEN_WEBSITES),          # OK
+    # GoogleMusic(Tests.MUSIC_PLAYBACK),         # OK
+    # Tune(Tests.MUSIC_NETWORK),                 # OK
+    # Video(Tests.VIDEO_PLAYBACK),               # OK
+    # Youtube(Tests.VIDEO_NETWORK),              # OK
+    # Dialer(Tests.MOVILTE),
+    # Dialer(Tests.MOVOLTE),
+    # Dialer(Tests.MTVOLTE),
+    # Dialer(Tests.VO2VI2VO)
   ]
-  suite.addTests(test)
+  suite.addTests(tests)
   return suite
 
 if __name__ == "__main__":
-  # try:
-  #   runTest()
-  # except Exception as e:
-  #   logging.info('Exception: {0}'.format(e))
-  #   logging.debug('Exception: {0}'.format(traceback.format_exc()))
-  # finally:
-  #   print('Please check the Reports.')
-  runTest()
+  try:
+    runTest()
+  except Exception as e:
+    logging.info('Exception: {0}'.format(e))
+    logging.debug('Exception: {0}'.format(traceback.format_exc()))
+  finally:
+    print('Please check the Reports.')

@@ -4,12 +4,15 @@
 12. Receive SMS And Reply: Receive an SMS message (or RCS Chat, if RCS compatible) from the reference device, then send a SMS (or RCS Chat) response.
 """
 import os
+import sys
 import unittest
 
 from time import sleep
-from appium import webdriver
+
+sys.path.append("..")
 from conf import appium_config
-from common.utils import get_path, logging, wait_el_xpath, wait_el_xpath_click, get_keycode
+from aptools.apconstants import Commands, Apps
+from aptools.aputils import path, action, logging, wait_el_xpath, wait_el_xpath_click, keycode
 
 class Messaging(unittest.TestCase):
   """
@@ -18,7 +21,7 @@ class Messaging(unittest.TestCase):
   """
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(app_name='Messaging', auto_grant_permissions=False)
+    self.driver = appium_config.my_webdriver(app_name=Apps.MESSAGING, auto_grant_permissions=False)
 
   def initM(self, num):
     """
@@ -26,20 +29,20 @@ class Messaging(unittest.TestCase):
     """
     app = 'messaging'
     prefix = 'test_SMS_M*'
-    if not wait_el_xpath_click(self.driver, get_path(app, 'btn_create_path')):
+    if not wait_el_xpath_click(self.driver, path(app, 'btn_create_path')):
       logging.info('{0}: Create new message unsucceed.'.format(prefix))
       self.fail('{0}: Create new message unsucceed.'.format(prefix))
-    recipients = wait_el_xpath(self.driver, get_path(app, 'recipients_path'))
-    recipients.clear()
+    recipients = wait_el_xpath(self.driver, path(app, 'recipients_path'))
+    action(recipients, Commands.CLEAR)
 
     # phone number: 147 8230 5348
-    phone_number_str = get_path('default', num)
+    phone_number_str = path('default', num)
     for s in phone_number_str:
-      self.driver.press_keycode(get_keycode(int(s)))
+      self.driver.press_keycode(keycode(int(s)))
 
-    self.driver.press_keycode(get_keycode('ENTER'))
+    self.driver.press_keycode(keycode(Commands.ENTER))
 
-    text_editor = wait_el_xpath(self.driver, get_path(app, 'text_editor_path'))
+    text_editor = wait_el_xpath(self.driver, path(app, 'text_editor_path'))
     return text_editor
 
   def test_SMS_MO(self):
@@ -52,13 +55,14 @@ class Messaging(unittest.TestCase):
       logging.info('{0}: Text editor load unsucceed.'.format(prefix))
       self.fail('{0}: Text editor load unsucceed.'.format(prefix))
     else:
-      btn_send_sms = wait_el_xpath(self.driver, get_path(app, 'btn_send_sms_path'))
-      text_editor.click()
-      text_editor.send_keys(get_path(app, 'default_msg'))
-      btn_send_sms.click()
+      btn_send_sms = wait_el_xpath(self.driver, path(app, 'btn_send_sms_path'))
+      action(text_editor, Commands.CLICK)
+      action(text_editor, Commands.SEND_KEYS, path(app, 'default_msg'))
+      action(btn_send_sms, Commands.CLICK)
       logging.info('{0}: Send a SMS to reference phone.'.format(prefix))
       sleep(10)
-      wait_el_xpath_click(self.driver, get_path(app, 'navigate_up_path'))
+      # wait_el_xpath_click(self.driver, path(app, 'navigate_up_path'))
+      self.driver.back()
       logging.info('{0}: END'.format(prefix))
 
   def test_MMS_MO(self):
@@ -72,51 +76,19 @@ class Messaging(unittest.TestCase):
       logging.info('{0}: Text editor load unsucceed.'.format(prefix))
       self.fail('{0}: Text editor load unsucceed.'.format(prefix))
     else:
-      wait_el_xpath_click(self.driver, get_path(app, 'add_attach_path'))
-      wait_el_xpath_click(self.driver, get_path(app, 'attach_subject_path'))
-      et_subject = wait_el_xpath(self.driver, get_path(app, 'et_subject_path'))
-      et_subject.send_keys(get_path(app, 'default_subject'))
-      text_editor.click()
-      text_editor.send_keys(get_path(app, 'default_msg'))
-      btn_send_mms = wait_el_xpath(self.driver, get_path(app, 'btn_send_mms_path'))
-      btn_send_mms.click()
+      wait_el_xpath_click(self.driver, path(app, 'add_attach_path'))
+      wait_el_xpath_click(self.driver, path(app, 'attach_subject_path'))
+      et_subject = wait_el_xpath(self.driver, path(app, 'et_subject_path'))
+      action(et_subject, Commands.SEND_KEYS, path(app, 'default_subject'))
+      action(text_editor, Commands.CLICK)
+      action(text_editor, Commands.SEND_KEYS, path(app, 'default_msg'))
+      btn_send_mms = wait_el_xpath(self.driver, path(app, 'btn_send_mms_path'))
+      action(btn_send_mms, Commands.CLICK)
       logging.info('{0}: Send a MMS to reference phone.'.format(prefix))
       sleep(10)
-      wait_el_xpath_click(self.driver, get_path(app, 'navigate_up_path'))
+      # wait_el_xpath_click(self.driver, path(app, 'navigate_up_path'))
+      self.driver.back()
       logging.info('{0}: END'.format(prefix))
-
-  """
-  def test_SMS_MT(self):
-    logging.info('test_SMS_MT: START')
-    text_editor = self.initM('phone_num')
-    
-    btn_send_sms = wait_el_xpath(self.driver, get_path(app, 'btn_send_sms_path'))
-    text_editor.click()
-    text_editor.send_keys(get_path(app, 'default_msg'))
-    btn_send_sms.click()
-    logging.info('test_SMS_MT: Send a SMS to DUT.')
-    sleep(5)
-    wait_el_xpath_click(self.driver, get_path(app, 'navigate_up_path'))
-    logging.info('test_SMS_MT: END')
-
-  def test_MMS_MT(self):
-    logging.info('test_MMS_MT: START')
-
-    text_editor = self.initM('phone_num')
-
-    wait_el_xpath_click(self.driver, get_path(app, 'add_attach_path'))
-    wait_el_xpath_click(self.driver, get_path(app, 'attach_subject_path'))
-    et_subject = wait_el_xpath(self.driver, get_path(app, 'et_subject_path'))
-    et_subject.send_keys(get_path(app, 'default_subject'))
-    text_editor.click()
-    text_editor.send_keys(get_path(app, 'default_msg'))
-    btn_send_mms = wait_el_xpath(self.driver, get_path(app, 'btn_send_mms_path'))
-    btn_send_mms.click()
-    logging.info('test_MMS_MT: Send a MMS to DUT.')
-    sleep(5)
-    wait_el_xpath_click(self.driver, get_path(app, 'navigate_up_path'))
-    logging.info('test_MMS_MT: END')
-  """
 
   @classmethod
   def tearDownClass(self):

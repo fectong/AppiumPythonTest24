@@ -3,27 +3,31 @@
 02. Launch Game: Launch a popular App Store game (currently Candy Crush), navigate the menu, then quit.
 """
 import os
+import sys
 import unittest
 
 from time import sleep
-from appium import webdriver
+
+sys.path.append("..")
 from conf import appium_config
-from common.utils import get_path, logging, wait_el_xpath
+from aptools.apconstants import Commands, Apps
+from aptools.aputils import path, logging
+
 
 class CandyCrush(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver('CandyCrush')
+    self.driver = appium_config.my_webdriver(Apps.CANDY_CRUSH)
 
   def test_candy_crush(self):
     app = 'candy_crush'
     prefix = 'test_candy_crush'
     sleep(20)
     logging.info('{0}: START'.format(prefix))
-    login_close_x = int(get_path(app, 'login_close_x'))
-    login_close_y = int(get_path(app, 'login_close_y'))
-    settings_x = int(get_path(app, 'settings_x'))
-    settings_y = int(get_path(app, 'settings_y'))
+    login_close_x = int(path(app, 'login_close_x'))
+    login_close_y = int(path(app, 'login_close_y'))
+    settings_x = int(path(app, 'settings_x'))
+    settings_y = int(path(app, 'settings_y'))
     os.popen('adb shell input tap {0} {1}'.format(login_close_x, login_close_y))
     logging.info('{0}: Close Logging popup.'.format(prefix))
     sleep(1)

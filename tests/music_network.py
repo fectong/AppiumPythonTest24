@@ -1,40 +1,43 @@
 # -*- coding:utf-8 -*-
 import os
+import sys
 import unittest
 import time
-from appium import webdriver
+
+sys.path.append("..")
 from conf import appium_config
-from common.utils import get_path, logging, wait_el_xpath, wait_el_xpath_click, get_keycode
+from aptools.apconstants import Commands, Apps
+from aptools.aputils import path, action, logging, wait_el_xpath, wait_el_xpath_click, keycode
 
 
 class Tune(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver('TuneInRadio')
+    self.driver = appium_config.my_webdriver(Apps.TUNE_IN_RADIO)
 
   def test_music_network(self):
     app = 'tune_in_radio'
     prefix = 'test_music_network'
     logging.info('{0}: START'.format(prefix))
     time.sleep(30)
-    wait_el_xpath_click(self.driver, get_path(app, 'btn_search_path'))
-    et_search = wait_el_xpath(self.driver, get_path(app, 'et_search_path'))
+    wait_el_xpath_click(self.driver, path(app, 'btn_search_path'))
+    et_search = wait_el_xpath(self.driver, path(app, 'et_search_path'))
     if et_search is None:
       self.fail('{0}: Load unsucceed.'.format(prefix))
     else:
-      et_search.click()
-      et_search.clear()
-      et_search.send_keys('love')
-      self.driver.press_keycode(get_keycode('ENTER'))
-      song_1st = wait_el_xpath(self.driver, get_path(app, 'music_1st_path'), 30)
+      action(et_search, Commands.CLICK)
+      action(et_search, Commands.CLEAR)
+      action(et_search, Commands.SEND_KEYS, 'love')
+      self.driver.press_keycode(keycode(Commands.ENTER))
+      song_1st = wait_el_xpath(self.driver, path(app, 'music_1st_path'), 30)
       if song_1st is None:
         self.fail('{0}: Please check if there is network or it is very slow.'.format(prefix))
       else:
-        song_1st.click()
-        if not wait_el_xpath_click(self.driver, get_path(app, 'btn_profile_play_path'), 30):
+        action(song_1st, Commands.CLICK)
+        if not wait_el_xpath_click(self.driver, path(app, 'btn_profile_play_path'), 30):
           self.fail('{0}: Please check if there is network or it is very slow.'.format(prefix))
         else:
-          play_minutes = int(get_path('default', 'play_minutes'))
+          play_minutes = int(path('default', 'play_minutes'))
           timeout = time.time() + 60*play_minutes
           logging.debug('{0}: Play for {1} minutes'.format(prefix, play_minutes))
           while time.time() < timeout:
