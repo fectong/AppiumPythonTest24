@@ -121,13 +121,16 @@ def wait_els_xpath(driver, elements, timeout=8):
 
 def wait_el_xpath_click(driver, element, timeout=8):
   try:
-    action(wait_el_xpath(driver, element, timeout), Commands.CLICK)
+    action(WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_xpath(element)), Commands.CLICK)
     return True
-  except TimeoutException:
-    logging.debug("TIMEOUT, Please confirm if the xPath({0}) is exist.".format(element))
+  except TimeoutException as te:
+    logging.debug("TIMEOUT: {0}; Please confirm if the id({1}) is exist.".format(te, element))
     return False
-  except WebDriverException:
-    logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(element))
+  except KeyError as ke:
+    logging.debug("KeyError: {0}; Please confirm if the id({1}) is exist.".format(ke, element))
+    return False
+  except WebDriverException as wde:
+    logging.debug("WebDriverException: {0}; Please confirm if the xPath({1}) is correct.".format(wde, element))
     return False
 
 def wait_el_id(driver, element, timeout=8):
@@ -152,13 +155,16 @@ def wait_els_id(driver, elements, timeout=8):
 
 def wait_el_id_click(driver, element, timeout=8):
   try:
-    action(wait_el_id(driver, element, timeout), Commands.CLICK)
+    action(WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_id(element)), Commands.CLICK)
     return True
-  except TimeoutException:
-    logging.debug("TIMEOUT, Please confirm if the id({0}) is exist.".format(element))
+  except TimeoutException as te:
+    logging.debug("TIMEOUT: {0}; Please confirm if the id({1}) is exist.".format(te, element))
     return False
-  except WebDriverException:
-    logging.debug("WebDriverException, Please confirm if the xPath({0}) is correct.".format(element))
+  except KeyError as ke:
+    logging.debug("KeyError: {0}; Please confirm if the id({1}) is exist.".format(ke, element))
+    return False
+  except WebDriverException as wde:
+    logging.debug("WebDriverException: {0}; Please confirm if the xPath({1}) is correct.".format(wde, element))
     return False
 
 def wait_time(func):

@@ -80,10 +80,11 @@ class Settings(unittest.TestCase):
     else:
       logging.info('{0}: Bluetooth is already enabled.'.format(prefix))
 
-    sleep(3)
+    sleep(5)
     while True:
       if wait_el_xpath_click(self.driver, path(app, 'btn_devices_1st_settings'), 3):
         wait_el_xpath_click(self.driver, path(app, 'btn_foget_path'))
+        logging.info('{0}: Forget remmerbered devices.'.format(prefix))
         sleep(2)
       else:
         break
