@@ -6,14 +6,14 @@ import time
 from appium import webdriver
 
 sys.path.append("..")
-from aptools.aputils import PATH, path, logging
+from aptools.aputils import PATH, logging
 from aptools.apmobile import get_devices, os_version
 
 #Get mobile devices_id
 devices_id = get_devices()
 
 def my_webdriver(
-  app_name,
+  app,
   host = 'http://127.0.0.1',
   port = 4723,
   device_name = devices_id[0],
@@ -23,12 +23,12 @@ def my_webdriver(
   full_reset = False,
   system_port = 8200,
   newCommandTimeout = 60):
-  return webdriver.Remote('{0}:{1}/wd/hub'.format(host, port), get_desired_caps(path('apps', app_name), device_name, platform_version, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout))
+  return webdriver.Remote('{0}:{1}/wd/hub'.format(host, port), get_desired_caps(app, device_name, platform_version, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout))
 
-def get_desired_caps(app_name, device_name, platform_version, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout):
+def get_desired_caps(app, device_name, platform_version, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout):
   desired_caps = {
-    'appPackage': path(app_name, 'package'),
-    'appActivity': path(app_name, 'activity'),
+    'appPackage': app[1],
+    'appActivity': app[2],
     'platformName': 'Android',
     'platformVersion': platform_version,
     'deviceName': device_name,
