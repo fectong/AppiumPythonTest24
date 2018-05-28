@@ -14,13 +14,17 @@ from time import sleep
 
 sys.path.append("..")
 from conf import appium_config
-from aptools.apconstants import Commands, Apps
-from aptools.aputils import path, action, logging, wait_el_xpath, wait_el_xpath_click
+from aptools.apconstants import Commands, C_Dialer
+from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click
 
 class Dialer(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(Apps.DIALER)
+    self.driver = appium_config.my_webdriver(C_Dialer.APP)
+
+  @classmethod
+  def setUp(self):
+    self.driver.launch_app()
 
   def test_MOViLTE(self):
     pass
@@ -32,6 +36,11 @@ class Dialer(unittest.TestCase):
   
   def test_Vo2Vi2Vo(self):
     pass
+
+  @classmethod
+  def tearDown(self):
+    sleep(3)
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):
