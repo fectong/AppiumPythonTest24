@@ -10,24 +10,23 @@ from time import sleep
 
 sys.path.append("..")
 from conf import appium_config
-from aptools.apconstants import Commands, Apps
-from aptools.aputils import path, logging
+from aptools.apconstants import Commands, C_CandyCrush
+from aptools.aputils import logging
 
 
 class CandyCrush(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(Apps.CANDY_CRUSH)
+    self.driver = appium_config.my_webdriver(C_CandyCrush.APP)
 
   def test_candy_crush(self):
-    app = 'candy_crush'
-    prefix = 'test_candy_crush'
+    prefix = C_CandyCrush.PREFIX
     sleep(20)
     logging.info('{0}: START'.format(prefix))
-    login_close_x = int(path(app, 'login_close_x'))
-    login_close_y = int(path(app, 'login_close_y'))
-    settings_x = int(path(app, 'settings_x'))
-    settings_y = int(path(app, 'settings_y'))
+    login_close_x = C_CandyCrush.LOGIN_CLOSE_X
+    login_close_y = C_CandyCrush.LOGIN_CLOSE_Y
+    settings_x = C_CandyCrush.SETTINGS_X
+    settings_y = C_CandyCrush.SETTINGS_Y
     os.popen('adb shell input tap {0} {1}'.format(login_close_x, login_close_y))
     logging.info('{0}: Close Logging popup.'.format(prefix))
     sleep(1)
