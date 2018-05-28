@@ -15,13 +15,14 @@ from time import sleep
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException, WebDriverException
-from configparser import NoOptionError, NoSectionError
 from .apconstants import Commands
+
+# from configparser import NoOptionError, NoSectionError
 
 PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
 
-cfg = configparser.ConfigParser()
-cfg.read(PATH('../conf/element.ini'))
+# cfg = configparser.ConfigParser()
+# cfg.read(PATH('../conf/element.ini'))
 
 if not(os.path.isdir(PATH('../logs'))):
   os.mkdir(PATH('../logs'))
@@ -30,7 +31,7 @@ if not(os.path.isdir(PATH('../logs'))):
 
 timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 logging.basicConfig(
-  level=logging.INFO,
+  level=logging.DEBUG,
   format="[%(asctime)s] %(levelname)s- %(message)s",
   filename=PATH("../logs/"+timestr+".log"),
   filemode = 'a'
@@ -53,20 +54,6 @@ def keycode(key):
     9: 16
   }.get(key, "Please confirm if the keycode is valid.")
 
-def path(section, option):
-  try:
-    path = cfg.get(section, option)
-    return path
-  except KeyError:
-    logging.debug("KeyError, config file does not have key named {0}.".format(option))
-    return None
-  except NoSectionError:
-    logging.debug("NoSectionError, config file does not have section named {0}.".format(section))
-    return None
-  except NoOptionError:
-    logging.debug("NoOptionError, config file does not have option named {0}.".format(option))
-    return None
-
 def value(element, value):
   try:
     if value == Commands.TEXT:
@@ -76,9 +63,14 @@ def value(element, value):
     else:
       return None
   except AttributeError as ae:
-    print('AttributeError: {0}'.format(ae))
+    logging.debug('AttributeError: {0}'.format(ae))
+    return None
   except KeyError as ke:
-    print('KeyError: {0}'.format(ke))
+    logging.debug('KeyError: {0}'.format(ke))
+    return None
+  except TypeError as te:
+    logging.debug('TypeError: {0}'.format(te))
+    return None
 
 def action(element, action, keys = None):
   try:
@@ -91,9 +83,9 @@ def action(element, action, keys = None):
     else:
       logging.debug('Please confirm if the has no action {1}'.format(action))
   except AttributeError as ae:
-    print('AttributeError: {0}'.format(ae))
+    logging.debug('AttributeError: {0}'.format(ae))
   except KeyError as ke:
-    print('KeyError: {0}'.format(ke))
+    logging.debug('KeyError: {0}'.format(ke))
 
 
 """
@@ -124,10 +116,10 @@ def wait_el_xpath_click(driver, element, timeout=8):
     action(WebDriverWait(driver, timeout).until(lambda x: x.find_element_by_xpath(element)), Commands.CLICK)
     return True
   except TimeoutException as te:
-    logging.debug("TIMEOUT: {0}; Please confirm if the id({1}) is exist.".format(te, element))
+    logging.debug("TIMEOUT: {0}; Please confirm if the xPath({1}) is exist.".format(te, element))
     return False
   except KeyError as ke:
-    logging.debug("KeyError: {0}; Please confirm if the id({1}) is exist.".format(ke, element))
+    logging.debug("KeyError: {0}; Please confirm if the xPath({1}) is exist.".format(ke, element))
     return False
   except WebDriverException as wde:
     logging.debug("WebDriverException: {0}; Please confirm if the xPath({1}) is correct.".format(wde, element))
