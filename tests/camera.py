@@ -23,7 +23,7 @@ class Camera(unittest.TestCase):
     logging.info('{0}: START'.format(prefix))
     if not wait_el_xpath_click(self.driver, C_Camera.PATH_BTN_YES):
       logging.info('{0}: No need to initialize Camera.'.format(prefix))
-    sleep(2)
+    sleep(5)
     btn_shutter = wait_el_xpath(self.driver, C_Camera.PATH_SHUTTER)
     if btn_shutter is not None:
       wait_el_xpath_click(self.driver, C_Camera.PATH_CAMERA_SWITCHER)

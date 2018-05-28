@@ -24,8 +24,6 @@ class Tune(unittest.TestCase):
     if et_search is None:
       self.fail('{0}: Load unsucceed.'.format(prefix))
     else:
-      action(et_search, Commands.CLICK)
-      action(et_search, Commands.CLEAR)
       action(et_search, Commands.SEND_KEYS, 'love')
       self.driver.press_keycode(keycode(Commands.ENTER))
       song_1st = wait_el_xpath(self.driver, C_Tune.PATH_MUSIC_1ST, 30)

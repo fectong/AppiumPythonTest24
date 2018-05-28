@@ -29,7 +29,7 @@ class CandyCrush(unittest.TestCase):
     settings_y = C_CandyCrush.SETTINGS_Y
     os.popen('adb shell input tap {0} {1}'.format(login_close_x, login_close_y))
     logging.info('{0}: Close Logging popup.'.format(prefix))
-    sleep(1)
+    sleep(3)
     os.popen('adb shell input tap {0} {1}'.format(settings_x, settings_y))
     logging.info('{0}: Open settings.'.format(prefix))
     logging.info('{0}: END'.format(prefix))
