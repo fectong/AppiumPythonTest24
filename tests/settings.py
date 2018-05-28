@@ -38,9 +38,9 @@ class Settings(unittest.TestCase):
       tv_used = wait_el_xpath(self.driver, C_Memorry.PATH_USED)
       logging.info(value(tv_used, Commands.TEXT) + ' ' + value(tv_total_memory, Commands.TEXT))
       sleep(2)
-      # self.driver.back()
     else:
       self.fail('{0}: Memory load unsucceed.'.format(prefix))
+    sleep(3)
     logging.info('{0}: END'.format(prefix))
 
   def initB(self):
@@ -65,8 +65,7 @@ class Settings(unittest.TestCase):
       logging.info('{0}: Bluetooth disable succeed.'.format(prefix))
     else:
       logging.info('{0}: Bluetooth is already disabled.'.format(prefix))
-    # self.driver.back()
-    # self.driver.back()
+    sleep(3)
     logging.info('{0}: END'.format(prefix))
 
   def test_bluetooth_enable(self):
@@ -109,8 +108,7 @@ class Settings(unittest.TestCase):
       self.fail('{0}: {1} not found.'.format(prefix, C_Bluetooth.PATH_DEVICES_1ST_SETTINGS))
     else:
       logging.info('{0}: Pair with {1} succeed.'.format(prefix, headset_name))
-    # self.driver.back()
-    # self.driver.back()
+    sleep(3)
     logging.info('{0}: END'.format(prefix))
 
   def initW(self):
@@ -134,8 +132,7 @@ class Settings(unittest.TestCase):
       logging.info('{0}: WLAN disable succeed.'.format(prefix))
     else:
       logging.info('{0}: WLAN is already disabled.'.format(prefix))
-    # self.driver.back()
-    # self.driver.back()
+    sleep(3)
     logging.info('{0}: END'.format(prefix))
 
   def test_wlan_enable(self):
@@ -215,7 +212,7 @@ class Settings(unittest.TestCase):
 
     sleep(8)
     self.driver.back()
-    sleep(8)
+    sleep(5)
     wifi_status = wait_el_xpath(self.driver, C_WLAN.PATH_WLAN_STATUS)
     if value(wifi_status, Commands.TEXT) == ap_point_name:
       logging.info('{0}: WLAN connect succeed.'.format(prefix))
@@ -223,12 +220,10 @@ class Settings(unittest.TestCase):
       logging.info('{0}: WLAN connect unsucceed.'.format(prefix))
       self.fail('{0}: WLAN connect unsucceed.'.format(prefix))
     sleep(2)
-    # self.driver.back()
     logging.info('{0}: END'.format(prefix))
 
   @classmethod
   def tearDown(self):
-    sleep(3)
     self.driver.close_app()
 
   @classmethod
