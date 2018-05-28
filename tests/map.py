@@ -44,11 +44,11 @@ class GoogleMaps(unittest.TestCase):
 
       for m in map_list:
         action(m, Commands.CLICK)
-        sleep(2)
+        sleep(3)
         for d in details_list:
           action(d, Commands.CLICK)
           logging.info('{0}: {1} - {2}'.format(prefix, value(m, Commands.TEXT), value(d, Commands.TEXT)))
-          sleep(2)
+          sleep(3)
       wait_el_xpath_click(self.driver, C_Maps.PATH_BTN_CLOSE_COMPASS)
     else:
       nav_menu = wait_el_xpath(self.driver, C_Maps.PATH_NAV_MENU)
