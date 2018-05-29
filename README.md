@@ -17,8 +17,8 @@
   CLASSPATH:
     .;%JAVA_HOME%\lib;%JRE_HOME%\lib
   PATH:
-    %JAVA_HOME%
     %JAVA_HOME%\bin
+    %JRE_HOME%\bin
 ```
 
 ### 检查 JAVA JDK
