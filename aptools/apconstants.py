@@ -242,6 +242,9 @@ class C_Tune(object):
   ]
   
   PREFIX = "test_music_network"
+  CLOSE_HOMEPAGE_X = 607
+  CLOSE_HOMEPAGE_Y = 68
+  PATH_HOMEPAGE = "//*[contains(@resource-id, 'id/webview)]"
   PLAY_MINUTES = 3
   PATH_NAV = "//*[contains(@content-desc, 'Open navigation drawer')]"
   PATH_BTN_SEARCH = "//*[contains(@resource-id, 'id/action_bar_search')]"
@@ -255,7 +258,7 @@ class C_Tune(object):
 
 
 class C_Messaging(object):
-  
+
   APP = [
     "Messaging",
     "com.android.mms",
