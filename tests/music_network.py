@@ -7,18 +7,23 @@ import time
 sys.path.append("..")
 from conf import appium_config
 from aptools.apconstants import Commands, C_Tune
-from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click, keycode
+from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click, keycode, PATH
 
 
 class Tune(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(C_Tune.APP)
+    self.driver = appium_config.my_webdriver(app=C_Tune.APP, app_path=PATH('../apps/TuneInRadio.apk'))
 
   def test_music_network(self):
     prefix = C_Tune.PREFIX
     logging.info('{0}: START'.format(prefix))
-    time.sleep(30)
+    time.sleep(20)
+    if wait_el_xpath(self.driver, C_Tune.PATH_HOMEPAGE) is not None:
+      time.sleep(5)
+      os.open("adb shell input tap {0} {1}".format(C_Tune.CLOSE_HOMEPAGE_X, C_Tune.CLOSE_HOMEPAGE_Y))
+    else:
+      logging.info('{0}: No need to initialize Tune.'.format(prefix))
     wait_el_xpath_click(self.driver, C_Tune.PATH_BTN_SEARCH)
     et_search = wait_el_xpath(self.driver, C_Tune.PATH_ET_SEARCH)
     if et_search is None:
