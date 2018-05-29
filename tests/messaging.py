@@ -37,6 +37,7 @@ class Messaging(unittest.TestCase):
       self.fail('{0}: Create new message unsucceed.'.format(prefix))
     recipients = wait_el_xpath(self.driver, C_Messaging.PATH_RECIPIENTS)
     action(recipients, Commands.CLEAR)
+    action(recipients, Commands.CLICK)
 
     # phone number: 147 8230 5348
     phone_number_str = C_Messaging.REF_PHONE_NUM
