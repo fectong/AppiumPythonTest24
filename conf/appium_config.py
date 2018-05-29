@@ -22,10 +22,11 @@ def my_webdriver(
   no_reset = False,
   full_reset = False,
   system_port = 8200,
-  newCommandTimeout = 60):
-  return webdriver.Remote('{0}:{1}/wd/hub'.format(host, port), get_desired_caps(app, device_name, platform_version, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout))
+  newCommandTimeout = 60,
+  app_path = ''):
+  return webdriver.Remote('{0}:{1}/wd/hub'.format(host, port), get_desired_caps(app, device_name, platform_version, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout, app_path))
 
-def get_desired_caps(app, device_name, platform_version, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout):
+def get_desired_caps(app, device_name, platform_version, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout, app_path):
   desired_caps = {
     'appPackage': app[1],
     'appActivity': app[2],
@@ -37,10 +38,11 @@ def get_desired_caps(app, device_name, platform_version, auto_grant_permissions,
     'fullReset': full_reset,
     'systemPort': system_port,
     'newCommandTimeout': newCommandTimeout,
+    'app': app_path,
     # 'udid': device_name,
-    # 'app': PATH('../apps/CandyCrushSaga.apk'),
     # 'unicodeKeyboard': True,
     # 'resetKeyboard': True,
+    'noSign': True,
     'automationName': 'UiAutomator2'
   }
   return desired_caps
