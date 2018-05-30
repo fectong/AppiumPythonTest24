@@ -25,7 +25,7 @@ class GoogleChrome(unittest.TestCase):
     else:
       logging.info('{0}: No need to initialize Google Chrome.'.format(prefix))
 
-    if wait_el_xpath_click(self.driver, C_Browser.PATH_SEARCH_BOX):
+    if wait_el_xpath_click(self.driver, C_Browser.PATH_SEARCH_BOX, 10):
       logging.info('{0}: There is HomePage.'.format(prefix))
 
     url_bar = wait_el_xpath(self.driver, C_Browser.PATH_URL_BAR)

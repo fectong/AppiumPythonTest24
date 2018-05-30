@@ -60,8 +60,12 @@ class C_Memorry(object):
   
   PREFIX = 'test_get_memory_status'
   ROOT_PATH = "android.support.v7.widget.RecyclerView[@index=0]/android.widget.LinearLayout[@index=0]/android.widget.LinearLayout[@index=0]"
+  PATH_DONUT = "//*[contains(@resource-id, 'id/donut')]"
   PATH_TOTAL_MEMORY = "//{0}/android.widget.TextView[@index=1]".format(ROOT_PATH)
   PATH_USED= "//{0}/android.widget.TextView[@index=0]".format(ROOT_PATH)
+
+  PATH_USED_C = "//android.support.v7.widget.RecyclerView[@index=0]/android.widget.LinearLayout[@index=1]/android.widget.TextView[@index=0]"
+  PATH_TOTAL_C = "//android.support.v7.widget.RecyclerView[@index=0]/android.widget.LinearLayout[@index=1]/android.widget.TextView[@index=1]"
 
 
 class C_Bluetooth(object):
@@ -194,11 +198,11 @@ class C_Video(object):
 
   PREFIX = 'test_video_playback'
   PATH_VIDEOS = "//*[contains(@resource-id, 'id/text1')]"
-  PATH_SELECT_PLAY = "//*[contains(@resource-id, 'id/text1') and contains(@text, 'Video player')]"
-  BTN_ALWAYS_X = 530
+  PATH_SELECT_PLAY = "//*[contains(@text, 'Video player')]"
+  BTN_ALWAYS_X = 550
   BTN_ALWAYS_Y = 980
-  BTN_ALWAYS_X1 = 530
-  BTN_ALWAYS_Y1 = 1145
+  BTN_ALWAYS_X1 = 555
+  BTN_ALWAYS_Y1 = 1160
   BTN_ONCE = "//*[contains(@resource-id, 'id/button_once')]"
   BTN_ALWAYS = "//*[contains(@resource-id, 'id/button_always')]"
   PLAY_MINUTES = 3

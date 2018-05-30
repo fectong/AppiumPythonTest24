@@ -34,9 +34,16 @@ class Settings(unittest.TestCase):
     sleep(5)
     if wait_el_xpath_click(self.driver, C_Settings.PATH_MEMORY):
       sleep(5)
-      tv_total_memory = wait_el_xpath(self.driver, C_Memorry.PATH_TOTAL_MEMORY)
-      tv_used = wait_el_xpath(self.driver, C_Memorry.PATH_USED)
-      logging.info(prefix + ': ' + value(tv_used, Commands.TEXT) + ' ' + value(tv_total_memory, Commands.TEXT))
+      if wait_el_xpath(self.driver, C_Memorry.PATH_DONUT) is not None:
+        logging.info('{0}: There is no sd card.')
+        tv_total_memory = wait_el_xpath(self.driver, C_Memorry.PATH_TOTAL_MEMORY)
+        tv_used = wait_el_xpath(self.driver, C_Memorry.PATH_USED)
+        logging.info('{0}: {1} {2}'.format(prefix, value(tv_used, Commands.TEXT), value(tv_total_memory, Commands.TEXT)))
+      else:
+        logging.info('{0}: There is a sd card.')
+        tv_used_c = wait_el_xpath(self.driver, C_Memorry.PATH_USED_C)
+        tv_total_c = wait_el_xpath(self.driver, C_Memorry.PATH_TOTAL_C)
+        logging.info('{0}: {1} {2}'.format(prefix, value(tv_used_c, Commands.TEXT), value(tv_total_c, Commands.TEXT)))
       sleep(2)
     else:
       self.fail('{0}: Memory load unsucceed.'.format(prefix))

@@ -24,7 +24,7 @@ from tests.dialer import Dialer
 
 def runTest():
   times = 1
-  timeout = time.time() + 60*2  # 24h = 60*60*24
+  timeout = time.time() + 60*1  # 24h = 60*60*24
   timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 
   filename = "./logs/"+timestr+".html"
@@ -37,7 +37,7 @@ def runTest():
         runner = HTMLTestRunner.HTMLTestRunner(
           stream=f,
           title=u'Test Report: {0}'.format(times),
-          description=u'Test reports by TG'
+          description=u'24 test case, test by TG'
         )
         logging.info('Test Times: {0}'.format(times))
         times+=1
@@ -46,25 +46,25 @@ def runTest():
 def suite():
   suite = unittest.TestSuite()
   tests = [
-    Settings(Tests.GET_MEMORY_STATUS),         # OK
-    Settings(Tests.BLUETOOTH_DISABLE),         # OK
-    Settings(Tests.BLUETOOTH_ENABLE),          # Headset Needed
-    Settings(Tests.WLAN_DISABLE),              # OK
-    Settings(Tests.WLAN_ENABLE),               # OK
-    CandyCrush(Tests.CANDY_CRUSH),             # OK
-    Camera(Tests.TAKE_PICTURE),                # OK
-    Messaging(Tests.SMS_MO),                   # OK
-    Messaging(Tests.MMS_MO),                   # OK
-    GoogleMaps(Tests.MULTI_LAYERS),            # OK
-    GoogleChrome(Tests.TEN_WEBSITES),          # OK
-    GoogleMusic(Tests.MUSIC_PLAYBACK),         # OK
-    Tune(Tests.MUSIC_NETWORK),                 # OK
+    # Settings(Tests.GET_MEMORY_STATUS),         # OK
+    # Settings(Tests.BLUETOOTH_DISABLE),         # OK
+    # Settings(Tests.BLUETOOTH_ENABLE),          # Headset Needed
+    # Settings(Tests.WLAN_DISABLE),              # OK
+    # Settings(Tests.WLAN_ENABLE),               # OK
+    # CandyCrush(Tests.CANDY_CRUSH),             # OK
+    # Camera(Tests.TAKE_PICTURE),                # OK
+    # Messaging(Tests.SMS_MO),                   # OK
+    # Messaging(Tests.MMS_MO),                   # OK
+    # GoogleMaps(Tests.MULTI_LAYERS),            # OK
+    # GoogleChrome(Tests.TEN_WEBSITES),          # OK
+    # GoogleMusic(Tests.MUSIC_PLAYBACK),         # OK
+    # Tune(Tests.MUSIC_NETWORK),                 # OK
     Video(Tests.VIDEO_PLAYBACK),               # OK
-    Youtube(Tests.VIDEO_NETWORK),              # OK
-    Dialer(Tests.MOVILTE),
-    Dialer(Tests.MOVOLTE),
-    Dialer(Tests.MTVOLTE),
-    Dialer(Tests.VO2VI2VO)
+    # Youtube(Tests.VIDEO_NETWORK),              # OK
+    # Dialer(Tests.MOVILTE),
+    # Dialer(Tests.MOVOLTE),
+    # Dialer(Tests.MTVOLTE),
+    # Dialer(Tests.VO2VI2VO)
   ]
   suite.addTests(tests)
   return suite

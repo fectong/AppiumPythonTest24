@@ -26,7 +26,9 @@ class GoogleMusic(unittest.TestCase):
 
     wait_el_xpath_click(self.driver, C_Music.PATH_NAV_LISTEN_NOW)
     time.sleep(3)
-    wait_el_xpath_click(self.driver, C_Music.PATH_SHUFFLE_ALL)
+    if not wait_el_xpath_click(self.driver, C_Music.PATH_SHUFFLE_ALL):
+      self.fail('{0}: If there are musics.'.format(prefix))
+      logging.info('{0}: If there are musics.'.format(prefix))
     logging.info('{0}: Shuffle all of the music.'.format(prefix))
     btn_pause_play = wait_el_xpath(self.driver, C_Music.PATH_BTN_PAUSE_PLAY)
     

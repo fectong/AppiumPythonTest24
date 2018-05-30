@@ -172,9 +172,9 @@ class Template_mixin(object):
     """
 
     STATUS = {
-    0: 'pass',
-    1: 'fail',
-    2: 'error',
+        0: 'pass',
+        1: 'fail',
+        2: 'error',
     }
 
     DEFAULT_TITLE = 'Unit Test Report'
@@ -184,117 +184,119 @@ class Template_mixin(object):
     # HTML Template
 
     HTML_TMPL = r"""<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>%(title)s</title>
-    <meta name="generator" content="%(generator)s"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    %(stylesheet)s
-</head>
-<body>
-<script language="javascript" type="text/javascript"><!--
-output_list = Array();
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>%(title)s</title>
+        <meta name="generator" content="%(generator)s"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js"></script>
+        %(stylesheet)s
+    </head>
+    <body class="container-fluid">
+        <script language="javascript" type="text/javascript"><!--
+        output_list = Array();
 
-/* level - 0:Summary; 1:Failed; 2:All */
-function showCase(level) {
-    trs = document.getElementsByTagName("tr");
-    for (var i = 0; i < trs.length; i++) {
-        tr = trs[i];
-        id = tr.id;
-        if (id.substr(0,2) == 'ft') {
-            if (level < 1) {
-                tr.className = 'hiddenRow';
+        /* level - 0:Summary; 1:Failed; 2:All */
+        function showCase(level) {
+            trs = document.getElementsByTagName("tr");
+            for (var i = 0; i < trs.length; i++) {
+                tr = trs[i];
+                id = tr.id;
+                if (id.substr(0,2) == 'ft') {
+                    if (level < 1) {
+                        tr.className = 'hiddenRow';
+                    }
+                    else {
+                        tr.className = '';
+                    }
+                }
+                if (id.substr(0,2) == 'pt') {
+                    if (level > 1) {
+                        tr.className = '';
+                    }
+                    else {
+                        tr.className = 'hiddenRow';
+                    }
+                }
+            }
+        }
+
+
+        function showClassDetail(cid, count) {
+            var id_list = Array(count);
+            var toHide = 1;
+            for (var i = 0; i < count; i++) {
+                tid0 = 't' + cid.substr(1) + '.' + (i+1);
+                tid = 'f' + tid0;
+                tr = document.getElementById(tid);
+                if (!tr) {
+                    tid = 'p' + tid0;
+                    tr = document.getElementById(tid);
+                }
+                id_list[i] = tid;
+                if (tr.className) {
+                    toHide = 0;
+                }
+            }
+            for (var i = 0; i < count; i++) {
+                tid = id_list[i];
+                if (toHide) {
+                    document.getElementById('div_'+tid).style.display = 'none'
+                    document.getElementById(tid).className = 'hiddenRow';
+                }
+                else {
+                    document.getElementById(tid).className = '';
+                }
+            }
+        }
+
+
+        function showTestDetail(div_id){
+            var details_div = document.getElementById(div_id)
+            var displayState = details_div.style.display
+            // alert(displayState)
+            if (displayState != 'block' ) {
+                displayState = 'block'
+                details_div.style.display = 'block'
             }
             else {
-                tr.className = '';
+                details_div.style.display = 'none'
             }
         }
-        if (id.substr(0,2) == 'pt') {
-            if (level > 1) {
-                tr.className = '';
-            }
-            else {
-                tr.className = 'hiddenRow';
-            }
+
+
+        function html_escape(s) {
+            s = s.replace(/&/g,'&amp;');
+            s = s.replace(/</g,'&lt;');
+            s = s.replace(/>/g,'&gt;');
+            return s;
         }
-    }
-}
 
-
-function showClassDetail(cid, count) {
-    var id_list = Array(count);
-    var toHide = 1;
-    for (var i = 0; i < count; i++) {
-        tid0 = 't' + cid.substr(1) + '.' + (i+1);
-        tid = 'f' + tid0;
-        tr = document.getElementById(tid);
-        if (!tr) {
-            tid = 'p' + tid0;
-            tr = document.getElementById(tid);
+        /* obsoleted by detail in <div>
+        function showOutput(id, name) {
+            var w = window.open("", //url
+                            name,
+                            "resizable,scrollbars,status,width=800,height=450");
+            d = w.document;
+            d.write("<pre>");
+            d.write(html_escape(output_list[id]));
+            d.write("\n");
+            d.write("<a href='javascript:window.close()'>close</a>\n");
+            d.write("</pre>\n");
+            d.close();
         }
-        id_list[i] = tid;
-        if (tr.className) {
-            toHide = 0;
-        }
-    }
-    for (var i = 0; i < count; i++) {
-        tid = id_list[i];
-        if (toHide) {
-            document.getElementById('div_'+tid).style.display = 'none'
-            document.getElementById(tid).className = 'hiddenRow';
-        }
-        else {
-            document.getElementById(tid).className = '';
-        }
-    }
-}
+        */
+        --></script>
 
+        %(heading)s
+        %(report)s
+        %(ending)s
 
-function showTestDetail(div_id){
-    var details_div = document.getElementById(div_id)
-    var displayState = details_div.style.display
-    // alert(displayState)
-    if (displayState != 'block' ) {
-        displayState = 'block'
-        details_div.style.display = 'block'
-    }
-    else {
-        details_div.style.display = 'none'
-    }
-}
-
-
-function html_escape(s) {
-    s = s.replace(/&/g,'&amp;');
-    s = s.replace(/</g,'&lt;');
-    s = s.replace(/>/g,'&gt;');
-    return s;
-}
-
-/* obsoleted by detail in <div>
-function showOutput(id, name) {
-    var w = window.open("", //url
-                    name,
-                    "resizable,scrollbars,status,width=800,height=450");
-    d = w.document;
-    d.write("<pre>");
-    d.write(html_escape(output_list[id]));
-    d.write("\n");
-    d.write("<a href='javascript:window.close()'>close</a>\n");
-    d.write("</pre>\n");
-    d.close();
-}
-*/
---></script>
-
-%(heading)s
-%(report)s
-%(ending)s
-
-</body>
-</html>
-"""
+    </body>
+    </html>
+    """
     # variables: (title, generator, stylesheet, heading, report, ending)
 
 
@@ -305,89 +307,89 @@ function showOutput(id, name) {
     #   <link rel="stylesheet" href="$url" type="text/css">
 
     STYLESHEET_TMPL = """
-<style type="text/css" media="screen">
-body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
-table       { font-size: 100%; }
-pre         { white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word; }
+    <style type="text/css" media="screen">
+        body        { font-family: Consolas, verdana, arial, helvetica, sans-serif; font-size: 90%; }
+        table       { font-size: 100%; }
+        pre         { white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word; }
 
-/* -- heading ---------------------------------------------------------------------- */
-h1 {
-	font-size: 16pt;
-	color: gray;
-}
-.heading {
-    margin-top: 0ex;
-    margin-bottom: 1ex;
-}
+        /* -- heading ---------------------------------------------------------------------- */
+        h1 {
+            font-size: 16pt;
+            color: gray;
+        }
+        .heading {
+            margin-top: 2ex;
+            margin-bottom: 1ex;
+        }
 
-.heading .attribute {
-    margin-top: 1ex;
-    margin-bottom: 0;
-}
+        .heading .attribute {
+            margin-top: 1ex;
+            margin-bottom: 0;
+        }
 
-.heading .description {
-    margin-top: 4ex;
-    margin-bottom: 6ex;
-}
+        .heading .description {
+            margin-top: 1ex;
+            margin-bottom: 2ex;
+        }
 
-/* -- css div popup ------------------------------------------------------------------------ */
-a.popup_link {
-}
+        /* -- css div popup ------------------------------------------------------------------------ */
+        a.popup_link {
+        }
 
-a.popup_link:hover {
-    color: red;
-}
+        a.popup_link:hover {
+            color: red;
+        }
 
-.popup_window {
-    display: none;
-    position: relative;
-    left: 0px;
-    top: 0px;
-    /*border: solid #627173 1px; */
-    padding: 10px;
-    font-family: "Lucida Console", "Courier New", Courier, monospace;
-    text-align: left;
-    font-size: 8pt;
-    width: 500px;
-}
+        .popup_window {
+            display: none;
+            position: relative;
+            left: 0px;
+            top: 0px;
+            /*border: solid #627173 1px; */
+            padding: 10px;
+            font-family: Consolas, "Lucida Console", "Courier New", Courier, monospace;
+            text-align: left;
+            font-size: 8pt;
+            width: 500px;
+        }
 
-}
-/* -- report ------------------------------------------------------------------------ */
-#show_detail_line {
-    margin-top: 3ex;
-    margin-bottom: 1ex;
-}
-#result_table {
-    width: 80%;
-    border-collapse: collapse;
-    border: 1px solid #DDDDDD;
-}
-#header_row {
-    font-weight: bold;
-    color: white;
-    background-color: #6B89D6;
-}
-#result_table td {
-    border: 1px solid #232323;
-    padding: 2px;
-}
-#total_row  { font-weight: bold; }
-.passClass  { background-color: #00B294; }
-.failClass  { background-color: #E78888; }
-.errorClass { background-color: #E81123; }
-.passCase   { color: #00B294; }
-.failCase   { color: #E78888; font-weight: bold; }
-.errorCase  { color: #E81123; font-weight: bold; }
-.hiddenRow  { display: none; }
-.testcase   { margin-left: 2em; }
+        }
+        /* -- report ------------------------------------------------------------------------ */
+        #show_detail_line {
+            margin-top: 3ex;
+            margin-bottom: 1ex;
+        }
+        #result_table {
+            width: 80%;
+            border-collapse: collapse;
+            border: 1px solid #DDDDDD;
+        }
+        #header_row {
+            font-weight: bold;
+            color: white;
+            background-color: #6B89D6;
+        }
+        #result_table td {
+            border: 1px solid #232323;
+            padding: 2px;
+        }
+        #total_row  { font-weight: bold; }
+        .passClass  { background-color: #bdedbc; }
+        .failClass  { background-color: #ffefa4; }
+        .errorClass { background-color: #ffc9c9; }
+        .passCase   { color: #6c6; }
+        .failCase   { color: #FF6600; font-weight: bold; }
+        .errorCase  { color: #c00; font-weight: bold; }
+        .hiddenRow  { display: none; }
+        .testcase   { margin-left: 2em; }
 
 
-/* -- ending ---------------------------------------------------------------------- */
-#ending {
-}
+        /* -- ending ---------------------------------------------------------------------- */
+        #ending {
+        }
 
-</style>
-"""
+    </style>
+    """
 
 
 
@@ -395,16 +397,15 @@ a.popup_link:hover {
     # Heading
     #
 
-    HEADING_TMPL = """<div class='heading'>
-<h1>%(title)s</h1>
-%(parameters)s
-<p class='description'>%(description)s</p>
-</div>
-
-""" # variables: (title, parameters, description)
+    HEADING_TMPL = """
+    <div class='heading'>
+        %(parameters)s
+        <p class='description'>%(title)s.%(description)s</p>
+    </div>
+    """ # variables: (title, parameters, description)
 
     HEADING_ATTRIBUTE_TMPL = """<p class='attribute'><strong>%(name)s:</strong> %(value)s</p>
-""" # variables: (name, value)
+    """ # variables: (name, value)
 
 
 
@@ -412,89 +413,91 @@ a.popup_link:hover {
     # Report
     #
 
-    REPORT_TMPL = """
-<p id='show_detail_line'>Show
-<a href='javascript:showCase(0)'>Summary</a>
-<a href='javascript:showCase(1)'>Failed</a>
-<a href='javascript:showCase(2)'>All</a>
-</p>
-<table id='result_table'>
-<colgroup>
-<col align='left' />
-<col align='right' />
-<col align='right' />
-<col align='right' />
-<col align='right' />
-<col align='right' />
-</colgroup>
-<tr id='header_row'>
-    <td>Test Group/Test case</td>
-    <td>Count</td>
-    <td>Pass</td>
-    <td>Fail</td>
-    <td>Error</td>
-    <td>View</td>
-</tr>
-%(test_list)s
-<tr id='total_row'>
-    <td>Total</td>
-    <td>%(count)s</td>
-    <td>%(Pass)s</td>
-    <td>%(fail)s</td>
-    <td>%(error)s</td>
-    <td>&nbsp;</td>
-</tr>
-</table>
-""" # variables: (test_list, count, Pass, fail, error)
+    REPORT_TMPL = r"""
+    <div>
+        <a class="btn btn-info btn-sm" href='javascript:showCase(0)'>Summary</a>
+        <a class="btn btn-danger btn-sm" href='javascript:showCase(1)'>Failed</a>
+        <a class="btn btn-default btn-sm" href='javascript:showCase(2)'>All</a>
+    </div>
+    <p></p>
+    <table id='result_table' class="table table-hover">
+        <colgroup>
+            <col align='left' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <!-- <col align='right' /> -->
+        </colgroup>
+        <tr id='header_row'>
+            <td>Test Group/Test case</td>
+            <td>Count</td>
+            <td>Pass</td>
+            <td>Fail</td>
+            <td>Error</td>
+            <!-- <td>View</td> -->
+        </tr>
+        %(test_list)s
+        <tr id='total_row'>
+            <td>Total</td>
+            <td>%(count)s</td>
+            <td>%(Pass)s</td>
+            <td>%(fail)s</td>
+            <td>%(error)s</td>
+            <!-- <td>&nbsp;</td> -->
+        </tr>
+    </table>
+
+    """ # variables: (test_list, count, Pass, fail, error)
 
     REPORT_CLASS_TMPL = r"""
-<tr class='%(style)s'>
-    <td>%(desc)s</td>
-    <td>%(count)s</td>
-    <td>%(Pass)s</td>
-    <td>%(fail)s</td>
-    <td>%(error)s</td>
-    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Detail</a></td>
-</tr>
-""" # variables: (style, desc, count, Pass, fail, error, cid)
+    <tr class='%(style)s'>
+        <td>%(desc)s</td>
+        <td>%(count)s</td>
+        <td>%(Pass)s</td>
+        <td>%(fail)s</td>
+        <td>%(error)s</td>
+        <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Detail</a></td>
+    </tr>
+    """ # variables: (style, desc, count, Pass, fail, error, cid)
 
 
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
-<tr id='%(tid)s' class='%(Class)s'>
-    <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
-    <td colspan='5' align='center'>
+    <tr id='%(tid)s' class='%(Class)s'>
+        <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
+        <td colspan='5' align='center'>
 
-    <!--css div popup start-->
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
-        %(status)s</a>
+        <!--css div popup start-->
+        <a class="btn btn-link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
+            %(status)s</a>
 
-    <div id='div_%(tid)s' class="popup_window">
-        <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_%(tid)s').style.display = 'none' " >
-           [x]</a>
+        <div id='div_%(tid)s' class="popup_window">
+            <div style='text-align: right; color:red;cursor:pointer'>
+            <a onfocus='this.blur();' onclick="document.getElementById('div_%(tid)s').style.display = 'none' " >
+            [x]</a>
+            </div>
+            <pre>
+            %(script)s
+            </pre>
         </div>
-        <pre>
-        %(script)s
-        </pre>
-    </div>
-    <!--css div popup end-->
+        <!--css div popup end-->
 
-    </td>
-</tr>
-""" # variables: (tid, Class, style, desc, status)
+        </td>
+    </tr>
+    """ # variables: (tid, Class, style, desc, status)
 
 
     REPORT_TEST_NO_OUTPUT_TMPL = r"""
-<tr id='%(tid)s' class='%(Class)s'>
-    <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
-    <td colspan='5' align='center'>%(status)s</td>
-</tr>
-""" # variables: (tid, Class, style, desc, status)
+    <tr id='%(tid)s' class='%(Class)s'>
+        <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
+        <td colspan='5' align='center'>%(status)s</td>
+    </tr>
+    """ # variables: (tid, Class, style, desc, status)
 
 
     REPORT_TEST_OUTPUT_TMPL = r"""
-%(id)s: %(output)s
-""" # variables: (id, output)
+    %(id)s: %(output)s
+    """ # variables: (id, output)
 
 
 
@@ -504,7 +507,7 @@ a.popup_link:hover {
 
     ENDING_TMPL = """<div id='ending'>&nbsp;</div>"""
 
-# -------------------- The end of the Template class -------------------
+    # -------------------- The end of the Template class -------------------
 
 
 TestResult = unittest.TestResult
