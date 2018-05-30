@@ -308,7 +308,7 @@ function showOutput(id, name) {
 <style type="text/css" media="screen">
 body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
 table       { font-size: 100%; }
-pre         { }
+pre         { white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word; }
 
 /* -- heading ---------------------------------------------------------------------- */
 h1 {
@@ -345,7 +345,6 @@ a.popup_link:hover {
     top: 0px;
     /*border: solid #627173 1px; */
     padding: 10px;
-    background-color: #E6E6D6;
     font-family: "Lucida Console", "Courier New", Courier, monospace;
     text-align: left;
     font-size: 8pt;
@@ -361,24 +360,24 @@ a.popup_link:hover {
 #result_table {
     width: 80%;
     border-collapse: collapse;
-    border: 1px solid #777;
+    border: 1px solid #DDDDDD;
 }
 #header_row {
     font-weight: bold;
     color: white;
-    background-color: #777;
+    background-color: #6B89D6;
 }
 #result_table td {
-    border: 1px solid #777;
+    border: 1px solid #232323;
     padding: 2px;
 }
 #total_row  { font-weight: bold; }
-.passClass  { background-color: #6c6; }
-.failClass  { background-color: #c60; }
-.errorClass { background-color: #c00; }
-.passCase   { color: #6c6; }
-.failCase   { color: #c60; font-weight: bold; }
-.errorCase  { color: #c00; font-weight: bold; }
+.passClass  { background-color: #00B294; }
+.failClass  { background-color: #E78888; }
+.errorClass { background-color: #E81123; }
+.passCase   { color: #00B294; }
+.failCase   { color: #E78888; font-weight: bold; }
+.errorCase  { color: #E81123; font-weight: bold; }
 .hiddenRow  { display: none; }
 .testcase   { margin-left: 2em; }
 
