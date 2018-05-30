@@ -212,13 +212,32 @@ class C_Dialer(object):
     ".app.DialtactsActivity"
     ]
   
+  CALL_TIME = 3
+
   PREFIX = 'test_dialer'
   PHONE_NUM = "13621872145"
   REF_PHONE_NUM = "14782305348"
+
   ID_BTN_FLOAT = "com.android.dialer:id/floating_action_button"
   ID_BTN_DIALPAD_FLOAT = "com.android.dialer:id/dialpad_floating_action_button"
   ID_BTN_END_CALL = "com.android.dialer:id/incall_end_call"
   ID_BTN_DELETE = "com.android.dialer:id/deleteButton"
+
+  ID_CONTACTGRID_STATUS = "com.android.dialer:id/contactgrid_status_text"
+
+  ID_VOLUME_BOOST = "com.android.dialer:id/volumeBoost"
+  PATH_MUTE = "//*[contains(@resource-id, 'id/incall_first_button') and contains(@text, 'Mute')]"
+  PATH_KEYPAD = "//*[contains(@resource-id, 'id/incall_second_button') and contains(@text, 'Keypad')]"
+  PATH_SPEAKER = "//*[contains(@resource-id, 'id/incall_third_button') and contains(@text, 'Speaker')]"
+  PATH_ADD_CALL = "//*[contains(@resource-id, 'id/incall_fourth_button') and contains(@text, 'Add call')]"
+  PATH_ADD_CALL = "//*[contains(@resource-id, 'id/incall_fifth_button') and contains(@text, 'Hold')]"
+
+  ID_DIALPAD_BACK = "com.android.dialer:id/dialpad_back"
+  PATH_SWAP_CALL = "//*[contains(@resource-id, 'id/incall_fourth_button') and contains(@text, 'Swap')]"
+
+  ID_SWIPE_TO_ANSWER = "com.android.dialer:id/incoming_swipe_to_answer_container"
+  ID_CALL_PUCK = "com.android.dialer:id/incoming_call_puck_bg"
+
   ID_KEY_ZERO = "com.android.dialer:id/zero"
   ID_KEY_ONE = "com.android.dialer:id/one"
   ID_KEY_TWO = "com.android.dialer:id/two"
@@ -231,6 +250,20 @@ class C_Dialer(object):
   ID_KEY_NINE = "com.android.dialer:id/nine"
   ID_KEY_STAR = "com.android.dialer:id/star"
   ID_KEY_POUND = "com.android.dialer:id/pound"
+
+  def number(self, key):
+    return{
+      '0': "com.android.dialer:id/zero",
+      '1': "com.android.dialer:id/one",
+      '2': "com.android.dialer:id/two",
+      '3': "com.android.dialer:id/three",
+      '4': "com.android.dialer:id/four",
+      '5': "com.android.dialer:id/five",
+      '6': "com.android.dialer:id/six",
+      '7': "com.android.dialer:id/seven",
+      '8': "com.android.dialer:id/eight",
+      '9': "com.android.dialer:id/nine"
+    }.get(key, "Please confirm if the keycode is valid.")
 
 
 class C_Tune(object):
