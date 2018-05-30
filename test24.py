@@ -46,25 +46,25 @@ def runTest():
 def suite():
   suite = unittest.TestSuite()
   tests = [
-    # Settings(Tests.GET_MEMORY_STATUS),         # OK
-    # Settings(Tests.BLUETOOTH_DISABLE),         # OK
-    # Settings(Tests.BLUETOOTH_ENABLE),          # Headset Needed
-    # Settings(Tests.WLAN_DISABLE),              # OK
-    # Settings(Tests.WLAN_ENABLE),               # OK
-    # CandyCrush(Tests.CANDY_CRUSH),             # OK
-    # Camera(Tests.TAKE_PICTURE),                # OK
-    # Messaging(Tests.SMS_MO),                   # OK
-    # Messaging(Tests.MMS_MO),                   # OK
-    # GoogleMaps(Tests.MULTI_LAYERS),            # OK
-    # GoogleChrome(Tests.TEN_WEBSITES),          # OK
-    # GoogleMusic(Tests.MUSIC_PLAYBACK),         # OK
-    # Tune(Tests.MUSIC_NETWORK),                 # OK
+    Settings(Tests.GET_MEMORY_STATUS),         # OK
+    Settings(Tests.BLUETOOTH_DISABLE),         # OK
+    Settings(Tests.BLUETOOTH_ENABLE),          # Headset Needed
+    Settings(Tests.WLAN_DISABLE),              # OK
+    Settings(Tests.WLAN_ENABLE),               # OK
+    CandyCrush(Tests.CANDY_CRUSH),             # OK
+    Camera(Tests.TAKE_PICTURE),                # OK
+    Messaging(Tests.SMS_MO),                   # OK
+    Messaging(Tests.MMS_MO),                   # OK
+    GoogleMaps(Tests.MULTI_LAYERS),            # OK
+    GoogleChrome(Tests.TEN_WEBSITES),          # OK
+    GoogleMusic(Tests.MUSIC_PLAYBACK),         # OK
+    Tune(Tests.MUSIC_NETWORK),                 # OK
     Video(Tests.VIDEO_PLAYBACK),               # OK
-    # Youtube(Tests.VIDEO_NETWORK),              # OK
-    # Dialer(Tests.MOVILTE),
-    # Dialer(Tests.MOVOLTE),
-    # Dialer(Tests.MTVOLTE),
-    # Dialer(Tests.VO2VI2VO)
+    Youtube(Tests.VIDEO_NETWORK),              # OK
+    Dialer(Tests.MOVILTE),
+    Dialer(Tests.MOVOLTE),
+    Dialer(Tests.MTVOLTE),
+    Dialer(Tests.VO2VI2VO)
   ]
   suite.addTests(tests)
   return suite
