@@ -10,12 +10,12 @@ import os
 import sys
 import unittest
 
-from time import sleep
+import time
 
 sys.path.append("..")
 from conf import appium_config
 from aptools.apconstants import Commands, C_Dialer
-from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click
+from aptools.aputils import action, logging, wait_el_id, wait_el_id_click
 
 class Dialer(unittest.TestCase):
   @classmethod
@@ -28,18 +28,38 @@ class Dialer(unittest.TestCase):
 
   def test_MOViLTE(self):
     pass
+
   def test_MOVoLTE(self):
-    pass
-  
+    prefix = C_Dialer.PREFIX
+    logging.info('{0}_MOVoLTE: START'.format(prefix))
+    wait_el_id_click(self.driver, C_Dialer.ID_BTN_FLOAT)
+    
+    for n in C_Dialer.REF_PHONE_NUM:
+      wait_el_id_click(self.driver, C_Dialer.number(self, n))
+
+    wait_el_id_click(self.driver, C_Dialer.ID_BTN_DIALPAD_FLOAT)
+
+    call_time = C_Dialer.CALL_TIME
+    timeout = time.time() + 60*call_time
+    logging.info('{0}: Play for {1} miuntes'.format(prefix, call_time))
+    while time.time() < timeout:
+      if (int(timeout-time.time()))%20 == 0:
+        self.driver.get_window_size()
+        logging.info('{0}: In Call'.format(prefix))
+        time.sleep(5)
+    wait_el_id_click(self.driver, C_Dialer.ID_BTN_END_CALL)
+
+    logging.info('{0}_MOVoLTE: END'.format(prefix))
+
   def test_MTVoLTE(self):
     pass
-  
+
   def test_Vo2Vi2Vo(self):
     pass
 
   @classmethod
   def tearDown(self):
-    sleep(3)
+    time.sleep(3)
     self.driver.close_app()
 
   @classmethod
