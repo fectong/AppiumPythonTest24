@@ -31,7 +31,7 @@ class Youtube(unittest.TestCase):
       while time.time() < timeout:
         if (int(timeout-time.time()))%20 == 0:
           self.driver.get_window_size()
-          logging.debug('{0}: Playing'.format(prefix))
+          logging.info('{0}: Playing'.format(prefix))
           time.sleep(5)
       logging.info('{0}: END'.format(prefix))
 

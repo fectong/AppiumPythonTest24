@@ -31,7 +31,7 @@ if not(os.path.isdir(PATH('../logs'))):
 
 timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 logging.basicConfig(
-  level=logging.DEBUG,
+  level=logging.INFO,
   format="[%(asctime)s] %(levelname)s- %(message)s",
   filename=PATH("../logs/"+timestr+".log"),
   filemode = 'a'
