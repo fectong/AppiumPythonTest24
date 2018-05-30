@@ -36,7 +36,7 @@ class Settings(unittest.TestCase):
       sleep(5)
       tv_total_memory = wait_el_xpath(self.driver, C_Memorry.PATH_TOTAL_MEMORY)
       tv_used = wait_el_xpath(self.driver, C_Memorry.PATH_USED)
-      logging.info(value(tv_used, Commands.TEXT) + ' ' + value(tv_total_memory, Commands.TEXT))
+      logging.info(prefix + ': ' + value(tv_used, Commands.TEXT) + ' ' + value(tv_total_memory, Commands.TEXT))
       sleep(2)
     else:
       self.fail('{0}: Memory load unsucceed.'.format(prefix))
@@ -93,7 +93,7 @@ class Settings(unittest.TestCase):
         break
 
     wait_el_xpath_click(self.driver, C_Bluetooth.PATH_PAIR_NEW_DEVICE)
-    if wait_el_xpath_click(self.driver, C_Bluetooth.PATH_HEADSET):
+    if wait_el_xpath_click(self.driver, C_Bluetooth.PATH_HEADSET, 10):
       sleep(8)
       wait_el_xpath_click(self.driver, C_Bluetooth.PATH_BTN_PAIR)
       sleep(8)
@@ -186,7 +186,7 @@ class Settings(unittest.TestCase):
           wait_el_xpath_click(self.driver, C_WLAN.PATH_WPA_SECURITY)
           wait_el_xpath_click(self.driver, C_WLAN.PATH_CHECKBOX_PW_SHOW)
           et_pw = wait_el_xpath(self.driver, C_WLAN.PATH_ET_PW)
-          action(et_pw, Commands.CLICK)
+          action(et_pw, Commands.CLEAR)
           action(et_pw, Commands.CLICK)
 
           # password: 173925239
