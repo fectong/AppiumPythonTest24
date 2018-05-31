@@ -21,7 +21,7 @@ from aptools.aputils import value, action, logging, wait_el_xpath, wait_els_xpat
 class Settings(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(C_Settings.APP)
+    self.driver = appium_config.my_webdriver(C_Settings.APP, no_reset=True)
     self.swipe = MobileSwipe()
 
   @classmethod
@@ -35,7 +35,7 @@ class Settings(unittest.TestCase):
     if wait_el_xpath_click(self.driver, C_Settings.PATH_MEMORY):
       sleep(5)
       if wait_el_xpath(self.driver, C_Memorry.PATH_DONUT) is not None:
-        logging.info('{0}: There is no sd card.')
+        logging.info('{0}: There is no sd card.'.format(prefix))
         tv_total_memory = wait_el_xpath(self.driver, C_Memorry.PATH_TOTAL_MEMORY)
         tv_used = wait_el_xpath(self.driver, C_Memorry.PATH_USED)
         logging.info('{0}: {1} {2}'.format(prefix, value(tv_used, Commands.TEXT), value(tv_total_memory, Commands.TEXT)))
