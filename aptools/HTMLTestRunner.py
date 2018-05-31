@@ -308,7 +308,7 @@ class Template_mixin(object):
 
     STYLESHEET_TMPL = """
     <style type="text/css" media="screen">
-        body        { font-family: Consolas, verdana, arial, helvetica, sans-serif; font-size: 90%; }
+        body        { font-family: Consolas, verdana, arial, helvetica, sans-serif; font-size: 100%; }
         table       { font-size: 100%; }
         pre         { white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word; }
 
@@ -400,7 +400,7 @@ class Template_mixin(object):
     HEADING_TMPL = """
     <div class='heading'>
         %(parameters)s
-        <p class='description'>%(title)s.%(description)s</p>
+        <p class='description'>%(title)s. %(description)s</p>
     </div>
     """ # variables: (title, parameters, description)
 
@@ -427,7 +427,7 @@ class Template_mixin(object):
             <col align='right' />
             <col align='right' />
             <col align='right' />
-            <!-- <col align='right' /> -->
+            <col align='right' />
         </colgroup>
         <tr id='header_row'>
             <td>Test Group/Test case</td>
@@ -435,7 +435,7 @@ class Template_mixin(object):
             <td>Pass</td>
             <td>Fail</td>
             <td>Error</td>
-            <!-- <td>View</td> -->
+            <td>View</td>
         </tr>
         %(test_list)s
         <tr id='total_row'>
@@ -444,7 +444,7 @@ class Template_mixin(object):
             <td>%(Pass)s</td>
             <td>%(fail)s</td>
             <td>%(error)s</td>
-            <!-- <td>&nbsp;</td> -->
+            <td>&nbsp;</td>
         </tr>
     </table>
 
@@ -468,7 +468,7 @@ class Template_mixin(object):
         <td colspan='5' align='center'>
 
         <!--css div popup start-->
-        <a class="btn btn-link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
+        <a class="btn btn-xs" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
             %(status)s</a>
 
         <div id='div_%(tid)s' class="popup_window">
