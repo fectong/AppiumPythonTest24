@@ -32,7 +32,6 @@ class Video(unittest.TestCase):
       self.fail("{0}: No Videos".format(prefix))
     
     select_play = wait_el_xpath(self.driver, C_Video.PATH_SELECT_PLAY)
-    logging.info(value(select_play, Commands.TEXT))
     if select_play is not None:
       os.popen('adb shell input tap {0} {1}'.format(btn_always_x1, btn_always_y1))
     else:
@@ -41,14 +40,13 @@ class Video(unittest.TestCase):
     logging.debug('{0}: Play each video for {1} minutes'.format(prefix, play_minutes/3))
     for video in videos:
       logging.info('{0}: {1} is playing'.format(prefix, value(video, Commands.TEXT)))
-      # timeout = time.time() + 20*play_minutes
+      timeout = time.time() + 20*play_minutes
       action(video, Commands.CLICK)
-      # while time.time() < timeout:
-      #   if (int(timeout-time.time()))%20 == 0:
-      #     self.driver.get_window_size()
-      #     logging.info('{0}: Playing'.format(prefix))
-      #     time.sleep(5)
-      time.sleep(5)
+      while time.time() < timeout:
+        if (int(timeout-time.time()))%20 == 0:
+          self.driver.get_window_size()
+          logging.info('{0}: Playing'.format(prefix))
+          time.sleep(5)
       self.driver.back()
 
     logging.info('{0}: END'.format(prefix))
