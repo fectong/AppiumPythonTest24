@@ -42,6 +42,10 @@ class Video(unittest.TestCase):
       logging.info('{0}: {1} is playing'.format(prefix, value(video, Commands.TEXT)))
       timeout = time.time() + 20*play_minutes
       action(video, Commands.CLICK)
+
+      if wait_el_xpath_click(self.driver, C_Video.PATH_START_OVER, 5):
+        logging.info('{0}: Start Over'.format(prefix))
+
       while time.time() < timeout:
         if (int(timeout-time.time()))%20 == 0:
           self.driver.get_window_size()
