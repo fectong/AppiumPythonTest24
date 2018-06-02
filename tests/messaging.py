@@ -40,8 +40,7 @@ class Messaging(unittest.TestCase):
     action(recipients, Commands.CLICK)
 
     # phone number: 147 8230 5348
-    phone_number_str = C_Messaging.REF_PHONE_NUM
-    for s in phone_number_str:
+    for s in num:
       self.driver.press_keycode(keycode(int(s)))
 
     self.driver.press_keycode(keycode(Commands.ENTER))
@@ -53,7 +52,7 @@ class Messaging(unittest.TestCase):
     prefix = C_Messaging.PREFIX_O
     logging.info('{0}: START'.format(prefix))
 
-    text_editor = self.initM('phone_num')
+    text_editor = self.initM(C_Messaging.REF_PHONE_NUM)
     if text_editor is None:
       logging.info('{0}: Text editor load unsucceed.'.format(prefix))
       self.fail('{0}: Text editor load unsucceed.'.format(prefix))
@@ -71,7 +70,7 @@ class Messaging(unittest.TestCase):
     prefix = C_Messaging.PREFIX_T
     logging.info('{0}: START'.format(prefix))
 
-    text_editor = self.initM('phone_num')
+    text_editor = self.initM(C_Messaging.REF_PHONE_NUM)
 
     if text_editor is None:
       logging.info('{0}: Text editor load unsucceed.'.format(prefix))
