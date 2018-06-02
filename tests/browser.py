@@ -28,7 +28,7 @@ class GoogleChrome(unittest.TestCase):
     if wait_el_xpath_click(self.driver, C_Browser.PATH_SEARCH_BOX, 10):
       logging.info('{0}: There is HomePage.'.format(prefix))
 
-    url_bar = wait_el_xpath(self.driver, C_Browser.PATH_URL_BAR)
+    url_bar = wait_el_xpath(self.driver, C_Browser.PATH_URL_BAR, 10)
     if url_bar is None:
       logging.info('{0}: URL bar load unsucceed.'.format(prefix))
       self.fail('{0}: URL bar load unsucceed.'.format(prefix))
