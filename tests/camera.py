@@ -25,9 +25,10 @@ class Camera(unittest.TestCase):
       logging.info('{0}: No need to initialize Camera.'.format(prefix))
     sleep(5)
     btn_shutter = wait_el_xpath(self.driver, C_Camera.PATH_SHUTTER)
-    if btn_shutter is not None:
+    if btn_shutter is None:
       wait_el_xpath_click(self.driver, C_Camera.PATH_CAMERA_SWITCHER)
       wait_el_xpath_click(self.driver,C_Camera.PATH_PHOTO_SWITCHER)
+      logging.info('{0}: Switch to Photo.'.format(prefix))
       wait_el_xpath_click(self.driver, C_Camera.PATH_SHUTTER)
     else:
       action(btn_shutter, Commands.CLICK)
