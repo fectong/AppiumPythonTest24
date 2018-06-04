@@ -33,7 +33,7 @@ class Video(unittest.TestCase):
       time.sleep(1)
 
       action(video, Commands.CLICK)
-      timeout = time.time() + 10*play_minutes
+      timeout = time.time() + 20*play_minutes
 
       select_play = wait_el_xpath(self.driver, C_Video.PATH_SELECT_PLAY, 3)
       if select_play is not None:
