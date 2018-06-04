@@ -17,12 +17,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from .apconstants import Commands
 
-# from configparser import NoOptionError, NoSectionError
 
 PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
-
-# cfg = configparser.ConfigParser()
-# cfg.read(PATH('../conf/element.ini'))
 
 if not(os.path.isdir(PATH('../logs'))):
   os.mkdir(PATH('../logs'))

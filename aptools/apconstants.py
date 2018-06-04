@@ -200,10 +200,6 @@ class C_Video(object):
   PLAY_MINUTES = 3
   PATH_VIDEOS = "//*[contains(@resource-id, 'id/text1')]"
   PATH_SELECT_PLAY = "//*[contains(@text, 'Video player')]"
-  BTN_ALWAYS_X = 550
-  BTN_ALWAYS_Y = 980
-  BTN_ALWAYS_X1 = 555
-  BTN_ALWAYS_Y1 = 1160
   PATH_BTN_ONCE = "//*[contains(@resource-id, 'id/button_once')]"
   PATH_BTN_ALWAYS = "//*[contains(@resource-id, 'id/button_always')]"
   PATH_START_OVER = "//*[contains(@resource-id, 'id/button2') and contains(@text, 'START OVER')]"
