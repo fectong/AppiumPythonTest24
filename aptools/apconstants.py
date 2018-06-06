@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*
 
-
 class Commands(object):
 
   TEXT = 'text'
@@ -45,7 +44,7 @@ class C_Location(object):
 class C_Settings(object):
   
   APP = [
-    'Settings',               # App Name
+    "Settings",               # App Name
     "com.android.settings",   # App Package
     ".Settings"               # App Activity
   ]
