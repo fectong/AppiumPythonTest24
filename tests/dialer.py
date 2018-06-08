@@ -9,22 +9,33 @@
 import os
 import sys
 import unittest
-
 import time
+
+from appium.webdriver.common.touch_action import TouchAction
 
 sys.path.append("..")
 from conf import appium_config
+from aptools.apmobile import get_devices
 from aptools.apconstants import Commands, C_Dialer
 from aptools.aputils import action, logging, wait_el_id, wait_el_id_click
 
 class Dialer(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(C_Dialer.APP)
+    devices = get_devices()
+    self.flag = False
+    if len(devices) >= 2:
+      self.flag = True
+      self.Odriver = appium_config.my_webdriver(C_Dialer.APP, port=4723, system_port=8200, device_name=devices[0], newCommandTimeout=180)
+      self.Tdriver = appium_config.my_webdriver(C_Dialer.APP, port=4725, system_port=8201, device_name=devices[1], newCommandTimeout=180)
 
   @classmethod
   def setUp(self):
-    self.driver.launch_app()
+    if not self.flag:
+       logging.info('test_dialer: There is only one device, can not take a interacted call test.')
+       self.fail('test_dialer: There is only one device, can not take a interacted call test.')
+    self.Odriver.launch_app()
+    self.Tdriver.launch_app()
 
   def test_MOViLTE(self):
     pass
@@ -32,22 +43,31 @@ class Dialer(unittest.TestCase):
   def test_MOVoLTE(self):
     prefix = C_Dialer.PREFIX
     logging.info('{0}_MOVoLTE: START'.format(prefix))
-    wait_el_id_click(self.driver, C_Dialer.ID_BTN_FLOAT)
+    wait_el_id_click(self.Odriver, C_Dialer.ID_BTN_FLOAT)
     
     for n in C_Dialer.REF_PHONE_NUM:
-      wait_el_id_click(self.driver, C_Dialer.number(self, n))
+      wait_el_id_click(self.Odriver, C_Dialer.number(self, n))
+    time.sleep(10)
 
-    wait_el_id_click(self.driver, C_Dialer.ID_BTN_DIALPAD_FLOAT)
+    btn_call = wait_el_id(self.Tdriver, C_Dialer.ID_BTN_DIALPAD_FLOAT, 10)
+    if btn_call is None:
+      self.fail('{0}: Wait to long for the call.'.format(prefix))
+    
+    width = self.Tdriver.get_window_size()['width']
+    height = self.Tdriver.get_window_size()['height']
+    TouchAction(self.Tdriver).press(btn_call).move_to(x=width/2, y=height/3)
 
     call_time = C_Dialer.CALL_TIME
     timeout = time.time() + 60*call_time
     logging.info('{0}: Play for {1} miuntes'.format(prefix, call_time))
     while time.time() < timeout:
       if (int(timeout-time.time()))%20 == 0:
-        self.driver.get_window_size()
+        self.Odriver.get_window_size()
+        self.Tdriver.get_window_size()
         logging.info('{0}: In Call'.format(prefix))
         time.sleep(5)
-    wait_el_id_click(self.driver, C_Dialer.ID_BTN_END_CALL)
+
+    wait_el_id_click(self.Odriver, C_Dialer.ID_BTN_END_CALL)
 
     logging.info('{0}_MOVoLTE: END'.format(prefix))
 
@@ -59,9 +79,10 @@ class Dialer(unittest.TestCase):
 
   @classmethod
   def tearDown(self):
-    time.sleep(3)
-    self.driver.close_app()
+    self.Odriver.close_app()
+    self.Tdriver.close_app()
 
   @classmethod
   def tearDownClass(self):
-    self.driver.quit()
+    self.Odriver.quit()
+    self.Tdriver.quit()
