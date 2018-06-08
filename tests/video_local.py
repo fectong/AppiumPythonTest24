@@ -6,7 +6,7 @@ import time
 
 sys.path.append("..")
 from conf import appium_config
-from aptools.apconstants import Commands, C_Video, C_Location
+from aptools.apconstants import Commands, C_Video
 from aptools.aputils import action, value, logging, wait_el_xpath, wait_el_xpath_click, wait_els_xpath
 
 
@@ -40,7 +40,7 @@ class Video(unittest.TestCase):
         action(select_play, Commands.CLICK)
       wait_el_xpath_click(self.driver, C_Video.PATH_BTN_ALWAYS, 2)
 
-      if wait_el_xpath_click(self.driver, C_Location.BTN_ALLOW, 3):
+      if wait_el_xpath_click(self.driver, C_Video.BTN_ALLOW, 3):
         logging.info('{0}: Permission Allowed.'.format(prefix))
 
       if wait_el_xpath_click(self.driver, C_Video.PATH_START_OVER, 3):
