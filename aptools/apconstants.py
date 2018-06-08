@@ -35,12 +35,6 @@ class Tests(object):
   VO2VI2VO = 'test_Vo2Vi2Vo'
 
 
-class C_Location(object):
-  
-  BTN_ALLOW = "//*[contains(@resource-id, 'id/permission_allow_button')]"
-  BTN_DENY = "//*[contains(@resource-id, 'id/permission_deny_button')]"
-
-
 class C_Settings(object):
   
   APP = [
@@ -196,6 +190,9 @@ class C_Video(object):
   ]
 
   PREFIX = 'test_video_playback'
+  BTN_ALLOW = "//*[contains(@resource-id, 'id/permission_allow_button')]"
+  BTN_DENY = "//*[contains(@resource-id, 'id/permission_deny_button')]"
+  PATH_BTN_GOT = "//*[contains(@text, 'GOT IT')]"
   PLAY_MINUTES = 3
   PATH_VIDEOS = "//*[contains(@resource-id, 'id/text1')]"
   PATH_SELECT_PLAY = "//*[contains(@text, 'Video player')]"
@@ -217,7 +214,7 @@ class C_Dialer(object):
 
   PREFIX = 'test_dialer'
   PHONE_NUM = "13621872145"
-  REF_PHONE_NUM = "14782305348"
+  REF_PHONE_NUM = "15221523443"
 
   ID_BTN_FLOAT = "com.android.dialer:id/floating_action_button"
   ID_BTN_DIALPAD_FLOAT = "com.android.dialer:id/dialpad_floating_action_button"
@@ -333,6 +330,7 @@ class C_Camera(object):
   PREFIX = 'test_take_picture'
   PATH_BTN_OK = "//*[contains(@text, 'OK')]"
   PATH_BTN_YES = "//*[contains(@text, 'Yes')]"
+  PATH_BTN_GOT = "//*[contains(@text, 'GOT IT')]"
   PATH_SHUTTER = "//*[contains(@resource-id, 'id/shutter_button')]"
   PATH_CAMERA_SWITCHER = "//*[contains(@resource-id, 'id/camera_switcher')]"
   PATH_PHOTO_SWITCHER = "//*[contains(@content-desc, 'Switch to photo')]"
