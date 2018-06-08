@@ -23,6 +23,8 @@ class Camera(unittest.TestCase):
     logging.info('{0}: START'.format(prefix))
     if not wait_el_xpath_click(self.driver, C_Camera.PATH_BTN_YES):
       logging.info('{0}: No need to initialize Camera.'.format(prefix))
+    if not wait_el_xpath_click(self.driver, C_Camera.PATH_BTN_GOT):
+      logging.info("{0}: It's not the 1st time run app in full screen.".format(prefix))
     sleep(5)
     btn_shutter = wait_el_xpath(self.driver, C_Camera.PATH_SHUTTER)
     if btn_shutter is None:
