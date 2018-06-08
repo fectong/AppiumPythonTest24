@@ -105,7 +105,7 @@ python --version
   pip install selenium
   pip install Appium-Python-Client
 
-  # 使用 RobotFramework 就装
+  # 使用 RobotFramework 则装
   pip install robotframework
   pip install robotframework-appiumlibrary
 ```
@@ -207,7 +207,24 @@ Refresh Bluetooth Device List
 
 2. 各测试按照测试应用进行分类, 处于 ./tests 目录
 
-3. 运行:
+3. Appium Server 配置:
+
+    Appium Desktop 版则设置 host 为 127.0.0.1, port 为 4723
+
+    NodeJS 则使用命令打开 Appium server:
+
+      ```CMD
+        appium -a 127.0.0.1 -p 4723 -bp 4724 --session-override
+      ```
+      > -a: address, host
+      
+      > -p: port, 默认即为 4723
+      
+      > -bp: --bootstrapPort, 默认即为 4724
+
+      > --session-override: 默认为False, 加上则为 True, 在 Parallel Test 中尤为重要
+
+4. 运行
 
    ```CMD
    python ./test24.py
