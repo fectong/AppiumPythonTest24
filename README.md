@@ -127,6 +127,7 @@ appium-doctor
 
 ``` python
 # -*- coding: utf-8 -*-
+import unittest
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 
