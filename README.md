@@ -226,6 +226,10 @@ Refresh Bluetooth Device List
 
 4. 运行
 
-   ```CMD
-   python ./test24.py
-   ```
+    ```CMD
+    python ./test24.py
+    ```
+
+5. [HTMLTestRunner.py](./aptools/HTMLTestRunner.py) 文件说明:
+
+    原版 [路径](https://pypi.python.org/pypi/HTMLTestRunner), 原版不支持 Python3.X, 项目中所用的是修改后的版本, 并使用 [Bootstrap](http://getbootstrap.com/) 修改了配色和样式
