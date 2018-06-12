@@ -8,7 +8,7 @@ import unittest
 import time
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.constants import Commands, C_Music
 from tools.utils import value, logging, wait_el_xpath, wait_el_xpath_click
 
@@ -16,7 +16,7 @@ from tools.utils import value, logging, wait_el_xpath, wait_el_xpath_click
 class GoogleMusic(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(C_Music.APP)
+    self.driver = appium_server.my_webdriver(C_Music.APP)
   
   def test_music_palyback(self):
     prefix = C_Music.PREFIX

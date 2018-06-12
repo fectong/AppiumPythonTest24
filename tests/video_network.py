@@ -5,7 +5,7 @@ import unittest
 import time
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.constants import Commands, C_Youtube
 from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 
@@ -13,7 +13,7 @@ from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 class Youtube(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(C_Youtube.APP)
+    self.driver = appium_server.my_webdriver(C_Youtube.APP)
 
   def test_video_network(self):
     play_minutes = C_Youtube.PLAY_MINUTES

@@ -10,7 +10,7 @@ import unittest
 from time import sleep
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.constants import Commands, Keycode, C_Messaging
 from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 
@@ -21,7 +21,7 @@ class Messaging(unittest.TestCase):
   """
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(app=C_Messaging.APP, auto_grant_permissions=False)
+    self.driver = appium_server.my_webdriver(app=C_Messaging.APP, auto_grant_permissions=False)
 
   @classmethod
   def setUp(self):

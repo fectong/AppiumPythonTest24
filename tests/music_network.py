@@ -5,7 +5,7 @@ import unittest
 import time
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.constants import Commands, Keycode, C_Tune
 from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click, PATH
 
@@ -13,7 +13,7 @@ from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click, PAT
 class Tune(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(app=C_Tune.APP, app_path=PATH('../apps/TuneInRadio.apk'))
+    self.driver = appium_server.my_webdriver(app=C_Tune.APP, app_path=PATH('../apps/TuneInRadio.apk'))
 
   def test_music_network(self):
     prefix = C_Tune.PREFIX

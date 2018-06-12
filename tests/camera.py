@@ -8,7 +8,7 @@ import unittest
 from time import sleep
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.constants import Commands, C_Camera
 from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 
@@ -16,7 +16,7 @@ from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 class Camera(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(C_Camera.APP)
+    self.driver = appium_server.my_webdriver(C_Camera.APP)
 
   def test_take_picture(self):
     prefix = C_Camera.PREFIX

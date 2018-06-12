@@ -14,7 +14,7 @@ import time
 from appium.webdriver.common.touch_action import TouchAction
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.mobile import get_devices
 from tools.constants import Commands, C_Dialer
 from tools.utils import action, logging, wait_el_id, wait_el_id_click
@@ -26,8 +26,8 @@ class Dialer(unittest.TestCase):
     self.flag = False
     if len(devices) >= 2:
       self.flag = True
-      self.Odriver = appium_config.my_webdriver(C_Dialer.APP, port=4723, system_port=8200, device_name=devices[0], newCommandTimeout=180)
-      self.Tdriver = appium_config.my_webdriver(C_Dialer.APP, port=4725, system_port=8201, device_name=devices[1], newCommandTimeout=180)
+      self.Odriver = appium_server.my_webdriver(C_Dialer.APP, port=4723, system_port=8200, device_name=devices[0], newCommandTimeout=180)
+      self.Tdriver = appium_server.my_webdriver(C_Dialer.APP, port=4725, system_port=8201, device_name=devices[1], newCommandTimeout=180)
 
   @classmethod
   def setUp(self):

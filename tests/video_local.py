@@ -5,7 +5,7 @@ import unittest
 import time
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.constants import Commands, C_Video
 from tools.utils import action, value, logging, wait_el_xpath, wait_el_xpath_click, wait_els_xpath
 
@@ -13,7 +13,7 @@ from tools.utils import action, value, logging, wait_el_xpath, wait_el_xpath_cli
 class Video(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(C_Video.APP)
+    self.driver = appium_server.my_webdriver(C_Video.APP)
 
   def test_video_playback(self):
     prefix = C_Video.PREFIX

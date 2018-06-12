@@ -6,7 +6,7 @@ import unittest
 from time import sleep
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.constants import Commands, Keycode, C_Browser
 from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 
@@ -14,7 +14,7 @@ from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 class GoogleChrome(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(C_Browser.APP)
+    self.driver = appium_server.my_webdriver(C_Browser.APP)
 
   def test_ten_websites(self):
     prefix = C_Browser.PREFIX

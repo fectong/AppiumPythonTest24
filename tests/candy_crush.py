@@ -9,7 +9,7 @@ import unittest
 from time import sleep
 
 sys.path.append("..")
-from server import appium_config
+from server import appium_server
 from tools.constants import Commands, C_CandyCrush
 from tools.utils import logging, PATH
 
@@ -17,7 +17,7 @@ from tools.utils import logging, PATH
 class CandyCrush(unittest.TestCase):
   @classmethod
   def setUpClass(self):
-    self.driver = appium_config.my_webdriver(app=C_CandyCrush.APP, app_path=PATH('../apps/CandyCrushSaga.apk'))
+    self.driver = appium_server.my_webdriver(app=C_CandyCrush.APP, app_path=PATH('../apps/CandyCrushSaga.apk'))
 
   def test_candy_crush(self):
     prefix = C_CandyCrush.PREFIX
