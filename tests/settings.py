@@ -14,8 +14,8 @@ from time import sleep
 
 sys.path.append("..")
 from conf import appium_config
-from aptools.apconstants import Commands, C_Settings, C_Memorry, C_Bluetooth, C_WLAN
-from aptools.aputils import value, action, logging, wait_el_xpath, wait_els_xpath, wait_el_xpath_click, keycode, MobileSwipe
+from aptools.apconstants import Commands, Keycode, C_Settings, C_Memorry, C_Bluetooth, C_WLAN
+from aptools.aputils import value, action, logging, wait_el_xpath, wait_els_xpath, wait_el_xpath_click, MobileSwipe
 
 
 class Settings(unittest.TestCase):
@@ -199,7 +199,7 @@ class Settings(unittest.TestCase):
           # password: 173925239
           password_str = C_WLAN.AP_PASSWORD
           for s in password_str:
-            self.driver.press_keycode(keycode(int(s)))
+            self.driver.press_keycode(Keycode.get(self, s))
           wait_el_xpath_click(self.driver, C_WLAN.PATH_BTN_SAVE)
           sleep(2)
           break
@@ -212,7 +212,7 @@ class Settings(unittest.TestCase):
         # password: 173925239
         password_str = C_WLAN.AP_PASSWORD
         for s in password_str:
-          self.driver.press_keycode(keycode(int(s)))
+          self.driver.press_keycode(Keycode.get(self, s))
         wait_el_xpath_click(self.driver, C_WLAN.PATH_BTN_CONNECT)
         sleep(1)
         break

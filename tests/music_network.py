@@ -6,8 +6,8 @@ import time
 
 sys.path.append("..")
 from conf import appium_config
-from aptools.apconstants import Commands, C_Tune
-from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click, keycode, PATH
+from aptools.apconstants import Commands, Keycode, C_Tune
+from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click, PATH
 
 
 class Tune(unittest.TestCase):
@@ -30,7 +30,7 @@ class Tune(unittest.TestCase):
       self.fail('{0}: Load unsucceed.'.format(prefix))
     else:
       action(et_search, Commands.SEND_KEYS, 'love')
-      self.driver.press_keycode(keycode(Commands.ENTER))
+      self.driver.press_keycode(Keycode.ENTER)
       song_1st = wait_el_xpath(self.driver, C_Tune.PATH_MUSIC_1ST, 30)
       if song_1st is None:
         self.fail('{0}: Please check if there is network or it is very slow.'.format(prefix))

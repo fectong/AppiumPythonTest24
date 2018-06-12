@@ -7,8 +7,8 @@ from time import sleep
 
 sys.path.append("..")
 from conf import appium_config
-from aptools.apconstants import Commands, C_Browser
-from aptools.aputils import keycode, action, logging, wait_el_xpath, wait_el_xpath_click
+from aptools.apconstants import Commands, Keycode, C_Browser
+from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click
 
 
 class GoogleChrome(unittest.TestCase):
@@ -39,7 +39,7 @@ class GoogleChrome(unittest.TestCase):
       action(url_bar, Commands.CLICK)
       action(url_bar, Commands.CLEAR)
       action(url_bar, Commands.SEND_KEYS, site)
-      self.driver.press_keycode(keycode(Commands.ENTER))
+      self.driver.press_keycode(Keycode.ENTER)
       sleep(20)
 
     logging.info('{0}: END'.format(prefix))

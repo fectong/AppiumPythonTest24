@@ -11,8 +11,8 @@ from time import sleep
 
 sys.path.append("..")
 from conf import appium_config
-from aptools.apconstants import Commands, C_Messaging
-from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click, keycode
+from aptools.apconstants import Commands, Keycode, C_Messaging
+from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click
 
 class Messaging(unittest.TestCase):
   """
@@ -41,9 +41,9 @@ class Messaging(unittest.TestCase):
 
     # phone number: 147 8230 5348
     for s in num:
-      self.driver.press_keycode(keycode(int(s)))
+      self.driver.press_keycode(Keycode.get(self, s))
 
-    self.driver.press_keycode(keycode(Commands.ENTER))
+    self.driver.press_keycode(Keycode.ENTER)
 
     text_editor = wait_el_xpath(self.driver, C_Messaging.PATH_TEXT_EDITOR)
     return text_editor
