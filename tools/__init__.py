@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*-
 
 __all__ = [
-  "aputils",
-  'apconstants'
+  "utils",
+  'constants'
   ]

@@ -9,9 +9,9 @@ import unittest
 from time import sleep
 
 sys.path.append("..")
-from conf import appium_config
-from aptools.apconstants import Commands, C_CandyCrush
-from aptools.aputils import logging, PATH
+from server import appium_config
+from tools.constants import Commands, C_CandyCrush
+from tools.utils import logging, PATH
 
 
 class CandyCrush(unittest.TestCase):

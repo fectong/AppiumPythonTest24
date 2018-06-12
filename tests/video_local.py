@@ -5,9 +5,9 @@ import unittest
 import time
 
 sys.path.append("..")
-from conf import appium_config
-from aptools.apconstants import Commands, C_Video
-from aptools.aputils import action, value, logging, wait_el_xpath, wait_el_xpath_click, wait_els_xpath
+from server import appium_config
+from tools.constants import Commands, C_Video
+from tools.utils import action, value, logging, wait_el_xpath, wait_el_xpath_click, wait_els_xpath
 
 
 class Video(unittest.TestCase):

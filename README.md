@@ -204,7 +204,7 @@ Refresh Bluetooth Device List
 
 ## 7. 模板介绍
 
-1. 启动时配置的 WebDriver 在 [appium_config.py](./conf/appium_config.py) 之中
+1. 启动时配置的 WebDriver 在 [appium_config.py](./server/appium_config.py) 之中
 
 2. 各测试按照测试应用进行分类, 处于 ./tests 目录
 
@@ -231,6 +231,6 @@ Refresh Bluetooth Device List
     python ./test24.py
     ```
 
-5. [HTMLTestRunner.py](./aptools/HTMLTestRunner.py) 文件说明:
+5. [HTMLTestRunner.py](./tools/HTMLTestRunner.py) 文件说明:
 
     原版 [路径](https://pypi.python.org/pypi/HTMLTestRunner), 原版不支持 Python3.X, 项目中所用的是修改后的版本, 并使用 [Bootstrap](http://getbootstrap.com/) 修改了配色和样式

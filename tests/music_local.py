@@ -8,9 +8,9 @@ import unittest
 import time
 
 sys.path.append("..")
-from conf import appium_config
-from aptools.apconstants import Commands, C_Music
-from aptools.aputils import value, logging, wait_el_xpath, wait_el_xpath_click
+from server import appium_config
+from tools.constants import Commands, C_Music
+from tools.utils import value, logging, wait_el_xpath, wait_el_xpath_click
 
 
 class GoogleMusic(unittest.TestCase):

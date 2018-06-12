@@ -14,10 +14,10 @@ import time
 from appium.webdriver.common.touch_action import TouchAction
 
 sys.path.append("..")
-from conf import appium_config
-from aptools.apmobile import get_devices
-from aptools.apconstants import Commands, C_Dialer
-from aptools.aputils import action, logging, wait_el_id, wait_el_id_click
+from server import appium_config
+from tools.mobile import get_devices
+from tools.constants import Commands, C_Dialer
+from tools.utils import action, logging, wait_el_id, wait_el_id_click
 
 class Dialer(unittest.TestCase):
   @classmethod

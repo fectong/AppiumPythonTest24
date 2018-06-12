@@ -13,9 +13,9 @@ import unittest
 from time import sleep
 
 sys.path.append("..")
-from conf import appium_config
-from aptools.apconstants import Commands, Keycode, C_Settings, C_Memorry, C_Bluetooth, C_WLAN
-from aptools.aputils import value, action, logging, wait_el_xpath, wait_els_xpath, wait_el_xpath_click, MobileSwipe
+from server import appium_config
+from tools.constants import Commands, Keycode, C_Settings, C_Memorry, C_Bluetooth, C_WLAN
+from tools.utils import value, action, logging, wait_el_xpath, wait_els_xpath, wait_el_xpath_click, MobileSwipe
 
 
 class Settings(unittest.TestCase):

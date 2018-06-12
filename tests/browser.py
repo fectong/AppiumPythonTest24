@@ -6,9 +6,9 @@ import unittest
 from time import sleep
 
 sys.path.append("..")
-from conf import appium_config
-from aptools.apconstants import Commands, Keycode, C_Browser
-from aptools.aputils import action, logging, wait_el_xpath, wait_el_xpath_click
+from server import appium_config
+from tools.constants import Commands, Keycode, C_Browser
+from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 
 
 class GoogleChrome(unittest.TestCase):

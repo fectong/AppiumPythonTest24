@@ -15,7 +15,7 @@ from time import sleep
 from appium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException, WebDriverException
-from .apconstants import Commands
+from .constants import Commands
 
 
 PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))

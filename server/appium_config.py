@@ -6,8 +6,8 @@ import time
 from appium import webdriver
 
 sys.path.append("..")
-from aptools.aputils import PATH, logging
-from aptools.apmobile import get_devices, os_version
+from tools.utils import PATH, logging
+from tools.mobile import get_devices, os_version
 
 #Get mobile devices_id
 devices_id = get_devices()
