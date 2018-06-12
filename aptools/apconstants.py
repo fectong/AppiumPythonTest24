@@ -7,9 +7,57 @@ class Commands(object):
   CLICK = 'click'
   CLEAR = 'clear'
   SEND_KEYS = 'send_keys'
-  ENTER = 'ENTER'
-  HOME = 'HOME'
-  BACK = 'BACK'
+
+
+class Keycode(object):
+
+  ENTER = 66
+  HOME = 3
+  BACK = 4
+  ESC = 111
+  DEL = 67
+  FORWARD_DEL = 112
+  CAPS_LOCK = 115
+
+  def get(self, key):
+    return{
+      '0': 7,
+      '1': 8,
+      '2': 9,
+      '3': 10,
+      '4': 11,
+      '5': 12,
+      '6': 13,
+      '7': 14,
+      '8': 15,
+      '9': 16,
+      'a': 29,
+      'b': 30,
+      'c': 31,
+      'd': 32,
+      'e': 33,
+      'f': 34,
+      'g': 35,
+      'h': 36,
+      'i': 37,
+      'j': 38,
+      'k': 39,
+      'l': 40,
+      'm': 41,
+      'n': 42,
+      'o': 43,
+      'p': 44,
+      'q': 45,
+      'r': 46,
+      's': 47,
+      't': 48,
+      'u': 49,
+      'v': 50,
+      'w': 51,
+      'x': 52,
+      'y': 53,
+      'z': 54
+    }.get(key, "Please confirm if the keycode is valid.")
 
 
 class Tests(object):
@@ -261,7 +309,7 @@ class C_Dialer(object):
       '7': "com.android.dialer:id/seven",
       '8': "com.android.dialer:id/eight",
       '9': "com.android.dialer:id/nine"
-    }.get(key, "Please confirm if the keycode is valid.")
+    }.get(key, "Please confirm if the number path is correct.")
 
 
 class C_Tune(object):
@@ -336,6 +384,41 @@ class C_Camera(object):
   PATH_PHOTO_SWITCHER = "//*[contains(@content-desc, 'Switch to photo')]"
   PATH_VIDEO_SWITCHER = "//*[contains(@content-desc, 'Switch to video')]"
   PATH_PANORAMA_SWITCHER = "//*[contains(@content-desc, 'Switch to panorama')]"
+
+
+class C_Gmail(object):
+
+  APP = [
+    "Gmail",
+    "com.google.android.gm",
+    ".ui.MailActivityGmail"
+  ]
+  PATH_GOT_IT = "//*[contains(@text, 'GOT IT')]"
+  ID_ADD_EMAIL = "com.google.android.gm:id/setup_addresses_add_another"
+  PATH_ADD_GOOGLE = "//*[contains(@text, 'Google')]"
+
+  PATH_SIGN_IN = "//*[contains(@text, 'Sign in')]"
+  # PATH_ET_EMAIL = "//*[contains(@text, 'Email or phone')]"
+  PATH_ET_EMAIL = "//android.webkit.WebView[@index=0]/android.view.View[@index=0]/android.view.View[@index=2]/android.view.View[@index=0]/android.view.View[@index=0]/android.view.View[@index=0]/android.widget.EditText[@index=0]"
+  PATH_BTN_NEXT = "//*[contains(@text, 'NEXT')]"
+  PATH_HI = "//*[contains(@text, 'Hi US')]"
+  PATH_ET_PW = "//android.webkit.WebView[@index=0]/android.webkit.WebView[@index=0]/android.view.View[@index=0]/android.view.View[@index=2]/android.view.View[@index=0]/android.view.View[@index=0]/android.view.View[@index=0]/android.view.View[@index=0]/android.widget.EditText[@index=0]"
+  # PATH_ET_PW = "//*[contains(@text, 'Enter your password')]"
+  PATH_BTN_AGREE = "//*[contains(@text, 'AGREE')]"
+  PATH_BTN_I_AGREE = "//*[contains(@text, 'I AGREE')]"
+  PATH_TO_GMAIL = "//*[contains(@text, 'TAKE ME TO GMAIL')]"
+  ID_CREATE_MAIL = "com.google.android.gm:id/compose_button"
+  ID_MAIL_TO = "com.google.android.gm:id/to"
+  ID_MAIL_SUBJECT = "com.google.android.gm:id/subject"
+  ID_MAIL_CONTENT = "com.google.android.gm:id/wc_body"
+  ID_MAIL_SEND = "com.google.android.gm:id/send"
+
+  EMAIL = "ustestfec@gmail.com"
+  PW = "usfec10207"
+
+  EMAIL_TO = "fectung@live.com"
+  EMAIL_SUBJECT = "SUBJECT"
+  EMAIL_CONTENT = "CONTENT"
 
 
 class C_Browser(object):
