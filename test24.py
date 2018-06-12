@@ -5,9 +5,9 @@ import time
 import unittest
 import traceback
 
-from aptools import HTMLTestRunner
-from aptools.aputils import logging
-from aptools.apconstants import Tests
+from tools import HTMLTestRunner
+from tools.utils import logging
+from tools.constants import Tests
 
 from tests.settings import Settings
 from tests.candy_crush import CandyCrush
@@ -24,7 +24,7 @@ from tests.dialer import Dialer
 
 def runTest():
   times = 1
-  timeout = time.time() + 60*60*24  # 24h = 60*60*24
+  timeout = time.time() + 60*1  # 24h = 60*60*24
   timestr = time.strftime('%Y_%m_%d_%H.%M.%S', time.localtime(time.time()))
 
   filename = "./logs/"+timestr+".html"
