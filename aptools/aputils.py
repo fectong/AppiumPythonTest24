@@ -33,23 +33,6 @@ logging.basicConfig(
   filemode = 'a'
 )
 
-def keycode(key):
-  return{
-    Commands.ENTER: 66,
-    Commands.HOME: 3,
-    Commands.BACK: 4,
-    0: 7,
-    1: 8,
-    2: 9,
-    3: 10,
-    4: 11,
-    5: 12,
-    6: 13,
-    7: 14,
-    8: 15,
-    9: 16
-  }.get(key, "Please confirm if the keycode is valid.")
-
 def value(element, value):
   try:
     if value == Commands.TEXT:
