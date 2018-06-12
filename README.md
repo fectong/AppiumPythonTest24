@@ -204,7 +204,7 @@ Refresh Bluetooth Device List
 
 ## 7. 模板介绍
 
-1. 启动时配置的 WebDriver 在 [appium_config.py](./server/appium_config.py) 之中
+1. 启动时配置的 WebDriver 在 [appium_server.py](./server/appium_server.py) 之中
 
 2. 各测试按照测试应用进行分类, 处于 ./tests 目录
 
