@@ -23,15 +23,7 @@ def my_webdriver(
   system_port = 8200,
   newCommandTimeout = 60,
   app_path = ''):
-  
-  try:
-    return webdriver.Remote('http://{0}:{1}/wd/hub'.format(host, port), get_desired_caps(app, device_name, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout, app_path))
-  except Exception as e:
-    logging.info('please confirm if the appium server is running.')
-    logging.debug('Exception: {0}, please confirm if the appium server is running.'.format(e))
-    return None
 
-def get_desired_caps(app, device_name, auto_grant_permissions, no_reset, full_reset, system_port, newCommandTimeout, app_path):
   desired_caps = {
     'appPackage': app[1],
     'appActivity': app[2],
@@ -50,4 +42,10 @@ def get_desired_caps(app, device_name, auto_grant_permissions, no_reset, full_re
     'noSign': True,
     'automationName': 'UiAutomator2'
   }
-  return desired_caps
+
+  try:
+    return webdriver.Remote('http://{0}:{1}/wd/hub'.format(host, port), desired_caps)
+  except Exception as e:
+    logging.info('please confirm if the appium server is running.')
+    logging.debug('Exception: {0}, please confirm if the appium server is running.'.format(e))
+    return None
