@@ -19,6 +19,11 @@ class CandyCrush(unittest.TestCase):
   def setUpClass(self):
     self.driver = appium_server.my_webdriver(app=C_CandyCrush.APP, app_path=PATH('../apps/CandyCrushSaga.apk'))
 
+  @classmethod
+  def setUp(self):
+    if self.driver == None:
+      self.fail('CandyCrush: Get webdriver unsucceed.')
+
   def test_candy_crush(self):
     prefix = C_CandyCrush.PREFIX
     sleep(30)
@@ -34,6 +39,10 @@ class CandyCrush(unittest.TestCase):
     sleep(3)
     logging.info('{0}: Open settings.'.format(prefix))
     logging.info('{0}: END'.format(prefix))
+
+  @classmethod
+  def tearDown(self):
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):

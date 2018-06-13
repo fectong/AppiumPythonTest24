@@ -11,9 +11,15 @@ from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 
 
 class Youtube(unittest.TestCase):
+
   @classmethod
   def setUpClass(self):
     self.driver = appium_server.my_webdriver(C_Youtube.APP)
+
+  @classmethod
+  def setUp(self):
+    if self.driver == None:
+      self.fail('Youtube: Get webdriver unsucceed.')
 
   def test_video_network(self):
     play_minutes = C_Youtube.PLAY_MINUTES
@@ -34,6 +40,10 @@ class Youtube(unittest.TestCase):
           logging.info('{0}: Playing'.format(prefix))
           time.sleep(5)
       logging.info('{0}: END'.format(prefix))
+
+  @classmethod
+  def tearDown(self):
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):

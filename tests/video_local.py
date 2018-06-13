@@ -11,9 +11,15 @@ from tools.utils import action, value, logging, wait_el_xpath, wait_el_xpath_cli
 
 
 class Video(unittest.TestCase):
+
   @classmethod
   def setUpClass(self):
     self.driver = appium_server.my_webdriver(C_Video.APP)
+
+  @classmethod
+  def setUp(self):
+    if self.driver == None:
+      self.fail('Video: Get webdriver unsucceed.')
 
   def test_video_playback(self):
     prefix = C_Video.PREFIX
@@ -58,6 +64,10 @@ class Video(unittest.TestCase):
         continue
 
     logging.info('{0}: END'.format(prefix))
+
+  @classmethod
+  def tearDown(self):
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):

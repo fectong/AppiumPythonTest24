@@ -14,10 +14,16 @@ from tools.utils import value, logging, wait_el_xpath, wait_el_xpath_click
 
 
 class GoogleMusic(unittest.TestCase):
+
   @classmethod
   def setUpClass(self):
     self.driver = appium_server.my_webdriver(C_Music.APP)
-  
+
+  @classmethod
+  def setUp(self):
+    if self.driver == None:
+      self.fail('GoogleMusic: Get webdriver unsucceed.')
+
   def test_music_palyback(self):
     prefix = C_Music.PREFIX
     logging.info('{0}: START'.format(prefix))
@@ -39,6 +45,10 @@ class GoogleMusic(unittest.TestCase):
         time.sleep(5)
 
     logging.info('{0}: END'.format(prefix))
+
+  @classmethod
+  def tearDown(self):
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):

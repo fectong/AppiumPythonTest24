@@ -25,6 +25,9 @@ class Messaging(unittest.TestCase):
 
   @classmethod
   def setUp(self):
+    if self.driver == None:
+      self.fail('Messaging: Get webdriver unsucceed.')
+
     self.driver.launch_app()
 
   def initM(self, num):

@@ -34,6 +34,10 @@ class Dialer(unittest.TestCase):
     if not self.flag:
        logging.info('test_dialer: There is only one device, can not take a interacted call test.')
        self.fail('test_dialer: There is only one device, can not take a interacted call test.')
+
+    if self.Odriver == None or self.Tdriver == None:
+      self.fail('Camera: Get webdriver unsucceed.')
+
     self.Odriver.launch_app()
     self.Tdriver.launch_app()
 

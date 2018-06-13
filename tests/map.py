@@ -15,9 +15,15 @@ from tools.utils import action, value, logging, wait_el_xpath, wait_el_xpath_cli
 
 
 class GoogleMaps(unittest.TestCase):
+
   @classmethod
   def setUpClass(self):
     self.driver = appium_server.my_webdriver(C_Maps.APP, no_reset=True)
+
+  @classmethod
+  def setUp(self):
+    if self.driver == None:
+      self.fail('GoogleMaps: Get webdriver unsucceed.')
 
   def test_multi_layers_no_reset(self):
     prefix = C_Maps.PREFIX
@@ -70,6 +76,10 @@ class GoogleMaps(unittest.TestCase):
         sleep(5)
 
     logging.info('{0}: END'.format(prefix))
+
+  @classmethod
+  def tearDown(self):
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):

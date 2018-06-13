@@ -14,9 +14,15 @@ from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click
 
 
 class Camera(unittest.TestCase):
+
   @classmethod
   def setUpClass(self):
     self.driver = appium_server.my_webdriver(C_Camera.APP)
+
+  @classmethod
+  def setUp(self):
+    if self.driver == None:
+      self.fail('Camera: Get webdriver unsucceed.')
 
   def test_take_picture(self):
     prefix = C_Camera.PREFIX
@@ -38,6 +44,10 @@ class Camera(unittest.TestCase):
     sleep(8)
     logging.info('{0}: Take a photo.'.format(prefix))
     logging.info('{0}: END'.format(prefix))
+
+  @classmethod
+  def tearDown(self):
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):

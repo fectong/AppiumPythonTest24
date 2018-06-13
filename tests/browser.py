@@ -16,6 +16,11 @@ class GoogleChrome(unittest.TestCase):
   def setUpClass(self):
     self.driver = appium_server.my_webdriver(C_Browser.APP)
 
+  @classmethod
+  def setUp(self):
+    if self.driver == None:
+      self.fail('GoogleChrome: Get webdriver unsucceed.')
+
   def test_ten_websites(self):
     prefix = C_Browser.PREFIX
     logging.info('{0}: START'.format(prefix))
@@ -43,6 +48,10 @@ class GoogleChrome(unittest.TestCase):
       sleep(20)
 
     logging.info('{0}: END'.format(prefix))
+
+  @classmethod
+  def tearDown(self):
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):

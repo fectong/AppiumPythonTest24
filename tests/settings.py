@@ -26,6 +26,9 @@ class Settings(unittest.TestCase):
 
   @classmethod
   def setUp(self):
+    if self.driver == None:
+      self.fail('Settings: Get webdriver unsucceed.')
+
     self.driver.launch_app()
 
   def test_get_memory_status(self):

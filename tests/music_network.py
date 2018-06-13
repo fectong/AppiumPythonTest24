@@ -11,9 +11,15 @@ from tools.utils import action, logging, wait_el_xpath, wait_el_xpath_click, PAT
 
 
 class Tune(unittest.TestCase):
+
   @classmethod
   def setUpClass(self):
     self.driver = appium_server.my_webdriver(app=C_Tune.APP, app_path=PATH('../apps/TuneInRadio.apk'))
+
+  @classmethod
+  def setUp(self):
+    if self.driver == None:
+      self.fail('Tune: Get webdriver unsucceed.')
 
   def test_music_network(self):
     prefix = C_Tune.PREFIX
@@ -49,6 +55,10 @@ class Tune(unittest.TestCase):
               time.sleep(5)
 
     logging.info('{0}: END'.format(prefix))
+
+  @classmethod
+  def tearDown(self):
+    self.driver.close_app()
 
   @classmethod
   def tearDownClass(self):
