@@ -8,7 +8,7 @@ def os_version(device_name):
   Get mobile os Version \n
   By device id
   """
-  return os.popen('adb -s {0} shell getprop ro.build.version.release'.format(device_name)).read()
+  return os.popen('adb -s {0} shell getprop ro.build.version.release'.format(device_name)).read()[0:-1]
 
 def str_sub(content, num):
   ct = content.replace('[', '').replace(']', '')
