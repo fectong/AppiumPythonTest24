@@ -234,3 +234,27 @@ Refresh Bluetooth Device List
 5. [HTMLTestRunner.py](./tools/HTMLTestRunner.py) 文件说明:
 
     原版 [路径](https://pypi.python.org/pypi/HTMLTestRunner), 原版不支持 Python3.X, 项目中所用的是修改后的版本, 并使用 [Bootstrap](http://getbootstrap.com/) 修改了配色和样式
+
+
+## 8. 注意事项
+
+1. 在处理`弹窗类`（比如弹窗输入密码, 选择打开方式）的事件时, 处理前可以有延时操作, 处理后在发出下一个与测试机交互的命令之前不要有任何延时操作, 加入延时可能会导致这个弹窗类的操作无效;
+
+2. desired_caps 中的 `deviceName` 是必须配置的变量, 但是实际没有区别不同设备的作用(官方文档是这样解释的), 要想区分多台设备应该将 adb device 分配给 'udid' 这个配置信息来区分不同的测试设备;
+
+3. `unicodeKeyboard`, `resetKeyboard` 配置信息是在处理中文输入时出现的乱码问题的, 没有出现或者不需要中文输入没必要配置此信息;
+
+4. `noReset` 指的是每次启动应用先重置, 即清除存储和权限配置之类的, `fullReset` 指的是测试前把已有的APP卸载重新安装, 所以这个只适用于测试第三方APP的时候使用;
+
+5. [utils.py](./tools/utils.py) 中有 `action` 和 `value` 两个方法:  
+value(element, value) 获取 element 的某个 value (值), 比如: text, tagName  
+action(element, action, keys = None) 让 elemen t进行某个 action (操作), 比如: click, clear, send_keys(keys)  
+这两个方法的目的是通过封装来处理此类操作中出现的异常, 防止其导致测试中断;
+
+6. Python 是动态类型的语言, 所以在某个目录运行某个 py 文件时, 此处即为根目录, 所以在别的目录使用相对路径就会造成 `"moudules not found"` 之类的错误, 所以在 [utils.py](./tools/utils.py) 中使用了 PATH 来获取 utils.py 的绝对路径, 其他 py 文件中则使用此 PATH 来完成相对路径的书写;
+
+7. [utils.py](./tools/utils.py) 中使用 `logging.basicConfig` 配置了日志记录的信息 `level=logging.INFO` 则记录日志级别为 INFO 的 log 信息, 可修改为 DEBUG 或其他, `filename=PATH("../logs/"+timestr+".log")` 为 log 的保存位置, 没有此项则默认打印输出在终端窗口;
+
+8. [utils.py](./tools/utils.py) 中 `wait_el_**` 此类方法为查找元素和查找后点击, 使用了 `WebDriverWait` 进行延时获取元素, 默认超时为 8s, 在 8s 内以 0.5s 为步进行查找, 超时后还未找到所需元素则怕抛出 TimeoutException, 提前找到则提前结束延时动作;
+
+9. [utils.py](./tools/utils.py) 中 `MobileSwipe` 集成了常用滑动操作
