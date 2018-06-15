@@ -47,5 +47,5 @@ def my_webdriver(
     return webdriver.Remote('http://{0}:{1}/wd/hub'.format(host, port), desired_caps)
   except Exception as e:
     logging.info('please confirm if the appium server is running.')
-    logging.debug('Exception: {0}, please confirm if the appium server is running.'.format(e))
+    logging.debug('Exception: {0}, Please confirm if the appium server is running.'.format(e))
     return None
