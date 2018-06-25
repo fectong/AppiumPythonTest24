@@ -53,13 +53,15 @@ class Dialer(unittest.TestCase):
       wait_el_id_click(self.Odriver, C_Dialer.number(self, n))
     time.sleep(10)
 
-    btn_call = wait_el_id(self.Tdriver, C_Dialer.ID_BTN_DIALPAD_FLOAT, 10)
+    btn_call = wait_el_id(self.Odriver, C_Dialer.ID_BTN_DIALPAD_FLOAT, 10)
     if btn_call is None:
       self.fail('{0}: Wait to long for the call.'.format(prefix))
-    
+    action(btn_call, Commands.CLICK)
+
+    btn_swipe_to_answer = wait_el_id(self.Tdriver, C_Dialer.ID_SWIPE_TO_ANSWER, 10)
     width = self.Tdriver.get_window_size()['width']
     height = self.Tdriver.get_window_size()['height']
-    TouchAction(self.Tdriver).press(btn_call).move_to(x=width/2, y=height/3)
+    TouchAction(self.Tdriver).press(btn_swipe_to_answer).move_to(x=width/2, y=height/3)
 
     call_time = C_Dialer.CALL_TIME
     timeout = time.time() + 60*call_time

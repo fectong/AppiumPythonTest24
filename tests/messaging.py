@@ -21,7 +21,7 @@ class Messaging(unittest.TestCase):
   """
   @classmethod
   def setUpClass(self):
-    self.driver = appium_server.my_webdriver(app=C_Messaging.APP, auto_grant_permissions=False)
+    self.driver = appium_server.my_webdriver(app=C_Messaging.APP)
 
   @classmethod
   def setUp(self):

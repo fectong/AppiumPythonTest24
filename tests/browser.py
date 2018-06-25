@@ -25,7 +25,7 @@ class GoogleChrome(unittest.TestCase):
     prefix = C_Browser.PREFIX
     logging.info('{0}: START'.format(prefix))
     if wait_el_xpath_click(self.driver, C_Browser.PATH_BTN_TERMS_ACCEPT, 5):
-      wait_el_xpath_click(self.driver, C_Browser.PATH_BTN_NEGATIVE, 5)
+      wait_el_xpath_click(self.driver, C_Browser.PATH_BTN_NEGATIVE, 20)
       wait_el_xpath_click(self.driver, C_Browser.PATH_BTN_UNCHANGE_SEARCH, 5)
     else:
       logging.info('{0}: No need to initialize Google Chrome.'.format(prefix))
