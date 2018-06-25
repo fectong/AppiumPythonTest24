@@ -38,11 +38,9 @@ class GoogleMusic(unittest.TestCase):
     logging.info('{0}: Shuffle all of the music.'.format(prefix))
     btn_pause_play = wait_el_xpath(self.driver, C_Music.PATH_BTN_PAUSE_PLAY)
     
-    timeout = time.time() + 60*C_Music.PLAY_MINUTES
     while value(btn_pause_play, Commands.TAG_NAME) == C_Music.STATUS_PLAYING:
-      if (int(timeout-time.time()))%20 == 0:
-        logging.info('{0}: Playing'.format(prefix))
-        time.sleep(5)
+      logging.info('{0}: Playing'.format(prefix))
+      time.sleep(5)
 
     logging.info('{0}: END'.format(prefix))
 
